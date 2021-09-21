@@ -1,0 +1,9 @@
+{
+    "name": "makiavelo/flex",
+    "autoload": {
+        "psr-4": {
+            "Makiavelo\\Flex\\": "src/"
+        }
+    },
+    "require": {}
+}
