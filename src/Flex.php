@@ -6,7 +6,10 @@ use Makiavelo\Flex\Util\Common;
 
 class Flex
 {
-    // Internal variable for meta data like table name
+    /**
+     * Internal variable for meta data like table name
+     * @var array
+     */
     public $_meta;
 
     public function __construct()
@@ -14,6 +17,11 @@ class Flex
 
     }
 
+    /**
+     * Check if it's a new instance or a loaded one
+     * 
+     * @return boolean
+     */
     public function isNew()
     {
         if (isset($this->id) && $this->id) {
@@ -47,13 +55,21 @@ class Flex
         }
     }
 
-    // Convert to json by default
+    /**
+     * Convert to json by default
+     * 
+     * @return string
+     */
     public function __toString()
     {
         return json_encode($this->getAttributes());
     }
 
-    // Get object attributes ignoring meta && ids
+    /**
+     * Get all the non-internal attributes of the instance.
+     * 
+     * @return array
+     */
     public function getAttributes()
     {
         $assoc = get_object_vars($this);
@@ -68,13 +84,22 @@ class Flex
         return $result;
     }
 
-    // Get the metta associative array
+    /**
+     * Get the metadata of the object.
+     * @return array
+     */
     public function _meta()
     {
         return $this->_meta;
     }
 
-    // Determine if it's an internal attribute
+    /**
+     * Determine if it's an internal attribute
+     * 
+     * @param string $name
+     * 
+     * @return boolean
+     */
     public function isInternal($name)
     {
         if (strpos($name, '_') === 0) {
@@ -88,19 +113,37 @@ class Flex
         return false;
     }
 
-    // Add meta values
+    /**
+     * Add values to the object meta-data
+     * 
+     * @param string $name
+     * @param mixed $value
+     * 
+     * @return void
+     */
     public function addMeta($name, $value = null)
     {
         $this->_meta[$name] = $value;
     }
 
-    // Get meta values
+    /**
+     * Get a meta-data value
+     * 
+     * @param string $path
+     * @param mixed $default
+     * 
+     * @return mixed
+     */
     public function getMeta($path, $default = null)
     {
         return Common::get($this->_meta, $path, $default);
     }
 
-    // Override for validation
+    /**
+     * This method should be overriden for object validation.
+     * 
+     * @return boolean
+     */
     public function valid()
     {
         return true;
@@ -108,21 +151,42 @@ class Flex
 
     // Hooks
     // Override for custom behaviors
+
+    /**
+     * Method to be executed before saving an object.
+     * 
+     * @return boolean
+     */
     public function preSave()
     {
         return true;
     }
 
+    /**
+     * Method to be executed after saving an object.
+     * 
+     * @return boolean
+     */
     public function postSave()
     {
         return true;
     }
 
+    /**
+     * Method to be executed before deleting an object.
+     * 
+     * @return boolean
+     */
     public function preDelete()
     {
         return true;
     }
 
+    /**
+     * Method to be executed after deleting an object.
+     * 
+     * @return boolean
+     */
     public function postDelete()
     {
         return true;

@@ -7,9 +7,25 @@ use Makiavelo\Flex\Util\Common;
 
 class FlexRepository
 {
+    /**
+     * @var EnhancedPDO
+     */
     public $db;
+
+    /**
+     * @var array
+     */
     public $meta;
+
+    /**
+     * @var FlexRepository
+     */
     private static $instance;
+
+    /**
+     * If this is set to true, no database changes will be performed.
+     * @var bool
+     */
     public static $freeze = false;
 
     private function __construct()
@@ -17,6 +33,11 @@ class FlexRepository
         
     }
 
+    /**
+     * Get the current instance or create one.
+     * 
+     * @return FlexRepository
+     */
     public static function get()
     {
         if (self::$instance) {
@@ -28,6 +49,18 @@ class FlexRepository
         return self::$instance;
     }
 
+    /**
+     * Connect to the database
+     * 
+     * @param string $host
+     * @param string $db
+     * @param string $user
+     * @param string $pass
+     * @param string $charset
+     * 
+     * @return boolean
+     * @throws \PDOException
+     */
     public function connect($host, $db, $user, $pass, $charset = 'utf8mb4')
     {
         $dsn = "mysql:host=$host;dbname=$db;charset=$charset";
@@ -39,11 +72,23 @@ class FlexRepository
 
         try {
             $this->db = new EnhancedPdo($dsn, $user, $pass, $options);
+            return true;
         } catch (\PDOException $e) {
             throw new \PDOException($e->getMessage(), (int)$e->getCode());
         }
     }
 
+    /**
+     * Save a model (create or update)
+     * if self::$freeze is true the 'prepare' method will try
+     * to syncronize the current schema with the database schema.
+     * 
+     * preSave and postSave hooks are triggered.
+     * 
+     * @param Flex $model
+     * 
+     * @return boolean
+     */
     public function save(Flex $model)
     {
         $this->prepare($model);
@@ -66,6 +111,15 @@ class FlexRepository
         }
     }
 
+    /**
+     * Update a model via DB query
+     * Table name is retrieved from the object meta.
+     * Fields and values are retrieved from the object.
+     *  
+     * @param Flex $model
+     * 
+     * @return boolean
+     */
     public function update(Flex $model)
     {
         $table = $model->getMeta('table');
@@ -84,6 +138,15 @@ class FlexRepository
         return $result;
     }
 
+    /**
+     * Insert a model via DB query
+     * Table name is retrieved from the object meta.
+     * Fields and values are retrieved from the object.
+     * 
+     * @param Flex $model
+     * 
+     * @return boolean
+     */
     public function insert(Flex $model)
     {
         $table = $model->getMeta('table');
@@ -102,6 +165,16 @@ class FlexRepository
         return $result;
     }
 
+    /**
+     * Delete a model.
+     * Table name is retrieved from the object meta.
+     * 
+     * Triggers 'preDelete' and 'postDelete' events.
+     * 
+     * @param Flex $model
+     * 
+     * @return [type]
+     */
     public function delete(Flex $model)
     {
         $pre = $model->preDelete();
@@ -122,6 +195,20 @@ class FlexRepository
         }
     }
 
+    /**
+     * Save a collection of models.
+     * All the models must be of the same type.
+     * There can be a mix of new and not-new objects
+     * insert and update operations will be performed separately.
+     * 
+     * The operation is atomic, transactions are used.
+     * 
+     * The db schema is synced.
+     * 
+     * @param Flex[] $collection
+     * 
+     * @return [type]
+     */
     public function saveCollection($collection)
     {
         $status = false;
@@ -145,6 +232,13 @@ class FlexRepository
         return $status;
     }
 
+    /**
+     * Gets an array of updates and executes them one by one.
+     * 
+     * @param Flex[] $updates
+     * 
+     * @return boolean
+     */
     public function performUpdates($updates)
     {
         $status = true;
@@ -156,6 +250,17 @@ class FlexRepository
         return $status;
     }
 
+    /**
+     * Gets an array of models to insert
+     * 
+     * Triggers all the 'preSave' and 'postSave' events.
+     * 
+     * All the models are inserted in a single query (transactional)
+     * 
+     * @param Flex[] $inserts
+     * 
+     * @return [type]
+     */
     public function performInserts($inserts)
     {
         $status = true;
@@ -171,6 +276,13 @@ class FlexRepository
         return $status;
     }
 
+    /**
+     * Get all the inserts/updates from a collection.
+     * 
+     * @param Flex[] $collection
+     * 
+     * @return array
+     */
     public function getOperations($collection)
     {
         $ops = [
@@ -189,6 +301,13 @@ class FlexRepository
         return $ops;
     }
 
+    /**
+     * Trigger 'preSave' events in the collection
+     * 
+     * @param Flex[] $elems
+     * 
+     * @return array
+     */
     public function preSaves($elems)
     {
         $result = [];
@@ -309,6 +428,10 @@ class FlexRepository
      * will be applied to the table.
      * If no meta was defined for fields, non-existant fields will be
      * created as TEXT fields in the table.
+     * 
+     * @param Flex $model
+     * 
+     * @return boolean
      */
     public function prepare(Flex $model)
     {
@@ -332,8 +455,18 @@ class FlexRepository
         if ($fields) {
             $this->addFieldsToTable($table, $fields);
         }
+
+        return true;
     }
 
+    /**
+     * Update field types on the model table
+     * 
+     * @param Flex $model
+     * @param mixed $tableFields
+     * 
+     * @return void
+     */
     public function updateTableTypes(Flex $model, $tableFields)
     {
         $table = $model->getMeta('table');
@@ -353,6 +486,15 @@ class FlexRepository
         }
     }
 
+    /**
+     * Add new fields to the table if needed.
+     * 
+     * @param Flex $model
+     * @param mixed $tableFields
+     * @param array $fields
+     * 
+     * @return array
+     */
     public function addNewFields(Flex $model, $tableFields, $fields = [])
     {
         $data = $this->getFieldsAndValues($model);
@@ -375,6 +517,16 @@ class FlexRepository
         return $fields;
     }
 
+    /**
+     * Add the model fields defined in the meta that are not defined
+     * in the database table.
+     * 
+     * @param Flex $model
+     * @param array $tableFields
+     * @param array $fields
+     * 
+     * @return array
+     */
     public function addModelFields(Flex $model, $tableFields, $fields = [])
     {
         $modelFields = $model->getMeta('fields');
@@ -395,6 +547,14 @@ class FlexRepository
         return $fields;
     }
 
+    /**
+     * Execute the query to add fields to a table
+     * 
+     * @param string $name Table name
+     * @param array $fields
+     * 
+     * @return [type]
+     */
     public function addFieldsToTable($name, $fields)
     {
         $query = "ALTER TABLE {$name} ";
@@ -413,6 +573,13 @@ class FlexRepository
         return $result;
     }
 
+    /**
+     * Execute the query to create a table
+     * 
+     * @param string $name
+     * 
+     * @return \PDOStatement|false
+     */
     public function createTable($name) {
         $tableQuery = "CREATE TABLE IF NOT EXISTS `{$name}` (id INT auto_increment, primary key (id)) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci";
         $result = $this->db->query($tableQuery);
@@ -420,6 +587,13 @@ class FlexRepository
         return $result;
     }
 
+    /**
+     * Check if a table exists via query
+     * 
+     * @param string $name
+     * 
+     * @return boolean
+     */
     public function tableExists($name)
     {
         $query = "SHOW TABLES LIKE '{$name}'";
@@ -431,6 +605,13 @@ class FlexRepository
         return false;
     }
 
+    /**
+     * Get the table fields via DESCRIBE query
+     * 
+     * @param string $name
+     * 
+     * @return array|false
+     */
     public function getTableFields($name)
     {
         $query = "DESCRIBE {$name}";
@@ -439,6 +620,15 @@ class FlexRepository
         return $result;
     }
 
+    /**
+     * Helper method to create a new object
+     * If an object is created this way, all the fields
+     * will be created as TEXT by default.
+     * 
+     * @param string $table
+     * 
+     * @return Flex
+     */
     public function create($table)
     {
         $flex = new Flex();
