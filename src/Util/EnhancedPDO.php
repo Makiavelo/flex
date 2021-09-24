@@ -7,7 +7,7 @@ namespace Makiavelo\Flex\Util;
  */
 class EnhancedPDO extends \PDO
 {
-    protected $transactionCount = 0;
+    protected $transactionCounter = 0;
 
     /**
      * Create a new transaction.

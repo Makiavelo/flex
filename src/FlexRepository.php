@@ -50,6 +50,17 @@ class FlexRepository
     }
 
     /**
+     * Re-create the instance
+     * 
+     * @return FlexRepository
+     */
+    public static function resetInstance()
+    {
+        self::$instance = new FlexRepository();
+        return self::$instance;
+    }
+
+    /**
      * Connect to the database
      * 
      * @param string $host
@@ -636,5 +647,13 @@ class FlexRepository
         $flex->id = null;
 
         return $flex;
+    }
+
+    public function find($table, $condition)
+    {
+        $query = "SELECT * FROM {$table} WHERE {$condition}";
+        $result = $this->db->query($query)->fetchAll();
+
+        return $result;
     }
 }
