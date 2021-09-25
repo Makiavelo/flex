@@ -2,3 +2,4 @@
 /.vscode/
 /.phpunit.cache/
 /tests/coverage/
+/tmp/

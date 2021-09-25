@@ -649,6 +649,16 @@ class FlexRepository
         return $flex;
     }
 
+    /**
+     * Helper method to do quick finds
+     * For complex queries use PDO directly.
+     * Hydration has to be done manually if needed.
+     * 
+     * @param mixed $table
+     * @param mixed $condition
+     * 
+     * @return [type]
+     */
     public function find($table, $condition)
     {
         $query = "SELECT * FROM {$table} WHERE {$condition}";

@@ -18,6 +18,41 @@ class Flex
     }
 
     /**
+     * Populate the instance with the given data.
+     * 
+     * @param mixed $data
+     * 
+     * @return Flex
+     */
+    public function hydrate($data)
+    {
+        if (!is_array($data)) {
+            // Convert to associative array
+            $data = json_decode(json_encode($data), true);
+        }
+
+        if (get_class($this) === 'Makiavelo\\Flex\\Flex') {
+            // If this is an instance of Flex then it has no
+            // Attribtues defined, let's take what we have from data
+            foreach ($data as $attr => $value) {
+                $this->$attr = $value;
+            }
+        } else {
+            // If this is a custom class with attributes, then just stick
+            // to the defined fields.
+            $attrs = $this->getAttributes();
+            if ($attrs) {
+                foreach ($attrs as $name => $value)
+                {
+                    $this->$name = Common::get($data, $name);
+                }
+            }
+        }
+
+        return $this;
+    }
+
+    /**
      * Check if it's a new instance or a loaded one
      * 
      * @return boolean

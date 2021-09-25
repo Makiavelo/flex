@@ -1,5 +1,8 @@
 {
     "name": "makiavelo/flex",
+    "scripts": {
+        "build-phar": "./util/build_phar.sh"
+    },
     "autoload": {
         "psr-4": {
             "Makiavelo\\Flex\\": "src/"

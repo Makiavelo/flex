@@ -6,6 +6,11 @@ use \Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryPHPUnitIntegration;
 use Makiavelo\Flex\Flex;
 
+class Stuff extends Flex {
+    public $id;
+    public $name;
+}
+
 final class FlexTest extends TestCase
 {
     use MockeryPHPUnitIntegration;
@@ -92,5 +97,33 @@ final class FlexTest extends TestCase
         $this->assertTrue($model->isInternal('id'));
         $this->assertFalse($model->isInternal('name'));
         $this->assertFalse($model->isInternal('phone_'));
+    }
+
+    public function testHydrateFlex()
+    {
+        $data = [
+            'name' => 'John',
+            'last_name' => 'Doe'
+        ];
+
+        $model = new Flex();
+        $model->hydrate($data);
+
+        $this->assertEquals($model->getName(), 'John');
+        $this->assertEquals($model->getLastName(), 'Doe');
+    }
+
+    public function testHydrateCustom()
+    {
+        $data = [
+            'name' => 'John',
+            'last_name' => 'Doe'
+        ];
+
+        $model = new Stuff();
+        $model->hydrate($data);
+
+        $this->assertEquals($model->getName(), 'John');
+        $this->assertFalse(isset($model->last_name));
     }
 }
