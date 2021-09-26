@@ -1,5 +1,5 @@
 # Flex
-Minimalistic ORM tool for fast prototyping and development of PHP/MySQL applications.
+Flexible and minimalistic ORM tool for fast prototyping and development of PHP/MySQL applications.
 The framework consists only of two Core files and a helpers file.
 The main approach is to have flexible models without worrying about database schemas, after that initial phase, the database can be freezed and handled manually.
 
@@ -57,6 +57,8 @@ $model->isNew(); // if it was just created or was already saved on db
 $model->_meta(); // Get the metadata. Metadata can be anything, like a parameter bag.
 $model->addMeta(); // Add a metadata item
 $model->getMeta($path, $default); // Get a metadata item based on a path ($path = 'some->internal->attr')
+$className::build($data); // Create an object of target class from array or object
+                          // Example: Flex::build($data) or User::build($data)
 ```
 
 ### Custom classes

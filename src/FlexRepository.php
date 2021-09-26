@@ -184,7 +184,7 @@ class FlexRepository
      * 
      * @param Flex $model
      * 
-     * @return [type]
+     * @return boolean
      */
     public function delete(Flex $model)
     {
@@ -218,7 +218,7 @@ class FlexRepository
      * 
      * @param Flex[] $collection
      * 
-     * @return [type]
+     * @return boolean
      */
     public function saveCollection($collection)
     {
@@ -270,7 +270,7 @@ class FlexRepository
      * 
      * @param Flex[] $inserts
      * 
-     * @return [type]
+     * @return boolean
      */
     public function performInserts($inserts)
     {
@@ -332,6 +332,13 @@ class FlexRepository
         return $result;
     }
 
+    /**
+     * Execute all the 'postSave' hooks from a model collection
+     * 
+     * @param array $elems
+     * 
+     * @return void
+     */
     public function postSaves($elems)
     {
         foreach ($elems as $model) {
@@ -339,6 +346,13 @@ class FlexRepository
         }
     }
 
+    /**
+     * Update all the models from a collection
+     * 
+     * @param Flex[] $updates
+     * 
+     * @return boolean
+     */
     public function updateCollection($updates)
     {
         if ($updates) {
@@ -356,6 +370,15 @@ class FlexRepository
         return true;
     }
 
+    /**
+     * Insert a model collection in the database using transactions
+     * All the models are inserted in one query.
+     * 
+     * @param Flex[] $inserts
+     * 
+     * @return boolean
+     * @throws \PDOException
+     */
     public function insertCollection($inserts) {
         $model = $inserts[0];
         $table = $model->getMeta('table');
@@ -388,6 +411,13 @@ class FlexRepository
         return $result;
     }
 
+    /**
+     * Get all the fields and their values from a Flex model
+     * 
+     * @param Flex $model
+     * 
+     * @return array
+     */
     public function getFieldsAndValues(Flex $model)
     {
         $attrs = $model->getAttributes();
@@ -404,6 +434,13 @@ class FlexRepository
         return $result;
     }
 
+    /**
+     * Delete a collection of Flex models
+     * 
+     * @param Flex[] $collection
+     * 
+     * @return boolean
+     */
     public function deleteCollection($collection)
     {
         if ($collection) {
@@ -422,6 +459,13 @@ class FlexRepository
         }
     }
 
+    /**
+     * Get an array of ids from a Flex collection
+     * 
+     * @param Flex[] $collection
+     * 
+     * @return array
+     */
     public function getCollectionIds($collection)
     {
         $ids = [];
@@ -564,7 +608,7 @@ class FlexRepository
      * @param string $name Table name
      * @param array $fields
      * 
-     * @return [type]
+     * @return \PDOStatement|false
      */
     public function addFieldsToTable($name, $fields)
     {
@@ -657,7 +701,7 @@ class FlexRepository
      * @param mixed $table
      * @param mixed $condition
      * 
-     * @return [type]
+     * @return array|false
      */
     public function find($table, $condition)
     {
