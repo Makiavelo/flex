@@ -364,6 +364,9 @@ $status = $repo->connect(
 
 This will completely turn off the automatic schema synchronization, so saving models can fail if the attributes aren't defined on the database.
 
+## Documentation
+The documentation of the classes can be found in the 'docs' folder. Can be viewed online on github pages here: https://makiavelo.github.io/flex/
+
 ## Testing
 If you want to play with the code, install dev dependencies and run any of these commands:
 
