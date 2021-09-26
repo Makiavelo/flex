@@ -6,6 +6,27 @@ The main approach is to have flexible models without worrying about database sch
 ## Requirements
 PHP, MySQL and a table to work on. No table creation required nor model generation required.
 
+## Install
+Via composer:
+```
+composer require makiavelo/flex
+```
+Or update dependency in composer.json
+```json
+"require": {
+    "makiavelo/flex": "dev-master"
+}
+```
+
+Via phar:
+Download the file located at '/phar/flex.phar' and include it.
+```php
+include('flex.phar');
+
+use Makiavelo\Flex\Flex;
+use Makiavelo\Flex\FlexRepository;
+```
+
 ## Examples
 
 ### Connecting to the database
