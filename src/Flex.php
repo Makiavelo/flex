@@ -17,6 +17,15 @@ class Flex
 
     }
 
+    public static function build($data)
+    {
+        $class = static::class;
+        $model = new $class();
+        $model->hydrate($data);
+
+        return $model;
+    }
+
     /**
      * Populate the instance with the given data.
      * 

@@ -126,4 +126,43 @@ final class FlexTest extends TestCase
         $this->assertEquals($model->getName(), 'John');
         $this->assertFalse(isset($model->last_name));
     }
+
+    public function testBuild()
+    {
+        $data = ['name' => 'John'];
+        $stuff = Stuff::build($data);
+
+        $this->assertEquals(get_class($stuff), 'Stuff');
+        $this->assertEquals($stuff->getName(), 'John');
+    }
+
+    public function testBuildCollection()
+    {
+        $data = [
+            ['name' => 'John'],
+            ['name' => 'Jack'],
+            ['name' => 'Will']
+        ];
+
+        $modelCollection = array_map(['Stuff', 'build'], $data);
+
+        $this->assertEquals('John', $modelCollection[0]->getName());
+        $this->assertEquals('Jack', $modelCollection[1]->getName());
+        $this->assertEquals('Will', $modelCollection[2]->getName());
+    }
+
+    public function testBuildFlexCollection()
+    {
+        $data = [
+            ['name' => 'John'],
+            ['name' => 'Jack'],
+            ['name' => 'Will']
+        ];
+
+        $modelCollection = array_map(['Makiavelo\\Flex\\Flex', 'build'], $data);
+
+        $this->assertEquals('John', $modelCollection[0]->getName());
+        $this->assertEquals('Jack', $modelCollection[1]->getName());
+        $this->assertEquals('Will', $modelCollection[2]->getName());
+    }
 }
