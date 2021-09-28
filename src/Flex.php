@@ -17,6 +17,14 @@ class Flex
 
     }
 
+    /**
+     * Convert an array/object result to this class
+     * this class can be Flex or any class that extended it
+     * 
+     * @param mixed $data
+     * 
+     * @return mixed
+     */
     public static function build($data)
     {
         $class = static::class;

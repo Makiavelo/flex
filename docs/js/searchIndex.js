@@ -13,7 +13,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\Makiavelo\\Flex\\Flex\u003A\u003Abuild\u0028\u0029",
             "name": "build",
-            "summary": "",
+            "summary": "Convert\u0020an\u0020array\/object\u0020result\u0020to\u0020this\u0020class\nthis\u0020class\u0020can\u0020be\u0020Flex\u0020or\u0020any\u0020class\u0020that\u0020extended\u0020it",
             "url": "classes/Makiavelo-Flex-Flex.html#method_build"
         },                {
             "fqsen": "\\Makiavelo\\Flex\\Flex\u003A\u003Ahydrate\u0028\u0029",
@@ -235,6 +235,26 @@ Search.appendIndex(
             "name": "find",
             "summary": "Helper\u0020method\u0020to\u0020do\u0020quick\u0020finds\nFor\u0020complex\u0020queries\u0020use\u0020PDO\u0020directly.",
             "url": "classes/Makiavelo-Flex-FlexRepository.html#method_find"
+        },                {
+            "fqsen": "\\Makiavelo\\Flex\\FlexRepository\u003A\u003Aquery\u0028\u0029",
+            "name": "query",
+            "summary": "Execute\u0020any\u0020query\u0020and\u0020get\u0020an\u0020array\u0020or\u0020a\u0020collection\u0020of\u0020models\nIf\u0020the\u0020query\u0020has\u0020any\u0020parameters,\u0020they\u0020have\u0020to\u0020be\u0020prepared\u0020to\u0020avoid\u0020injection\nso\u0020name\u0020them\u0020in\u0020the\u0020PDO\u0020fashion\u0020and\u0020send\u0020an\u0020array\u0020of\u0020parameters\/values.",
+            "url": "classes/Makiavelo-Flex-FlexRepository.html#method_query"
+        },                {
+            "fqsen": "\\Makiavelo\\Flex\\FlexRepository\u003A\u003AgetDefaultOptions\u0028\u0029",
+            "name": "getDefaultOptions",
+            "summary": "Get\u0020default\u0020options\u0020for\u0020queries",
+            "url": "classes/Makiavelo-Flex-FlexRepository.html#method_getDefaultOptions"
+        },                {
+            "fqsen": "\\Makiavelo\\Flex\\FlexRepository\u003A\u003AbindValues\u0028\u0029",
+            "name": "bindValues",
+            "summary": "Bind\u0020parameters\u0020to\u0020the\u0020PDOStatement",
+            "url": "classes/Makiavelo-Flex-FlexRepository.html#method_bindValues"
+        },                {
+            "fqsen": "\\Makiavelo\\Flex\\FlexRepository\u003A\u003Ahydrate\u0028\u0029",
+            "name": "hydrate",
+            "summary": "Hydrate\u0020a\u0020collection.",
+            "url": "classes/Makiavelo-Flex-FlexRepository.html#method_hydrate"
         },                {
             "fqsen": "\\Makiavelo\\Flex\\FlexRepository\u003A\u003A\u0024db",
             "name": "db",

@@ -6,6 +6,17 @@ use Makiavelo\Flex\Flex;
 use Makiavelo\Flex\FlexRepository;
 use Makiavelo\Flex\Util\EnhancedPDO;
 
+class Modelx extends Flex {
+    public $id;
+    public $name;
+    public $last_name;
+
+    public function __construct()
+    {
+        $this->addMeta('table', 'modelx');
+    }
+}
+
 final class FlexRepositoryFunctionalTest extends TestCase
 {
     public static function setUpBeforeClass(): void
@@ -77,7 +88,7 @@ final class FlexRepositoryFunctionalTest extends TestCase
         $repo->save($model);
 
         $result = $repo->find('test_save', "id = '{$model->id}'");
-        $this->assertEquals($result[0]['name'], 'Peter');
+        $this->assertEquals($result[0]->name, 'Peter');
     }
 
     public function testDelete()
@@ -89,7 +100,7 @@ final class FlexRepositoryFunctionalTest extends TestCase
 
         $repo->save($model);
         $result = $repo->find('test_delete', "id = '{$model->id}'");
-        $this->assertEquals($result[0]['name'], 'John');
+        $this->assertEquals($result[0]->name, 'John');
 
         $repo->delete($model);
 
@@ -117,13 +128,13 @@ final class FlexRepositoryFunctionalTest extends TestCase
         $this->assertTrue($status);
 
         $result = $repo->find('test_save_collection', "id = '{$model1->id}'");
-        $this->assertEquals($result[0]['name'], 'John');
+        $this->assertEquals($result[0]->name, 'John');
 
         $result = $repo->find('test_save_collection', "id = '{$model2->id}'");
-        $this->assertEquals($result[0]['name'], 'Jack');
+        $this->assertEquals($result[0]->name, 'Jack');
 
         $result = $repo->find('test_save_collection', "id = '{$model3->id}'");
-        $this->assertEquals($result[0]['name'], 'Will');
+        $this->assertEquals($result[0]->name, 'Will');
     }
 
     public function testDeleteCollection()
@@ -172,13 +183,13 @@ final class FlexRepositoryFunctionalTest extends TestCase
         $repo->saveCollection([$preexistent, $model1, $model2]);
 
         $result = $repo->find('test_update_mixed_collection', "id = '{$preexistent->id}'");
-        $this->assertEquals($result[0]['name'], 'Peter');
+        $this->assertEquals($result[0]->name, 'Peter');
 
         $result = $repo->find('test_update_mixed_collection', "id = '{$model1->id}'");
-        $this->assertEquals($result[0]['name'], 'Will');
+        $this->assertEquals($result[0]->name, 'Will');
 
         $result = $repo->find('test_update_mixed_collection', "id = '{$model2->id}'");
-        $this->assertEquals($result[0]['name'], 'Jack');
+        $this->assertEquals($result[0]->name, 'Jack');
     }
 
     /**
@@ -260,5 +271,66 @@ final class FlexRepositoryFunctionalTest extends TestCase
 
         $this->assertEquals($updatedFields[2]['Field'], 'phone');
         $this->assertEquals($updatedFields[2]['Type'], 'varchar(50)');
+    }
+
+    public function testQuery()
+    {
+        $repo = FlexRepository::get();
+
+        $model = $repo->create('test_query');
+        $model->name = 'TestQuery';
+        $repo->save($model);
+
+        $result = $repo->query('SELECT * FROM test_query WHERE name = :name', [':name' => 'TestQuery']);
+
+        $this->assertCount(1, $result);
+        $this->assertEquals('TestQuery', $result[0]->name);
+    }
+
+    public function testHydrate()
+    {
+        $repo = FlexRepository::get();
+        $values = [
+            ['name' => 'John', 'last_name' => 'Doe'],
+            ['name' => 'Jack', 'last_name' => 'Daniels'],
+            ['name' => 'Will', 'last_name' => 'Ferrel'],
+        ];
+
+        $hydrated = $repo->hydrate($values, 'some_table', 'Makiavelo\\Flex\\Flex');
+
+        $this->assertCount(3, $hydrated);
+        $this->assertEquals('Makiavelo\\Flex\\Flex', get_class($hydrated[0]));
+        $this->assertEquals('John Doe', $hydrated[0]->name . ' ' . $hydrated[0]->last_name);
+
+        $this->assertEquals('Makiavelo\\Flex\\Flex', get_class($hydrated[1]));
+        $this->assertEquals('Jack Daniels', $hydrated[1]->name . ' ' . $hydrated[1]->last_name);
+
+        $this->assertEquals('Makiavelo\\Flex\\Flex', get_class($hydrated[2]));
+        $this->assertEquals('Will Ferrel', $hydrated[2]->name . ' ' . $hydrated[2]->last_name);
+    }
+
+    public function testCustomClassHydration()
+    {
+        $repo = FlexRepository::get();
+        $values = [
+            ['name' => 'John', 'last_name' => 'Doe'],
+            ['name' => 'Jack', 'last_name' => 'Daniels'],
+            ['name' => 'Will', 'last_name' => 'Ferrel'],
+        ];
+
+        $hydrated = $repo->hydrate($values, 'modelx', 'Modelx');
+
+        $this->assertCount(3, $hydrated);
+        $this->assertEquals('Modelx', get_class($hydrated[0]));
+        $this->assertEquals('John Doe', $hydrated[0]->name . ' ' . $hydrated[0]->last_name);
+        $this->assertEquals('modelx', $hydrated[0]->getMeta('table'));
+
+        $this->assertEquals('Modelx', get_class($hydrated[1]));
+        $this->assertEquals('Jack Daniels', $hydrated[1]->name . ' ' . $hydrated[1]->last_name);
+        $this->assertEquals('modelx', $hydrated[1]->getMeta('table'));
+
+        $this->assertEquals('Modelx', get_class($hydrated[2]));
+        $this->assertEquals('Will Ferrel', $hydrated[2]->name . ' ' . $hydrated[2]->last_name);
+        $this->assertEquals('modelx', $hydrated[2]->getMeta('table'));
     }
 }

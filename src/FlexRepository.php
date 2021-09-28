@@ -703,10 +703,120 @@ class FlexRepository
      * 
      * @return array|false
      */
-    public function find($table, $condition)
+    public function find($table, $condition = '', $params = [], $options = [])
     {
-        $query = "SELECT * FROM {$table} WHERE {$condition}";
-        $result = $this->db->query($query)->fetchAll();
+        $options = array_merge($this->getDefaultOptions(), $options);
+
+        $query = "SELECT * FROM {$table}";
+        if ($condition) {
+            $query .= " WHERE {$condition}";
+            $stmt = $this->db->prepare($query);
+            $this->bindValues($stmt, $params);
+            $stmt->execute();
+            $result = $stmt->fetchAll();
+        } else {
+            $result = $this->db->query($query)->fetchAll();
+        }
+
+        $result = $this->hydrate($result, $options['class']);
+
+        return $result;
+    }
+
+    /**
+     * Execute any query and get an array or a collection of models
+     * If the query has any parameters, they have to be prepared to avoid injection
+     * so name them in the PDO fashion and send an array of parameters/values.
+     * 
+     * Eg:
+     *   $query = 'SELECT * FROM user WHERE id = :id';
+     *   $params = [':id' => $id];
+     * 
+     * In the $options parameter define if you want hydration, which is enabled by default
+     * to return a collection of Flex models.
+     * 
+     * In the case of Flex models, if the table name option is not defined, then the models can't
+     * be updated later on (unless the table meta is set manually).
+     * 
+     * @param mixed $query
+     * @param mixed $params
+     * @param array $options
+     * 
+     * @return array
+     */
+    public function query($query, $params, $options = [])
+    {
+        $options = array_merge($this->getDefaultOptions(), $options);
+
+        $stmt = $this->db->prepare($query);
+        $this->bindValues($stmt, $params);
+        $stmt->execute();
+        $result = $stmt->fetchAll();
+        if ($options['hydrate']) {
+            $result = $this->hydrate($result, $options['table'], $options['class']);
+        }
+        
+        return $result;
+    }
+
+    /**
+     * Get default options for queries
+     * 
+     * @return array
+     */
+    public function getDefaultOptions()
+    {
+        $options = [
+            'hydrate' => true,
+            'class' => 'Makiavelo\\Flex\\Flex',
+            'table' => ''
+        ];
+
+        return $options;
+    }
+
+    /**
+     * Bind parameters to the PDOStatement
+     * 
+     * @param \PDOStatement $stmt
+     * @param array $params
+     * 
+     * @return void
+     */
+    public function bindValues(\PDOStatement $stmt, $params = [])
+    {
+        if ($params) {
+            foreach ($params as $key => $value) {
+                $stmt->bindValue($key, $value);
+            }
+        }
+    }
+
+    /**
+     * Hydrate a collection.
+     * By default all the results are Hydrated to a collection of Flex
+     * but the class to use can be modified.
+     * 
+     * @param array $result
+     * @param string $class
+     * 
+     * @return [type]
+     */
+    public function hydrate($result, $table, $class = 'Makiavelo\\Flex\\Flex')
+    {
+        if ($result) {
+            $hydrated = [];
+            foreach ($result as $item) {
+                $model = new $class();
+                $model->hydrate($item);
+                if ($class === 'Makiavelo\\Flex\\Flex' && $table) {
+                    $model->addMeta('table', $table);
+                }
+                $hydrated[] = $model;
+            }
+
+            return $hydrated;
+        }
 
         return $result;
     }
