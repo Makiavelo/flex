@@ -190,17 +190,31 @@ class FlexRepository
                             $this->handleRelations($relation['instance'][$key]);
                             $this->save($relation['instance'][$key]);
                             $this->handlePostRelations($relation['instance'][$key]);
-
-                            $relationModel = new Flex();
-                            $relationModel->addMeta('table', $relation['relation_table']);
-                            $relationModel->{$relation['key']} = $model->id;
-                            $relationModel->{$relation['external_key']} = $relation['instance']['key']->id;
-                            $this->save($relationModel);
+                            $this->_saveIntermediateTable($model, $relation, $key);
                         }
                     }
                 }
             }
         }
+    }
+
+    /**
+     * Internal method to save an intermediate table in a HasAndBelongs relationship
+     * 
+     * @param Flex $model original model
+     * @param mixed $relation relation data array
+     * @param mixed $key key in the instances collection to use
+     * 
+     * @return void
+     */
+    public function _saveIntermediateTable(Flex $model, $relation, $key)
+    {
+        $relationModel = new Flex();
+        $relationModel->addMeta('table', $relation['relation_table']);
+        $relationModel->id = null;
+        $relationModel->{$relation['key']} = $model->id;
+        $relationModel->{$relation['external_key']} = $relation['instance'][$key]->id;
+        $this->save($relationModel);
     }
 
     /**

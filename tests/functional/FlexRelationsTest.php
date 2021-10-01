@@ -235,9 +235,6 @@ final class FlexRelationsTest extends TestCase
         
     }
 
-    /**
-     * @group eb1
-     */
     public function testHydrateAlias()
     {
         $repo = FlexRepository::get();
@@ -463,6 +460,31 @@ final class FlexRelationsTest extends TestCase
 
         $user->setTags([$tag1, $tag2]);
 
-        $repo->save($user);
+        $status = $repo->save($user);
+
+        $this->assertTrue($status);
+    }
+
+    /**
+     * @depends testHasAndBelongs
+     * @group eb1
+     */
+    public function testHydrateHasAndBelongs()
+    {
+        $repo = FlexRepository::get();
+
+        $query = "SELECT * FROM userb JOIN userb_tagb ON userb_tagb.user_id = userb.id JOIN tagb ON userb_tagb.tag_id = tagb.id";
+        $result = $repo->query($query, [], ['table' => 'userb', 'class' => 'UserB']);
+
+        $this->assertNotNull($result);
+        $this->assertCount(1, $result);
+        $this->assertInstanceOf('UserB', $result[0]);
+        $this->assertCount(2, $result[0]->getTags());
+        $this->assertInstanceOf('TagB', $result[0]->getTags()[0]);
+        $this->assertInstanceOf('TagB', $result[0]->getTags()[1]);
+
+        // Checking that there aren't circular dependency issues
+        $this->assertNull($result[0]->getTags()[0]->getRelation('Users')['instance']);
+        $this->assertNull($result[0]->getTags()[1]->getRelation('Users')['instance']);
     }
 }

@@ -10,7 +10,9 @@ use Makiavelo\Flex\Util\Common;
  * @todo add aliases to relationships to be able to hydrate when there are 2 of the same kind (Eg: person (lawyer, doctor)) (DONE)
  * @todo self references (DONE)
  * @todo cleanup, make methods shorter, optimize algorithms, beautify (Done partially, no algos changed, just moved to sub methods)
- * @todo Evaluate Many-to-Many
+ * @todo Evaluate Many-to-Many (DONE)
+ * @todo Check for updates/deletes in child collections
+ * @todo Check for HasAndBelongs what happens if it has the same 'tag' twice
  */
 class Flex
 {
@@ -233,10 +235,19 @@ class Flex
                         if ($data) {
                             $this->hydrateHas($relation, $data);
                         }
+                    } elseif ($relation['type'] == 'HasAndBelongs') {
+                        if ($data) {
+                            $this->hydrateHasAndBelongs($relation, $data);
+                        }
                     }
                 }
             }
         }
+    }
+
+    public function hydrateHasAndBelongs($relation, $data)
+    {
+        $this->hydrateHas($relation, $data);
     }
 
     /**
@@ -261,15 +272,17 @@ class Flex
             $model = new $relation['class']();
             $model->hydrate($row);
 
-            if (is_array($relation['instance'])) {
-                $relation['instance'][] = $model;
-            } else {
-                $relation['instance'] = [];
-                $relation['instance'][] = $model;
-            }
+            if (!$model->isEmpty()) {
+                if (is_array($relation['instance'])) {
+                    $relation['instance'][] = $model;
+                } else {
+                    $relation['instance'] = [];
+                    $relation['instance'][] = $model;
+                }
 
-            $relation['loaded'] = true;
-            $this->editRelation($relation['name'], $relation);
+                $relation['loaded'] = true;
+                $this->editRelation($relation['name'], $relation);
+            }
         }
     }
 
@@ -414,8 +427,10 @@ class Flex
     {
         if ($relation['type'] === 'Belongs') {
             $this->_setBelongInstance($relation, $arguments);
-        } else if ($relation['type'] === 'Has') {
-            $this->_setBelongInstance($relation, $arguments);
+        } elseif ($relation['type'] === 'Has') {
+            $this->_setHasInstance($relation, $arguments);
+        } elseif ($relation['type'] === 'HasAndBelongs') {
+            $this->_setHasInstance($relation, $arguments);
         }
     }
 
@@ -433,6 +448,8 @@ class Flex
             return $this->_getBelongRelationInstance($relation);
         } elseif ($relation['type'] === 'Has') {
             return $this->_getHasRelationInstance($relation);
+        } elseif ($relation['type'] === 'HasAndBelongs') {
+            return $this->_getHasAndBelongsRelationInstance($relation);
         } else {
             throw new \Exception("Relation type not supported ('" . $relation['type'] . "')");
         }
@@ -450,7 +467,6 @@ class Flex
     {
         $relation['loaded'] = true;
         $relation['instance'] = $arguments[0];
-        $this->{$relation['name']} = $arguments[0];
         $this->editRelation($relation['name'], $relation);
     }
 
@@ -467,6 +483,33 @@ class Flex
         $relation['loaded'] = true;
         $relation['instance'] = $arguments[0];
         $this->editRelation($relation['name'], $relation);
+    }
+
+    /**
+     * Get or Load the other end of a 'HasAndBelongs' relationship
+     * 
+     * @param mixed $relation
+     * 
+     * @return array
+     */
+    public function _getHasAndBelongsRelationInstance($relation)
+    {
+        if ($relation['loaded']) {
+            return $relation['instance'];
+        } else {
+            $repo = FlexRepository::get();
+            $query = "SELECT {$relation['table']}.* FROM {$relation['table']} JOIN {$relation['relation_table']} ON {$relation['relation_table']}.{$relation['external_key']} = {$relation['table']}.id WHERE {$relation['relation_table']}.{$relation['key']} = :id";
+            $models = $repo->query($query, [], ['table' => $relation['table'], 'class' => $relation['class']]);
+
+            if ($models) {
+                $relation['loaded'] = true;
+                $relation['instance'] = $models;
+                $this->editRelation($relation['name'], $relation);
+                return $relation['instance'];
+            }
+        }
+
+        return $relation['instance'];
     }
 
     /**
