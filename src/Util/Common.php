@@ -138,4 +138,18 @@ class Common
 
         return $return;
     }
+
+    public static function isCollection($var)
+    {
+        $is = false;
+        // Can be associative
+        if (is_array($var)) {
+            if ($var) {
+                // Are all numeric keys?
+                $is = array_keys($var) === range(0, count($var) - 1);
+            }
+        }
+
+        return $is;
+    }
 }

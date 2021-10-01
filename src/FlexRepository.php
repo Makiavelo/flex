@@ -26,7 +26,7 @@ class FlexRepository
      * If this is set to true, no database changes will be performed.
      * @var bool
      */
-    public static $freeze = false;
+    protected static $freeze = false;
 
     private function __construct()
     {
@@ -47,6 +47,27 @@ class FlexRepository
         }
 
         return self::$instance;
+    }
+
+    /**
+     * Freeze the database, models will no longer update the schema.
+     * Recommended for production environments.
+     * 
+     * @return void
+     */
+    public static function freeze()
+    {
+        self::$freeze = true;
+    }
+
+    /**
+     * Check if the database is frozen.
+     * 
+     * @return boolean
+     */
+    public static function frozen()
+    {
+        return self::$freeze;
     }
 
     /**
@@ -79,6 +100,7 @@ class FlexRepository
             \PDO::ATTR_ERRMODE            => \PDO::ERRMODE_EXCEPTION,
             \PDO::ATTR_DEFAULT_FETCH_MODE => \PDO::FETCH_ASSOC,
             \PDO::ATTR_EMULATE_PREPARES   => false,
+            //\PDO::ATTR_FETCH_TABLE_NAMES  => true
         ];
 
         try {
@@ -102,9 +124,11 @@ class FlexRepository
      */
     public function save(Flex $model)
     {
+        if (self::frozen()) $this->db->beginTransaction();
         $this->prepare($model);
         $pre = $model->preSave();
         if ($pre) {
+            $this->handleRelations($model);
             if ($model->isNew()) {
                 $result = $this->insert($model);
             } else {
@@ -112,13 +136,70 @@ class FlexRepository
             }
 
             if ($result) {
+                $this->handlePostRelations($model);
                 $model->postSave();
+                if (self::frozen()) $this->db->commit();
                 return $result;
             } else {
+                if (self::frozen()) $this->db->rollback();
                 return false;
             }
         } else {
+            if (self::frozen()) $this->db->rollback();
             return false;
+        }
+    }
+
+    public function handleRelations(Flex $model)
+    {
+        $relations = $model->getMeta('relations');
+        if ($relations) {
+            foreach ($relations as $relation) {
+                if ($relation['type'] === 'Belongs') {
+                    if ($relation['instance']) {
+                        if (get_class($relation['instance']) === $relation['class']) {
+                            $this->handleRelations($relation['instance']);
+                            $this->save($relation['instance']);
+                            $model->{$relation['key']} = $relation['instance']->id;
+                            $this->handlePostRelations($relation['instance']);
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    public function handlePostRelations(Flex $model)
+    {
+        $relations = $model->getMeta('relations');
+        if ($relations) {
+            foreach ($relations as $relation) {
+                if ($relation['type'] === 'Has') {
+                    if ($relation['instance']) {
+                        foreach ($relation['instance'] as $key => $related) {
+                            $this->handleRelations($relation['instance'][$key]);
+                            $relation['instance'][$key]->{$relation['key']} = $model->id;
+                            $this->save($relation['instance'][$key]);
+                            $this->handlePostRelations($relation['instance'][$key]);
+                        }
+                    }
+                } elseif ($relation['type'] === 'HasAndBelongs') {
+                    if ($relation['instance']) {
+                        foreach ($relation['instance'] as $key => $related) {
+                            // First save both ends, then add the relation record.
+                            $this->handleRelations($relation['instance'][$key]);
+                            $this->save($relation['instance'][$key]);
+                            $this->handlePostRelations($relation['instance'][$key]);
+
+                            $relationModel = new Flex();
+                            $relationModel->addMeta('table', $relation['relation_table']);
+                            $relationModel->{$relation['key']} = $model->id;
+                            $relationModel->{$relation['external_key']} = $relation['instance']['key']->id;
+                            $this->save($relationModel);
+                        }
+                    }
+                }
+            }
         }
     }
 
@@ -477,7 +558,7 @@ class FlexRepository
     }
 
     /**
-     * While not freezed the table will get updated
+     * While not frozen the table will get updated
      * just by saving records to it. 
      * The Flex instance may have a meta definition for fields, which
      * will be applied to the table.
@@ -490,7 +571,7 @@ class FlexRepository
      */
     public function prepare(Flex $model)
     {
-        if (FlexRepository::$freeze === true) {
+        if (self::frozen() === true) {
             return true;
         }
 
@@ -705,6 +786,7 @@ class FlexRepository
      */
     public function find($table, $condition = '', $params = [], $options = [])
     {
+        $this->db->setAttribute(\PDO::ATTR_FETCH_TABLE_NAMES, true);
         $options = array_merge($this->getDefaultOptions(), $options);
 
         $query = "SELECT * FROM {$table}";
@@ -718,9 +800,24 @@ class FlexRepository
             $result = $this->db->query($query)->fetchAll();
         }
 
-        $result = $this->hydrate($result, $options['class']);
+        if ($options['hydrate']) {
+            $result = $this->hydrate($result, $table, $options['class']);
+        }
+
+        $this->db->setAttribute(\PDO::ATTR_FETCH_TABLE_NAMES, false);
 
         return $result;
+    }
+
+    public function findOne($table, $condition = '', $params = [], $options = [])
+    {
+        $condition .= ' LIMIT 1';
+        $result = $this->find($table, $condition, $params, $options);
+        if ($result) {
+            return $result[0];
+        }
+
+        return null;
     }
 
     /**
@@ -744,8 +841,9 @@ class FlexRepository
      * 
      * @return array
      */
-    public function query($query, $params, $options = [])
+    public function query($query, $params = [], $options = [])
     {
+        $this->db->setAttribute(\PDO::ATTR_FETCH_TABLE_NAMES, true);
         $options = array_merge($this->getDefaultOptions(), $options);
 
         $stmt = $this->db->prepare($query);
@@ -755,7 +853,8 @@ class FlexRepository
         if ($options['hydrate']) {
             $result = $this->hydrate($result, $options['table'], $options['class']);
         }
-        
+        $this->db->setAttribute(\PDO::ATTR_FETCH_TABLE_NAMES, false);
+
         return $result;
     }
 
@@ -800,19 +899,46 @@ class FlexRepository
      * @param array $result
      * @param string $class
      * 
-     * @return [type]
+     * @return array
      */
     public function hydrate($result, $table, $class = 'Makiavelo\\Flex\\Flex')
     {
         if ($result) {
+            //$mainId = $result[0][$table . '.id'];
+            $mainId = Common::get($result, '0->' . $table . '.id');
             $hydrated = [];
+            $haystack = [];
+            $tree = [];
             foreach ($result as $item) {
-                $model = new $class();
-                $model->hydrate($item);
-                if ($class === 'Makiavelo\\Flex\\Flex' && $table) {
-                    $model->addMeta('table', $table);
+                //$rowId = $item[$table . '.id'];
+                $rowId = Common::get($item, $table . '.id');
+                if ($rowId && $rowId === $mainId) {
+                    $tree[] = $item;
+                } else {
+                    if (!$rowId) {
+                        $haystack[] = $item;
+                    } else {
+                        $haystack[] = $tree;
+                        $tree = [$item];
+                        $mainId = $rowId;
+                    }
                 }
-                $hydrated[] = $model;
+            }
+
+            if ($tree) {
+                $haystack[] = $tree;
+                $tree = [];
+            }
+
+            if ($haystack) {
+                foreach ($haystack as $block) {
+                    $model = new $class();
+                    if ($class === 'Makiavelo\\Flex\\Flex' && $table) {
+                        $model->addMeta('table', $table);
+                    }
+
+                    $hydrated[] = $model->hydrate($block);
+                }
             }
 
             return $hydrated;

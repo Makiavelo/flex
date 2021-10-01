@@ -6,16 +6,7 @@ use Makiavelo\Flex\Flex;
 use Makiavelo\Flex\FlexRepository;
 use Makiavelo\Flex\Util\EnhancedPDO;
 
-class Modelx extends Flex {
-    public $id;
-    public $name;
-    public $last_name;
-
-    public function __construct()
-    {
-        $this->addMeta('table', 'modelx');
-    }
-}
+require_once(dirname(__FILE__) . '/../util/test_models.php');
 
 final class FlexRepositoryFunctionalTest extends TestCase
 {
@@ -291,9 +282,9 @@ final class FlexRepositoryFunctionalTest extends TestCase
     {
         $repo = FlexRepository::get();
         $values = [
-            ['name' => 'John', 'last_name' => 'Doe'],
-            ['name' => 'Jack', 'last_name' => 'Daniels'],
-            ['name' => 'Will', 'last_name' => 'Ferrel'],
+            ['table.name' => 'John', 'table.last_name' => 'Doe'],
+            ['table.name' => 'Jack', 'table.last_name' => 'Daniels'],
+            ['table.name' => 'Will', 'table.last_name' => 'Ferrel'],
         ];
 
         $hydrated = $repo->hydrate($values, 'some_table', 'Makiavelo\\Flex\\Flex');
@@ -313,9 +304,9 @@ final class FlexRepositoryFunctionalTest extends TestCase
     {
         $repo = FlexRepository::get();
         $values = [
-            ['name' => 'John', 'last_name' => 'Doe'],
-            ['name' => 'Jack', 'last_name' => 'Daniels'],
-            ['name' => 'Will', 'last_name' => 'Ferrel'],
+            ['modelx.name' => 'John', 'modelx.last_name' => 'Doe'],
+            ['modelx.name' => 'Jack', 'modelx.last_name' => 'Daniels'],
+            ['modelx.name' => 'Will', 'modelx.last_name' => 'Ferrel'],
         ];
 
         $hydrated = $repo->hydrate($values, 'modelx', 'Modelx');

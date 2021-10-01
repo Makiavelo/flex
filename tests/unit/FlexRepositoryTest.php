@@ -7,6 +7,8 @@ use Mockery\Adapter\Phpunit\MockeryPHPUnitIntegration;
 use Makiavelo\Flex\Flex;
 use Makiavelo\Flex\FlexRepository;
 
+require_once(dirname(__FILE__) . '/../util/test_models.php');
+
 final class FlexRepositoryTest extends TestCase
 {
     use MockeryPHPUnitIntegration;

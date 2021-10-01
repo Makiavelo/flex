@@ -5,11 +5,9 @@ use PHPUnit\Framework\TestCase;
 use \Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryPHPUnitIntegration;
 use Makiavelo\Flex\Flex;
+use Makiavelo\Flex\FlexRepository;
 
-class Stuff extends Flex {
-    public $id;
-    public $name;
-}
+require_once(dirname(__FILE__) . '/../util/test_models.php');
 
 final class FlexTest extends TestCase
 {
@@ -116,8 +114,8 @@ final class FlexTest extends TestCase
     public function testHydrateCustom()
     {
         $data = [
-            'name' => 'John',
-            'last_name' => 'Doe'
+            'stuff.name' => 'John',
+            'stuff.last_name' => 'Doe'
         ];
 
         $model = new Stuff();
@@ -127,9 +125,23 @@ final class FlexTest extends TestCase
         $this->assertFalse(isset($model->last_name));
     }
 
+    public function testHydrateCustomWithoutTable()
+    {
+        $data = [
+            'name' => 'John',
+            'last_name' => 'Doe'
+        ];
+
+        $model = new OtherStuff();
+        $model->hydrate($data);
+
+        $this->assertEquals($model->getName(), 'John');
+        $this->assertFalse(isset($model->last_name));
+    }
+
     public function testBuild()
     {
-        $data = ['name' => 'John'];
+        $data = ['stuff.name' => 'John'];
         $stuff = Stuff::build($data);
 
         $this->assertEquals(get_class($stuff), 'Stuff');
@@ -139,9 +151,9 @@ final class FlexTest extends TestCase
     public function testBuildCollection()
     {
         $data = [
-            ['name' => 'John'],
-            ['name' => 'Jack'],
-            ['name' => 'Will']
+            ['stuff.name' => 'John'],
+            ['stuff.name' => 'Jack'],
+            ['stuff.name' => 'Will']
         ];
 
         $modelCollection = array_map(['Stuff', 'build'], $data);
@@ -164,5 +176,25 @@ final class FlexTest extends TestCase
         $this->assertEquals('John', $modelCollection[0]->getName());
         $this->assertEquals('Jack', $modelCollection[1]->getName());
         $this->assertEquals('Will', $modelCollection[2]->getName());
+    }
+
+    public function testHydrateRelation()
+    {
+        $result = [
+            'user.id' => 1,
+            'user.company_id' => 1,
+            'user.name' => 'John',
+            'user.last_name' => 'Doe',
+            'company.id' => 1,
+            'company.name' => 'TestCompany'
+        ];
+
+        $user = new User();
+        $user->hydrate($result);
+
+        $this->assertEquals(1, $user->getId());
+        $this->assertEquals(1, $user->getCompanyId());
+        $this->assertEquals('John', $user->getName());
+        $this->assertEquals('Doe', $user->getLastName());
     }
 }
