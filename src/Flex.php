@@ -11,8 +11,8 @@ use Makiavelo\Flex\Util\Common;
  * @todo self references (DONE)
  * @todo cleanup, make methods shorter, optimize algorithms, beautify (Done partially, no algos changed, just moved to sub methods)
  * @todo Evaluate Many-to-Many (DONE)
- * @todo Check for updates/deletes in child collections
- * @todo Check for HasAndBelongs what happens if it has the same 'tag' twice
+ * @todo Check for updates/deletes in child collections (DONE)
+ * @todo Check for HasAndBelongs what happens if it has the same 'tag' twice (DONE)
  */
 class Flex
 {
@@ -499,14 +499,16 @@ class Flex
         } else {
             $repo = FlexRepository::get();
             $query = "SELECT {$relation['table']}.* FROM {$relation['table']} JOIN {$relation['relation_table']} ON {$relation['relation_table']}.{$relation['external_key']} = {$relation['table']}.id WHERE {$relation['relation_table']}.{$relation['key']} = :id";
-            $models = $repo->query($query, [], ['table' => $relation['table'], 'class' => $relation['class']]);
+            $models = $repo->query($query, [':id' => $this->id], ['table' => $relation['table'], 'class' => $relation['class']]);
 
             if ($models) {
-                $relation['loaded'] = true;
                 $relation['instance'] = $models;
-                $this->editRelation($relation['name'], $relation);
-                return $relation['instance'];
+            } else {
+                $relation['instance'] = [];
             }
+
+            $relation['loaded'] = true;
+            $this->editRelation($relation['name'], $relation);
         }
 
         return $relation['instance'];
@@ -533,11 +535,13 @@ class Flex
             ]);
 
             if ($models) {
-                $relation['loaded'] = true;
                 $relation['instance'] = $models;
-                $this->editRelation($relation['name'], $relation);
-                return $relation['instance'];
+            } else {
+                $relation['instance'] = [];
             }
+
+            $relation['loaded'] = true;
+            $this->editRelation($relation['name'], $relation);
         }
 
         return $relation['instance'];
@@ -722,9 +726,12 @@ class Flex
         return [
             'name' => '',
             'key' => '',
+            'external_key' => '',
+            'table' => '',
             'table_alias' => '',
             'class' => 'Makiavelo\\Flex\\Flex',
-            'type' => 'Belongs'
+            'type' => 'Belongs',
+            'remove_orphans' => false
         ];
     }
 

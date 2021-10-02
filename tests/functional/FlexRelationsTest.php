@@ -442,9 +442,6 @@ final class FlexRelationsTest extends TestCase
         $this->assertEquals('3', $result[2]->getUserTags()[2]->getTag()->getId());
     }
 
-    /**
-     * @group eb1
-     */
     public function testHasAndBelongs()
     {
         $repo = FlexRepository::get();
@@ -467,7 +464,6 @@ final class FlexRelationsTest extends TestCase
 
     /**
      * @depends testHasAndBelongs
-     * @group eb1
      */
     public function testHydrateHasAndBelongs()
     {
@@ -486,5 +482,106 @@ final class FlexRelationsTest extends TestCase
         // Checking that there aren't circular dependency issues
         $this->assertNull($result[0]->getTags()[0]->getRelation('Users')['instance']);
         $this->assertNull($result[0]->getTags()[1]->getRelation('Users')['instance']);
+    }
+
+    /**
+     * @depends testHydrateHasAndBelongs
+     */
+    public function testUpdateRelatedCollection()
+    {
+        $repo = FlexRepository::get();
+
+        $query = "SELECT * FROM userb JOIN userb_tagb ON userb_tagb.user_id = userb.id JOIN tagb ON userb_tagb.tag_id = tagb.id";
+        $result = $repo->query($query, [], ['table' => 'userb', 'class' => 'UserB']);
+
+        $user = $result[0];
+
+        $user->getTags()[0]->setName('Edited Tag');
+        $user->setTags([$user->getTags()[0]]);
+        $repo->save($user);
+
+        $query = "SELECT * FROM userb JOIN userb_tagb ON userb_tagb.user_id = userb.id JOIN tagb ON userb_tagb.tag_id = tagb.id";
+        $result = $repo->query($query, [], ['table' => 'userb', 'class' => 'UserB']);
+        $user = $result[0];
+
+        $this->assertCount(1, $user->getTags());
+        $this->assertInstanceOf('TagB', $user->getTags()[0]);
+        $this->assertEquals('Edited Tag', $user->getTags()[0]->getName());
+
+        $user->setTags([]);
+        $repo->save($user);
+
+        $query = "SELECT * FROM userb LEFT JOIN userb_tagb ON userb_tagb.user_id = userb.id LEFT JOIN tagb ON userb_tagb.tag_id = tagb.id";
+        $result = $repo->query($query, [], ['table' => 'userb', 'class' => 'UserB']);
+
+        $user = $result[0];
+        $this->assertCount(0, $user->getTags());
+
+        // Just check nothing got messed up
+        $this->assertIsNumeric($user->getId());
+        $this->assertIsString($user->getName());
+    }
+
+    public function testUpdateHasRelation()
+    {
+        $repo = FlexRepository::get();
+
+        $company = new CompanyB();
+        $company->setName('TestCompanyB');
+        
+        $user1 = new UserC();
+        $user1->setName('John');
+
+        $user2 = new UserC();
+        $user2->setName('Jack');
+
+        $company->setUsers([$user1, $user2]);
+
+        $repo->save($company);
+
+        $query = "SELECT * FROM companyb JOIN userc ON userc.company_id = companyb.id WHERE companyb.id = '{$company->id}'";
+        $result = $repo->query($query, [], ['table' => 'companyb', 'class' => 'CompanyB']);
+
+        $company = $result[0];
+        $this->assertCount(2, $company->getUsers());
+        $company->setUsers([$company->getUsers()[0]]);
+        $repo->save($company);
+
+        $query = "SELECT * FROM companyb JOIN userc ON userc.company_id = companyb.id WHERE companyb.id = '{$company->id}'";
+        $result = $repo->query($query, [], ['table' => 'companyb', 'class' => 'CompanyB']);
+
+        $company = $result[0];
+        $this->assertCount(1, $company->getUsers());
+        $company->setUsers([]);
+        $repo->save($company);
+
+        $query = "SELECT * FROM companyb LEFT JOIN userc ON userc.company_id = companyb.id WHERE companyb.id = '{$company->id}'";
+        $result = $repo->query($query, [], ['table' => 'companyb', 'class' => 'CompanyB']);
+
+        $company = $result[0];
+        $this->assertCount(0, $company->getUsers());
+
+        $this->assertTrue(true);
+    }
+
+    /**
+     * @group eb1
+     */
+    public function testDupedHasAndBelongs()
+    {
+        $repo = FlexRepository::get();
+
+        $user = new UserD();
+        $user->setName('Duper');
+
+        $tag1 = new TagD();
+        $tag1->setName('Duped');
+
+        $user->setTags([$tag1, $tag1]);
+
+        $this->expectException(\Exception::class);
+        $status = $repo->save($user);
+
+        $this->assertFalse($status);
     }
 }
