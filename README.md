@@ -7,6 +7,7 @@ The main approach is to have flexible models without worrying about database sch
   * [Requirements](#requirements)
   * [Install with composer](#install-with-composer)
   * [Install with single file](#install-with-single-file)
+  * [Quick tour](#quick-tour)
   * [Examples](#examples)
     + [Connecting to the database](#connecting-to-the-database)
     + [Creating models](#creating-models)
@@ -708,7 +709,7 @@ for production environments. The idea is to grab the rough version created by 'F
 To prevent the models from updating the database, a static method should be called:
 
 ```php
-FlexRepository::$freeze = true;
+FlexRepository::freeze();
 ```
 
 So in a real world example it will look like this:
@@ -716,7 +717,7 @@ So in a real world example it will look like this:
 ```php
 include('../vendor/autoload.php');
 
-FlexRepository::$freeze = true;
+FlexRepository::freeze();
 $repo = FlexRepository::get();
 $status = $repo->connect(
     '172.17.0.1',
