@@ -8,7 +8,8 @@ class Stuff extends Flex {
 
     public function __construct()
     {
-        $this->addMeta('table', 'stuff');
+        parent::__construct();
+        $this->meta()->add('table', 'stuff');
     }
 }
 
@@ -23,8 +24,9 @@ class Company extends Flex {
 
     public function __construct()
     {
-        $this->addMeta('table', 'company');
-        $this->addRelation([
+        parent::__construct();
+        $this->meta()->add('table', 'company');
+        $this->relations()->add([
             'name' => 'Users',
             'table' => 'user',
             'class' => 'User',
@@ -42,8 +44,9 @@ class User extends Flex {
 
     public function __construct()
     {
-        $this->addMeta('table', 'user');
-        $this->addRelation([
+        parent::__construct();
+        $this->meta()->add('table', 'user');
+        $this->relations()->add([
             'name' => 'Company',
             'table' => 'company',
             'class' => 'Company',
@@ -65,7 +68,8 @@ class Modelx extends Flex {
 
     public function __construct()
     {
-        $this->addMeta('table', 'modelx');
+        parent::__construct();
+        $this->meta()->add('table', 'modelx');
     }
 }
 
@@ -77,8 +81,9 @@ class CompanyX extends Flex {
 
     public function __construct()
     {
-        $this->addMeta('table', 'companyx');
-        $this->addRelation([
+        parent::__construct();
+        $this->meta()->add('table', 'companyx');
+        $this->relations()->add([
             'name' => 'Owner',
             'table' => 'userx',
             'table_alias' => 'owner',
@@ -87,7 +92,7 @@ class CompanyX extends Flex {
             'type' => 'Belongs',
         ]);
 
-        $this->addRelation([
+        $this->relations()->add([
             'name' => 'Manager',
             'table' => 'userx',
             'table_alias' => 'manager',
@@ -105,7 +110,8 @@ class UserX extends Flex {
 
     public function __construct()
     {
-        $this->addMeta('table', 'userx');
+        parent::__construct();
+        $this->meta()->add('table', 'userx');
     }
 }
 
@@ -117,8 +123,9 @@ class UserY extends Flex {
 
     public function __construct()
     {
-        $this->addMeta('table', 'usery');
-        $this->addRelation([
+        parent::__construct();
+        $this->meta()->add('table', 'usery');
+        $this->relations()->add([
             'name' => 'Parent',
             'table' => 'usery',
             'table_alias' => 'parent',
@@ -135,8 +142,9 @@ class UserA extends Flex {
 
     public function __construct()
     {
-        $this->addMeta('table', 'usera');
-        $this->addRelation([
+        parent::__construct();
+        $this->meta()->add('table', 'usera');
+        $this->relations()->add([
             'name' => 'UserTags',
             'table' => 'usera_tag',
             'table_alias' => '',
@@ -153,8 +161,9 @@ class Tag extends Flex {
 
     public function __construct()
     {
-        $this->addMeta('table', 'tag');
-        $this->addRelation([
+        parent::__construct();
+        $this->meta()->add('table', 'tag');
+        $this->relations()->add([
             'name' => 'UserTags',
             'table' => 'usera_tag',
             'table_alias' => '',
@@ -172,8 +181,9 @@ class UserTag extends Flex {
 
     public function __construct()
     {
-        $this->addMeta('table', 'usera_tag');
-        $this->addRelation([
+        parent::__construct();
+        $this->meta()->add('table', 'usera_tag');
+        $this->relations()->add([
             'name' => 'User',
             'table' => 'usera',
             'table_alias' => '',
@@ -182,7 +192,7 @@ class UserTag extends Flex {
             'type' => 'Belongs',
         ]);
 
-        $this->addRelation([
+        $this->relations()->add([
             'name' => 'Tag',
             'table' => 'tag',
             'table_alias' => '',
@@ -200,8 +210,9 @@ class UserB extends Flex
 
     public function __construct()
     {
-        $this->addMeta('table', 'userb');
-        $this->addRelation([
+        parent::__construct();
+        $this->meta()->add('table', 'userb');
+        $this->relations()->add([
             'name' => 'Tags',
             'table' => 'tagb',
             'relation_table' => 'userb_tagb',
@@ -221,8 +232,9 @@ class TagB extends Flex
 
     public function __construct()
     {
-        $this->addMeta('table', 'tagb');
-        $this->addRelation([
+        parent::__construct();
+        $this->meta()->add('table', 'tagb');
+        $this->relations()->add([
             'name' => 'Users',
             'table' => 'userb',
             'relation_table' => 'userb_tagb',
@@ -242,8 +254,9 @@ Class CompanyB extends Flex
 
     public function __construct()
     {
-        $this->addMeta('table', 'companyb');
-        $this->addRelation([
+        parent::__construct();
+        $this->meta()->add('table', 'companyb');
+        $this->relations()->add([
             'name' => 'Users',
             'table' => 'userc',
             'class' => 'UserC',
@@ -261,8 +274,9 @@ Class UserC extends Flex
     
     public function __construct()
     {
-        $this->addMeta('table', 'userc');
-        $this->addRelation([
+        parent::__construct();
+        $this->meta()->add('table', 'userc');
+        $this->relations()->add([
             'name' => 'Company',
             'table' => 'companyb',
             'class' => 'CompanyB',
@@ -279,8 +293,9 @@ class UserD extends Flex
 
     public function __construct()
     {
-        $this->addMeta('table', 'userd');
-        $this->addRelation([
+        parent::__construct();
+        $this->meta()->add('table', 'userd');
+        $this->relations()->add([
             'name' => 'Tags',
             'table' => 'tagd',
             'relation_table' => 'userb_tagd',
@@ -300,8 +315,9 @@ class TagD extends Flex
 
     public function __construct()
     {
-        $this->addMeta('table', 'tagd');
-        $this->addRelation([
+        parent::__construct();
+        $this->meta()->add('table', 'tagd');
+        $this->relations()->add([
             'name' => 'Users',
             'table' => 'userd',
             'relation_table' => 'userd_tagd',

@@ -97,6 +97,9 @@ final class FlexRelationsTest extends TestCase
         $this->assertEquals($company->getId(), $company->getUsers()[1]->company_id);
     }
 
+    /**
+     * @group ebx
+     */
     public function testHydrateRelations()
     {
         $repo = FlexRepository::get();
@@ -480,8 +483,8 @@ final class FlexRelationsTest extends TestCase
         $this->assertInstanceOf('TagB', $result[0]->getTags()[1]);
 
         // Checking that there aren't circular dependency issues
-        $this->assertNull($result[0]->getTags()[0]->getRelation('Users')['instance']);
-        $this->assertNull($result[0]->getTags()[1]->getRelation('Users')['instance']);
+        $this->assertNull($result[0]->getTags()[0]->relations()->get('Users')->instance);
+        $this->assertNull($result[0]->getTags()[1]->relations()->get('Users')->instance);
     }
 
     /**
@@ -580,8 +583,6 @@ final class FlexRelationsTest extends TestCase
         $user->setTags([$tag1, $tag1]);
 
         $this->expectException(\Exception::class);
-        $status = $repo->save($user);
-
-        $this->assertFalse($status);
+        $repo->save($user);
     }
 }

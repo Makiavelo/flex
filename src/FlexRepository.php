@@ -100,7 +100,6 @@ class FlexRepository
             \PDO::ATTR_ERRMODE            => \PDO::ERRMODE_EXCEPTION,
             \PDO::ATTR_DEFAULT_FETCH_MODE => \PDO::FETCH_ASSOC,
             \PDO::ATTR_EMULATE_PREPARES   => false,
-            //\PDO::ATTR_FETCH_TABLE_NAMES  => true
         ];
 
         try {
@@ -124,7 +123,7 @@ class FlexRepository
      */
     public function save(Flex $model)
     {
-        if (self::frozen()) $this->db->beginTransaction();
+        $this->beginTransaction();
         $this->prepare($model);
         $pre = $model->preSave();
         if ($pre) {
@@ -138,16 +137,46 @@ class FlexRepository
             if ($result) {
                 $this->handlePostRelations($model);
                 $model->postSave();
-                if (self::frozen()) $this->db->commit();
+                $this->commit();
                 return $result;
             } else {
-                if (self::frozen()) $this->db->rollback();
+                $this->rollback();
                 return false;
             }
         } else {
-            if (self::frozen()) $this->db->rollback();
+            $this->rollback();
             return false;
         }
+    }
+
+    /**
+     * If not frozen, start transaction
+     * 
+     * @return void
+     */
+    public function beginTransaction()
+    {
+        if (self::frozen()) $this->db->beginTransaction();
+    }
+
+    /**
+     * If not frozen, commit transaction
+     * 
+     * @return void
+     */
+    public function commit()
+    {
+        if (self::frozen()) $this->db->commit();
+    }
+
+    /**
+     * If not frozen, rollback transaction
+     * 
+     * @return void
+     */
+    public function rollback()
+    {
+        if (self::frozen()) $this->db->rollback();
     }
 
     /**
@@ -159,17 +188,15 @@ class FlexRepository
      */
     public function handleRelations(Flex $model)
     {
-        $relations = $model->getMeta('relations');
+        $relations = $model->relations()->get();
         if ($relations) {
             foreach ($relations as $relation) {
-                if ($relation['type'] === 'Belongs') {
-                    if ($relation['instance']) {
-                        if (get_class($relation['instance']) === $relation['class']) {
-                            $this->handleRelations($relation['instance']);
-                            $this->save($relation['instance']);
-                            $model->{$relation['key']} = $relation['instance']->id;
-                            $this->handlePostRelations($relation['instance']);
-                        }
+                if ($relation->type === 'Belongs') {
+                    if ($relation->instance) {
+                        $this->handleRelations($relation->instance);
+                        $this->save($relation->instance);
+                        $model->{$relation->key} = $relation->instance->id;
+                        $this->handlePostRelations($relation->instance);
                     }
                 }
             }
@@ -185,69 +212,104 @@ class FlexRepository
      */
     public function handlePostRelations(Flex $model)
     {
-        $relations = $model->getMeta('relations');
+        $relations = $model->relations()->get();
         if ($relations) {
             foreach ($relations as $relation) {
-                if ($relation['type'] === 'Has') {
-                    if (is_array($relation['instance']) && empty($relation['instance'])) {
-                        if ($relation['remove_orphans']) {
-                            $this->removeUnusedChilds($model, $relation);
-                        } else {
-                            $this->nullifyUnusedChilds($model, $relation);
-                        }
-                    } elseif ($relation['instance']) {
-                        foreach ($relation['instance'] as $key => $related) {
-                            $this->handleRelations($relation['instance'][$key]);
-                            $relation['instance'][$key]->{$relation['key']} = $model->id;
-                            $this->save($relation['instance'][$key]);
-                            $this->handlePostRelations($relation['instance'][$key]);
-                        }
-
-                        if ($relation['remove_orphans']) {
-                            $this->removeUnusedChilds($model, $relation);
-                        } else {
-                            $this->nullifyUnusedChilds($model, $relation);
-                        }
-                    }
-                } elseif ($relation['type'] === 'HasAndBelongs') {
-                    if (is_array($relation['instance']) && empty($relation['instance'])) {
-                        // IF the relation is an empty array then we should clear it
-                        // when the relation is null it means the relation wasn't loaded.
-                        $this->_clearIntermediateTable($model, $relation);
-                    } elseif ($relation['instance']) {
-                        // Clear intermediate table records, they will be recreated
-                        // with the current colleciton data.
-                        $this->_clearIntermediateTable($model, $relation);
-                        foreach ($relation['instance'] as $key => $related) {
-                            // First save both ends, then add the relation record.
-                            $this->handleRelations($relation['instance'][$key]);
-                            $this->save($relation['instance'][$key]);
-                            $this->handlePostRelations($relation['instance'][$key]);
-                            $this->_saveIntermediateTable($model, $relation, $key);
-                        }
-
-                        if ($relation['remove_orphans']) {
-                            //@todo check if this is necessary, it may be costly to
-                            // check here for orphans...
-                        }
-                    }
+                if ($relation->type === 'Has') {
+                    $this->handleHasRelation($relation, $model);
+                } elseif ($relation->type === 'HasAndBelongs') {
+                    $this->handleHasAndBelongsRelation($relation, $model);
                 }
             }
         }
     }
 
-    public function _clearIntermediateTable(Flex $model, $relation)
+    /**
+     * Handle a 'HasAndBelongs' relation after the parent model was saved
+     * 
+     * @param Relation $relation
+     * @param Flex $model
+     * 
+     * @return void
+     */
+    public function handleHasAndBelongsRelation(Relation $relation, Flex $model)
     {
-        if ($relation['type'] === 'HasAndBelongs') {
+        if ($relation->isEmptyCollection()) {
+            // IF the relation is an empty array then we should clear it
+            // when the relation is null it means the relation wasn't loaded.
+            $this->_clearIntermediateTable($model, $relation);
+        } elseif ($relation->instance) {
+            // Clear intermediate table records, they will be recreated
+            // with the current colleciton data.
+            $this->_clearIntermediateTable($model, $relation);
+            foreach ($relation->instance as $key => $related) {
+                // First save both ends, then add the relation record.
+                $this->handleRelations($relation->instance[$key]);
+                $this->save($relation->instance[$key]);
+                $this->handlePostRelations($relation->instance[$key]);
+                $this->_saveIntermediateTable($model, $relation, $key);
+            }
+
+            if ($relation->removeOrphans) {
+                //@todo check if this is necessary, it may be costly to
+                // check here for orphans...
+            }
+        }
+    }
+
+    /**
+     * Handle a 'Has' relation after the parent model was saved
+     * 
+     * @param Relation $relation
+     * @param Flex $model
+     * 
+     * @return void
+     */
+    public function handleHasRelation(Relation $relation, Flex $model)
+    {
+        if ($relation->isEmptyCollection()) {
+            if ($relation->removeOrphans) {
+                $this->removeUnusedChilds($model, $relation);
+            } else {
+                $this->nullifyUnusedChilds($model, $relation);
+            }
+        } elseif ($relation->instance) {
+            foreach ($relation->instance as $key => $related) {
+                $this->handleRelations($relation->instance[$key]);
+                $relation->instance[$key]->{$relation->key} = $model->id;
+                $this->save($relation->instance[$key]);
+                $this->handlePostRelations($relation->instance[$key]);
+            }
+
+            if ($relation->removeOrphans) {
+                $this->removeUnusedChilds($model, $relation);
+            } else {
+                $this->nullifyUnusedChilds($model, $relation);
+            }
+        }
+    }
+
+    /**
+     * Internal method to clear an intermediate table in a 'HasAndBelongs'
+     * relation after updates.
+     * 
+     * @param Flex $model
+     * @param Relation $relation
+     * 
+     * @return boolean
+     */
+    public function _clearIntermediateTable(Flex $model, Relation $relation)
+    {
+        if ($relation->type === 'HasAndBelongs') {
             if (self::frozen()) {
                 // If the db is frozen we asume the table exists.
                 $tableExists = true;
             } else {
-                $tableExists = $this->tableExists($relation['relation_table']);
+                $tableExists = $this->tableExists($relation->relationTable);
             }
 
             if ($tableExists) {
-                $query = "DELETE FROM {$relation['relation_table']} WHERE {$relation['key']} = :parent_id";
+                $query = "DELETE FROM {$relation->relationTable} WHERE {$relation->key} = :parent_id";
                 $stmt = $this->db->prepare($query);
                 $this->bindValues($stmt, [':parent_id' => $model->id]);
                 $result = $stmt->execute();
@@ -259,11 +321,19 @@ class FlexRepository
         return false;
     }
 
-    public function removeUnusedChilds(Flex $model, $relation)
+    /**
+     * Delete orphaned records from a 'Has' relation after an update
+     * 
+     * @param Flex $model
+     * @param Relation $relation
+     * 
+     * @return boolean
+     */
+    public function removeUnusedChilds(Flex $model,Relation $relation)
     {
         $usedIds = array_map(function($obj) { return $obj->id; }, $relation['instance']);
-        if ($relation['type'] === 'Has') {
-            $query = "DELETE FROM {$relation['table']} WHERE {$relation['key']} = :parent_id AND {$relation['table']}.id NOT IN (" . implode($usedIds) . ")";
+        if ($relation->type === 'Has') {
+            $query = "DELETE FROM {$relation->table} WHERE {$relation->key} = :parent_id AND {$relation->table}.id NOT IN (" . implode($usedIds) . ")";
             $stmt = $this->db->prepare($query);
             $this->bindValues($stmt, [':parent_id' => $model->id]);
             $result = $stmt->execute();
@@ -272,13 +342,23 @@ class FlexRepository
         return $result;
     }
 
-    public function nullifyUnusedChilds(Flex $model, $relation)
+    /**
+     * Set to null references to the main model in a 'Has' relation after updates.
+     * 
+     * @param Flex $model
+     * @param Relation $relation
+     * 
+     * @return boolean
+     */
+    public function nullifyUnusedChilds(Flex $model, Relation $relation)
     {
-        $usedIds = array_map(function($obj) { return $obj->id; }, $relation['instance']);
-        if ($relation['type'] === 'Has') {
-            $query = "UPDATE {$relation['table']} SET {$relation['key']} = NULL WHERE {$relation['key']} = :parent_id";
+        // Extract ids from the objects collection
+        $usedIds = array_map(function($obj) { return $obj->id; }, $relation->instance);
+
+        if ($relation->type === 'Has') {
+            $query = "UPDATE {$relation->table} SET {$relation->key} = NULL WHERE {$relation->key} = :parent_id";
             if ($usedIds) {
-                $query .= " AND {$relation['table']}.id NOT IN (" . implode(',', $usedIds) . ")";
+                $query .= " AND {$relation->table}.id NOT IN (" . implode(',', $usedIds) . ")";
             }
             
             $stmt = $this->db->prepare($query);
@@ -301,16 +381,16 @@ class FlexRepository
     public function _saveIntermediateTable(Flex $model, $relation, $key)
     {
         $relationModel = new Flex();
-        $relationModel->addMeta('table', $relation['relation_table']);
-        $relationModel->addMeta('table_type', 'intermediate');
-        $relationModel->addMeta('unique_pair', $relation['key'] . ',' . $relation['external_key']);
-        $relationModel->addMeta('fields', [
-            $relation['key'] => ['type' => 'INT', 'nullable' => true],
-            $relation['external_key'] => ['type' => 'INT', 'nullable' => true],
+        $relationModel->meta()->add('table', $relation->relationTable);
+        $relationModel->meta()->add('table_type', 'intermediate');
+        $relationModel->meta()->add('unique_pair', $relation->key . ',' . $relation->externalKey);
+        $relationModel->meta()->add('fields', [
+            $relation->key => ['type' => 'INT', 'nullable' => true],
+            $relation->externalKey => ['type' => 'INT', 'nullable' => true],
         ]);
         $relationModel->id = null;
-        $relationModel->{$relation['key']} = $model->id;
-        $relationModel->{$relation['external_key']} = $relation['instance'][$key]->id;
+        $relationModel->{$relation->key} = $model->id;
+        $relationModel->{$relation->externalKey} = $relation->instance[$key]->id;
         $this->save($relationModel);
     }
 
@@ -325,7 +405,7 @@ class FlexRepository
      */
     public function update(Flex $model)
     {
-        $table = $model->getMeta('table');
+        $table = $model->meta()->get('table');
         $data = $this->getFieldsAndValues($model);
         $updates = [];
 
@@ -352,7 +432,7 @@ class FlexRepository
      */
     public function insert(Flex $model)
     {
-        $table = $model->getMeta('table');
+        $table = $model->meta()->get('table');
         $data = $this->getFieldsAndValues($model);
         $count = count($data['fields']);
         $placeHolders = array_fill(0, $count, '?');
@@ -383,7 +463,7 @@ class FlexRepository
         $pre = $model->preDelete();
 
         if ($pre) {
-            $table = $model->getMeta('table');
+            $table = $model->meta()->get('table');
             $query = "DELETE FROM {$table} WHERE id = ?";
             $stmt = $this->db->prepare($query);
             $result = $stmt->execute([$model->id]);
@@ -417,7 +497,7 @@ class FlexRepository
         $status = false;
         if ($collection) {
             $this->prepare($collection[0]);
-            $this->db->beginTransaction();
+            $this->beginTransaction();
             $operations = $this->getOperations($collection);
             $status = $this->performInserts($operations['inserts']);
             if ($status) {
@@ -425,9 +505,9 @@ class FlexRepository
             }
 
             if (!$status) {
-                $this->db->rollback();
+                $this->rollback();
             } else {
-                $this->db->commit();
+                $this->commit();
             }
             
         }
@@ -548,15 +628,15 @@ class FlexRepository
     public function updateCollection($updates)
     {
         if ($updates) {
-            $this->db->beginTransaction();
+            $this->beginTransaction();
             foreach($updates as $model) {
                 $status = $this->save($model);
                 if (!$status) {
-                    $this->db->rollback();
+                    $this->rollback();
                     return false;
                 }
             }
-            $this->db->commit();
+            $this->commit();
         }
 
         return true;
@@ -573,7 +653,7 @@ class FlexRepository
      */
     public function insertCollection($inserts) {
         $model = $inserts[0];
-        $table = $model->getMeta('table');
+        $table = $model->meta()->get('table');
         $data = $this->getFieldsAndValues($model);
         $count = count($data['fields']);
 
@@ -588,7 +668,7 @@ class FlexRepository
             }
         }
 
-        $this->db->beginTransaction();
+        $this->beginTransaction();
         $query = "INSERT INTO {$table} (" . implode(',', $data['fields']) . ") VALUES " . implode(',', $insertStrings);
         $stmt = $this->db->prepare($query);
         $result = $stmt->execute($values);
@@ -598,7 +678,7 @@ class FlexRepository
             $inserts[$i]->setId($lastId + $i);
         }
 
-        $this->db->commit();
+        $this->commit();
 
         return $result;
     }
@@ -637,7 +717,7 @@ class FlexRepository
     {
         if ($collection) {
             $model = $collection[0];
-            $table = $model->getMeta('table');
+            $table = $model->meta()->get('table');
             $count = count($collection);
             $placeHolders = array_fill(0, $count, '?');
 
@@ -686,7 +766,7 @@ class FlexRepository
             return true;
         }
 
-        $table = $model->getMeta('table');
+        $table = $model->meta()->get('table');
         $tableExists = $this->tableExists($table);
 
         if (!$tableExists) {
@@ -706,7 +786,7 @@ class FlexRepository
         // It was actually created, but this var was false if 
         // it didn't exist in the begining of the script.
         if (!$tableExists) {
-            $type = $model->getMeta('table_type');
+            $type = $model->meta()->get('table_type');
             if ($type === 'intermediate') {
                 $this->addUniqueCombinedIndex($model);
             }
@@ -717,7 +797,7 @@ class FlexRepository
 
     public function addUniqueCombinedIndex($model)
     {
-        $query = "ALTER TABLE `{$model->getMeta('table')}` ADD CONSTRAINT flex_unique_pair_constraint UNIQUE KEY({$model->getMeta('unique_pair')})";
+        $query = "ALTER TABLE `{$model->meta()->get('table')}` ADD CONSTRAINT flex_unique_pair_constraint UNIQUE KEY({$model->meta()->get('unique_pair')})";
         $result = $this->db->query($query);
 
         return $result;
@@ -733,9 +813,9 @@ class FlexRepository
      */
     public function updateTableTypes(Flex $model, $tableFields)
     {
-        $table = $model->getMeta('table');
+        $table = $model->meta()->get('table');
         $baseQuery = "ALTER TABLE `{$table}` MODIFY COLUMN ";
-        $modelFields = $model->getMeta('fields');
+        $modelFields = $model->meta()->get('fields');
         if ($modelFields) {
             foreach ($modelFields as $name => $modelData) {
                 foreach ($tableFields as $tableField) {
@@ -793,7 +873,7 @@ class FlexRepository
      */
     public function addModelFields(Flex $model, $tableFields, $fields = [])
     {
-        $modelFields = $model->getMeta('fields');
+        $modelFields = $model->meta()->get('fields');
         if ($modelFields) {
             foreach ($modelFields as $name => $modelData) {
                 $found = Common::find($tableFields, 'Field', $name);
@@ -896,7 +976,7 @@ class FlexRepository
     public function create($table)
     {
         $flex = new Flex();
-        $flex->addMeta('table', $table);
+        $flex->meta()->add('table', $table);
         $flex->id = null;
 
         return $flex;
@@ -905,10 +985,11 @@ class FlexRepository
     /**
      * Helper method to do quick finds
      * For complex queries use PDO directly.
-     * Hydration has to be done manually if needed.
      * 
-     * @param mixed $table
-     * @param mixed $condition
+     * @param string $table
+     * @param string $condition
+     * @param array $params
+     * @param array $options
      * 
      * @return array|false
      */
@@ -937,6 +1018,17 @@ class FlexRepository
         return $result;
     }
 
+    /**
+     * Alias for 'find' which just returns the first result and
+     * limits the query to one result.
+     * 
+     * @param mixed $table
+     * @param string $condition
+     * @param array $params
+     * @param array $options
+     * 
+     * @return mixed
+     */
     public function findOne($table, $condition = '', $params = [], $options = [])
     {
         $condition .= ' LIMIT 1';
@@ -1032,37 +1124,18 @@ class FlexRepository
     public function hydrate($result, $table, $class = 'Makiavelo\\Flex\\Flex')
     {
         if ($result) {
-            //$mainId = $result[0][$table . '.id'];
             $mainId = Common::get($result, '0->' . $table . '.id');
             $hydrated = [];
-            $haystack = [];
-            $tree = [];
-            foreach ($result as $item) {
-                //$rowId = $item[$table . '.id'];
-                $rowId = Common::get($item, $table . '.id');
-                if ($rowId && $rowId === $mainId) {
-                    $tree[] = $item;
-                } else {
-                    if (!$rowId) {
-                        $haystack[] = $item;
-                    } else {
-                        $haystack[] = $tree;
-                        $tree = [$item];
-                        $mainId = $rowId;
-                    }
-                }
-            }
 
-            if ($tree) {
-                $haystack[] = $tree;
-                $tree = [];
-            }
+            // Build an array of arrays grouping by id
+            // Each group will be hydrated as one object of the selected class
+            $haystack = $this->buildHaystack($result, $table, $mainId);
 
             if ($haystack) {
                 foreach ($haystack as $block) {
                     $model = new $class();
                     if ($class === 'Makiavelo\\Flex\\Flex' && $table) {
-                        $model->addMeta('table', $table);
+                        $model->meta()->add('table', $table);
                     }
 
                     $hydrated[] = $model->hydrate($block);
@@ -1073,5 +1146,43 @@ class FlexRepository
         }
 
         return $result;
+    }
+
+    /**
+     * Get a full result from the database, and group them by the
+     * selected id.
+     * 
+     * @param array $result
+     * @param string $table
+     * @param mixed $id
+     * 
+     * @return array
+     */
+    public function buildHaystack($result, $table, $id)
+    {
+        $haystack = [];
+        $tree = [];
+
+        foreach ($result as $item) {
+            $rowId = Common::get($item, $table . '.id');
+            if ($rowId && $rowId === $id) {
+                $tree[] = $item;
+            } else {
+                if (!$rowId) {
+                    $haystack[] = $item;
+                } else {
+                    $haystack[] = $tree;
+                    $tree = [$item];
+                    $id = $rowId;
+                }
+            }
+        }
+
+        if ($tree) {
+            $haystack[] = $tree;
+            $tree = [];
+        }
+
+        return $haystack;
     }
 }

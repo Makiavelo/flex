@@ -68,7 +68,7 @@ final class FlexTest extends TestCase
         $model->id = '123';
         $model->name = 'tester';
         $model->age = 50;
-        $model->addMeta('table', 'user');
+        $model->meta()->add('table', 'user');
 
         $attrs = $model->getAttributes();
         $this->assertEquals(count($attrs), 2);
@@ -80,10 +80,10 @@ final class FlexTest extends TestCase
     public function testGetMeta()
     {
         $model = new Flex();
-        $model->addMeta('table', 'test_table');
+        $model->meta()->add('table', 'test_table');
 
-        $meta = $model->_meta();
-        $this->assertEquals($meta['table'], 'test_table');
+        $meta = $model->meta();
+        $this->assertEquals($meta->get('table'), 'test_table');
     }
 
     public function testIsInternal()

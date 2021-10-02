@@ -114,7 +114,7 @@ final class FlexRepositoryTest extends TestCase
         $repo = FlexRepository::get();
         $model = $repo->create('user');
 
-        $this->assertEquals($model->getMeta('table'), 'user');
+        $this->assertEquals($model->meta()->get('table'), 'user');
         $this->assertEquals(get_class($model), 'Makiavelo\\Flex\\Flex');
     }
 
@@ -123,7 +123,7 @@ final class FlexRepositoryTest extends TestCase
         $repo = FlexRepository::get();
         $model = $repo->create('user');
 
-        $model->addMeta('fields', [
+        $model->meta()->add('fields', [
             'name' => ['type' => 'VARCHAR(150)', 'nullable' => true],
             'description' => ['type' => 'TEXT', 'nullable' => true],
         ]);

@@ -247,7 +247,7 @@ final class FlexRepositoryFunctionalTest extends TestCase
 
         $repo->save($model);
 
-        $model->addMeta('fields', [
+        $model->meta()->add('fields', [
             'name' => ['type' => 'VARCHAR(150)', 'nullable' => true],
             'phone' => ['type' => 'VARCHAR(50)', 'nullable' => true],
         ]);
@@ -314,14 +314,14 @@ final class FlexRepositoryFunctionalTest extends TestCase
         $this->assertCount(3, $hydrated);
         $this->assertEquals('Modelx', get_class($hydrated[0]));
         $this->assertEquals('John Doe', $hydrated[0]->name . ' ' . $hydrated[0]->last_name);
-        $this->assertEquals('modelx', $hydrated[0]->getMeta('table'));
+        $this->assertEquals('modelx', $hydrated[0]->meta()->get('table'));
 
         $this->assertEquals('Modelx', get_class($hydrated[1]));
         $this->assertEquals('Jack Daniels', $hydrated[1]->name . ' ' . $hydrated[1]->last_name);
-        $this->assertEquals('modelx', $hydrated[1]->getMeta('table'));
+        $this->assertEquals('modelx', $hydrated[1]->meta()->get('table'));
 
         $this->assertEquals('Modelx', get_class($hydrated[2]));
         $this->assertEquals('Will Ferrel', $hydrated[2]->name . ' ' . $hydrated[2]->last_name);
-        $this->assertEquals('modelx', $hydrated[2]->getMeta('table'));
+        $this->assertEquals('modelx', $hydrated[2]->meta()->get('table'));
     }
 }

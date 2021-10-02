@@ -2,7 +2,9 @@
 
 namespace Makiavelo\Flex;
 
+use Makiavelo\Flex\RelationManager;
 use Makiavelo\Flex\Util\Common;
+use Makiavelo\Flex\Meta;
 
 /**
  * Flexible models
@@ -13,6 +15,8 @@ use Makiavelo\Flex\Util\Common;
  * @todo Evaluate Many-to-Many (DONE)
  * @todo Check for updates/deletes in child collections (DONE)
  * @todo Check for HasAndBelongs what happens if it has the same 'tag' twice (DONE)
+ * @todo Move relations logic to specific clases (DONE)
+ * @todo move meta logic to other class (DONE)
  */
 class Flex
 {
@@ -21,10 +25,12 @@ class Flex
      * @var array
      */
     public $_meta;
+    public $_relations;
 
     public function __construct()
     {
-
+        $this->_meta = new Meta();
+        $this->_relations = new RelationManager();
     }
 
     /**
@@ -53,6 +59,10 @@ class Flex
      * which starts the recursion loop to hydrate everything
      * available, including child objects.
      * 
+     * Internally, $data can be a collection, this happens when
+     * querying a 'Has' or 'HasAndBelongs' relation, which returns
+     * a row for each relation match.
+     * 
      * @param mixed $data The array/object to hydrate
      * @param string $alias Alias used
      * 
@@ -60,33 +70,48 @@ class Flex
      */
     public function hydrate($data, $alias = '')
     {
-        if (!is_array($data)) {
-            // Convert to associative array
-            $data = json_decode(json_encode($data), true);
-        }
+        // Turn to array in case it's object
+        $data = $this->toArray($data);
         
         // Get the first result if it's a collection, or
         // just de values if it's an associative.
-        $dataIsCollection = Common::isCollection($data);
-        $mainData = $dataIsCollection ? $data[0] : $data;
+        $currentData = Common::isCollection($data) ? $data[0] : $data;
 
         if (get_class($this) === 'Makiavelo\\Flex\\Flex') {
-            $this->hydrateFlex($mainData);
+            $this->hydrateFlex($currentData);
         } else {
-            $hydrated = $this->hydrateCustomClass($mainData, $alias);
+            $hydrated = $this->hydrateCustomClass($currentData, $alias);
 
             if ($hydrated) {
                 // Force a collection format
-                $dataCollection = $dataIsCollection ? $data : [$data];
+                $collection = Common::isCollection($data) ? $data : [$data];
 
                 // Remove own fields to prevent circular dependencies
-                $modified = $this->removeTableFields($alias, $dataCollection);
+                $modified = $this->removeTableFields($alias, $collection);
 
+                // Only custom classes should have relations
                 $this->hydrateRelations($modified);
             }
         }
 
         return $this;
+    }
+
+    /**
+     * Helper method, turn input data to array
+     * 
+     * @param mixed $data
+     * 
+     * @return array
+     */
+    public function toArray($data)
+    {
+        if (!is_array($data)) {
+            // Convert to associative array
+            $data = json_decode(json_encode($data), true);
+        }
+
+        return $data;
     }
 
     /**
@@ -103,7 +128,7 @@ class Flex
      */
     public function removeTableFields($alias, $data)
     {
-        $aliasOrTable = $this->_getAliasOrTable($alias);
+        $aliasOrTable = $this->meta()->getAliasOrTable($alias);
         
         // Loop all the rows
         foreach ($data as $index => $row) {
@@ -111,22 +136,46 @@ class Flex
             // Loop each field
             foreach ($row as $field => $value) {
 
-                // Extract table and field name
-                $parts = explode('.', $field);
-                if (count($parts) === 2) {
-
+                $fieldData = $this->fieldData($field);
+                if ($fieldData['length'] === 2) {
                     // If the table name matches the current alias/table
                     // then remove it from the collection.
-                    if ($parts[0] === $aliasOrTable) {
+                    if ($fieldData['alias_or_table'] === $aliasOrTable) {
                         unset($data[$index][$field]);
-
-                        // If a row is empty, remove it.
                         if (!$data[$index]) {
+                            // If a row is empty, remove it.
                             unset($data[$index]);
                         }
                     }
                 }
             }
+        }
+
+        return $data;
+    }
+
+    /**
+     * Helper method to extract information about a database field
+     * DB should return the following format: {table_name_or_alias}.{field_name}
+     * 
+     * Here we extract the table/alias name, and the field name
+     * 
+     * @param string $field
+     * 
+     * @return array
+     */
+    public function fieldData($field)
+    {
+        $data = [];
+        $parts = explode('.', $field);
+        $data['length'] = count($parts);
+
+        if ($data['length'] === 2) {
+            $data['alias_or_table'] = $parts[0];
+            $data['name'] = $parts[1];
+        } else {
+            $data['alias_or_table'] = '';
+            $data['name'] = $parts[0];
         }
 
         return $data;
@@ -152,7 +201,7 @@ class Flex
         $edited = false;
         $attrs = $this->getAttributes();
         if ($attrs) {
-            $aliasOrTable = $this->_getAliasOrTable($alias);
+            $aliasOrTable = $this->meta()->getAliasOrTable($alias);
             $preffix = $aliasOrTable ? $aliasOrTable . '.' : '';
             $this->id = Common::get($data, $preffix . 'id');
             foreach ($attrs as $name => $value)
@@ -166,25 +215,6 @@ class Flex
         }
 
         return $edited;
-    }
-
-    /**
-     * Helper method to determine if an alias or a table
-     * name should be used.
-     * 
-     * @param mixed $alias
-     * 
-     * @return string
-     */
-    public function _getAliasOrTable($alias)
-    {
-        if ($alias) {
-            return $alias;
-        } elseif ($this->getMeta('table')) {
-            return $this->getMeta('table');
-        }
-
-        return '';
     }
 
     /**
@@ -202,13 +232,8 @@ class Flex
         // If this is an instance of Flex then it has no
         // Attribtues defined, let's take what we have from data
         foreach ($data as $attr => $value) {
-            $parts = explode('.', $attr);
-            if (count($parts) === 2) {
-                $attrName = $parts[1];
-            } else {
-                $attrName = $parts[0];
-            }
-
+            $fieldData = $this->fieldData($attr);
+            $attrName = $fieldData['name'];
             $this->$attrName = $value;
         }
     }
@@ -226,16 +251,16 @@ class Flex
     public function hydrateRelations($data)
     {
         if ($data) {
-            $relations = $this->getMeta('relations');
+            $relations = $this->relations()->get();
             if ($relations) {
                 foreach ($relations as $relation) {
-                    if ($relation['type'] === 'Belongs') {
+                    if ($relation->type === 'Belongs') {
                         $this->hydrateBelongs($relation, $data);
-                    } elseif ($relation['type'] === 'Has') {
+                    } elseif ($relation->type === 'Has') {
                         if ($data) {
                             $this->hydrateHas($relation, $data);
                         }
-                    } elseif ($relation['type'] == 'HasAndBelongs') {
+                    } elseif ($relation->type == 'HasAndBelongs') {
                         if ($data) {
                             $this->hydrateHasAndBelongs($relation, $data);
                         }
@@ -269,21 +294,16 @@ class Flex
 
         // For each row, hydrate the instance of the relation class
         foreach ($data as $row) {
-            $model = new $relation['class']();
+            $class = $relation->class;
+            $model = new $class();
             $model->hydrate($row);
 
             if (!$model->isEmpty()) {
-                if (is_array($relation['instance'])) {
-                    $relation['instance'][] = $model;
-                } else {
-                    $relation['instance'] = [];
-                    $relation['instance'][] = $model;
-                }
-
-                $relation['loaded'] = true;
-                $this->editRelation($relation['name'], $relation);
+                $relation->add($model);
             }
         }
+
+        $relation->loaded = true;
     }
 
     /**
@@ -297,14 +317,15 @@ class Flex
      */
     public function hydrateBelongs($relation, $data)
     {
-        $related = new $relation['class'];
-        $related->hydrate($data, $relation['table_alias']);
-        $this->{$relation['key']} = $related->id;
+        $class = $relation->class;
+        $related = new $class;
+        $related->hydrate($data, $relation->tableAlias);
+        $this->{$relation->key} = $related->id;
         if (!$related->isEmpty()) {
-            $relation['instance'] = $related;
-            $relation['loaded'] = true;
+            $relation->setInstance($related);
         }
-        $this->editRelation($relation['name'], $relation);
+
+        $relation->loaded = true;
     }
 
     /**
@@ -363,37 +384,56 @@ class Flex
      * @param mixed $name
      * @param mixed $arguments
      * 
-     * @return [type]
+     * @return mixed
      */
     public function __call($name, $arguments)
     {
         // Check if it's a getter/setter
+        // first 3 chars are 'get' or 'set'
         $getSetPreffix = substr($name, 0, 3);
-        if (in_array($getSetPreffix, ['get', 'set'])) {
+        if ($getSetPreffix === 'get' || $getSetPreffix === 'set') {
 
-            // Determine both cases (sname & camel) for the attribute name
-            $camelCaseAttr = substr($name, 3);
-            $snakeCaseAttr = strtolower(preg_replace('/(?<!^)[A-Z]/', '_$0', $camelCaseAttr));
+            // Get the attribute name in snake case and camel case
+            $names = $this->_getPropertyNames($name);
 
             // If the property exists, get or set it
-            if (property_exists($this, $snakeCaseAttr)) {
-                return $this->_propertyGetterSetter($getSetPreffix, $snakeCaseAttr, $arguments);
+            // Properties have snake case to mimic db tables.
+            if (property_exists($this, $names['attribute'])) {
+                return $this->_propertyGetterSetter($getSetPreffix, $names['attribute'], $arguments);
 
-            } elseif ($this->hasRelation($camelCaseAttr)) {
+            } elseif ($this->relations()->has($names['relation'])) {
                 // Search for relationships
-                $relation = $this->getRelation($camelCaseAttr);
+                $relation = $this->relations()->get($names['relation']);
                 if ($getSetPreffix === 'get') {
-                    return $this->_relationGetter($relation);
+                    return $relation->getInstance($this);
                 } else {
-                    $this->_relationSetter($relation, $arguments);
+                    $relation->setInstance($arguments[0]);
                     return $this;
                 }
             } else {
-                throw new \Exception("Undefined attribute '" . $snakeCaseAttr . "'");
+                throw new \Exception("Undefined attribute '" . $names['attribute'] . "'");
             }
         } else {
             throw new \Exception("Undefined method '" . $name . "'");
         }
+    }
+
+    /**
+     * Internal method to get attribute and relation names based
+     * on the original method call.
+     * 
+     * @param mixed $name
+     * 
+     * @return array
+     */
+    public function _getPropertyNames($name)
+    {
+        $camelCase = substr($name, 3);
+        $snakeCase = strtolower(preg_replace('/(?<!^)[A-Z]/', '_$0', $camelCase));
+        return [
+            'relation' => $camelCase,
+            'attribute' => $snakeCase
+        ];
     }
 
     /**
@@ -405,176 +445,14 @@ class Flex
      * 
      * @return mixed
      */
-    public function _propertyGetterSetter($getSetPreffix, $snakeCaseAttr, $arguments = [])
+    public function _propertyGetterSetter($getSetPreffix, $name, $arguments = [])
     {
         if ($getSetPreffix === 'get') {
-            return $this->$snakeCaseAttr;
+            return $this->$name;
         } else {
-            $this->$snakeCaseAttr = $arguments[0];
+            $this->$name = $arguments[0];
             return $this;
         }
-    }
-
-    /**
-     * Internal method to set a relationship
-     * 
-     * @param mixed $relation
-     * @param mixed $arguments
-     * 
-     * @return void
-     */
-    public function _relationSetter($relation, $arguments)
-    {
-        if ($relation['type'] === 'Belongs') {
-            $this->_setBelongInstance($relation, $arguments);
-        } elseif ($relation['type'] === 'Has') {
-            $this->_setHasInstance($relation, $arguments);
-        } elseif ($relation['type'] === 'HasAndBelongs') {
-            $this->_setHasInstance($relation, $arguments);
-        }
-    }
-
-    /**
-     * Internal method to get a relationship
-     * 
-     * @param mixed $relation
-     * 
-     * @return mixed
-     * @throws \Exception
-     */
-    public function _relationGetter($relation)
-    {
-        if ($relation['type'] === 'Belongs') {
-            return $this->_getBelongRelationInstance($relation);
-        } elseif ($relation['type'] === 'Has') {
-            return $this->_getHasRelationInstance($relation);
-        } elseif ($relation['type'] === 'HasAndBelongs') {
-            return $this->_getHasAndBelongsRelationInstance($relation);
-        } else {
-            throw new \Exception("Relation type not supported ('" . $relation['type'] . "')");
-        }
-    }
-
-    /**
-     * Internal method to set a 'Has' instance (collection)
-     * 
-     * @param mixed $relation
-     * @param mixed $arguments
-     * 
-     * @return void
-     */
-    public function _setHasInstance($relation, $arguments)
-    {
-        $relation['loaded'] = true;
-        $relation['instance'] = $arguments[0];
-        $this->editRelation($relation['name'], $relation);
-    }
-
-    /**
-     * Internal method to set a 'Belong' relation instance
-     * 
-     * @param mixed $relation
-     * @param mixed $arguments
-     * 
-     * @return void
-     */
-    public function _setBelongInstance($relation, $arguments)
-    {
-        $relation['loaded'] = true;
-        $relation['instance'] = $arguments[0];
-        $this->editRelation($relation['name'], $relation);
-    }
-
-    /**
-     * Get or Load the other end of a 'HasAndBelongs' relationship
-     * 
-     * @param mixed $relation
-     * 
-     * @return array
-     */
-    public function _getHasAndBelongsRelationInstance($relation)
-    {
-        if ($relation['loaded']) {
-            return $relation['instance'];
-        } else {
-            $repo = FlexRepository::get();
-            $query = "SELECT {$relation['table']}.* FROM {$relation['table']} JOIN {$relation['relation_table']} ON {$relation['relation_table']}.{$relation['external_key']} = {$relation['table']}.id WHERE {$relation['relation_table']}.{$relation['key']} = :id";
-            $models = $repo->query($query, [':id' => $this->id], ['table' => $relation['table'], 'class' => $relation['class']]);
-
-            if ($models) {
-                $relation['instance'] = $models;
-            } else {
-                $relation['instance'] = [];
-            }
-
-            $relation['loaded'] = true;
-            $this->editRelation($relation['name'], $relation);
-        }
-
-        return $relation['instance'];
-    }
-
-    /**
-     * Internal method to get a collection of 'Has' relation instances.
-     * 
-     * @param mixed $relation
-     * 
-     * @return mixed
-     */
-    public function _getHasRelationInstance($relation)
-    {
-        if ($relation['loaded']) {
-            return $relation['instance'];
-        } else {
-            $repo = FlexRepository::get();
-            $models = $repo->find(
-                $relation['table'],
-                "{$relation['key']} = :id",
-                [':id' => $this->id],
-                ['class' => $relation['class']
-            ]);
-
-            if ($models) {
-                $relation['instance'] = $models;
-            } else {
-                $relation['instance'] = [];
-            }
-
-            $relation['loaded'] = true;
-            $this->editRelation($relation['name'], $relation);
-        }
-
-        return $relation['instance'];
-    }
-
-    /**
-     * Internal method to get a 'Belong' relationship's instance
-     * 
-     * @param mixed $relation
-     * 
-     * @return [type]
-     */
-    public function _getBelongRelationInstance($relation)
-    {
-        if ($relation['loaded']) {
-            return $relation['instance'];
-        } else {
-            $repo = FlexRepository::get();
-            $model = $repo->findOne(
-                $relation['table'],
-                'id = :id',
-                [':id' => $this->{$relation['key']}],
-                ['class' => $relation['class']
-            ]);
-
-            if ($model) {
-                $relation['loaded'] = true;
-                $relation['instance'] = $model;
-                $this->editRelation($relation['name'], $relation);
-            }
-        }
-
-        return $relation['instance'];
     }
 
     /**
@@ -607,141 +485,23 @@ class Flex
     }
 
     /**
-     * Add a relation to another model
-     * $param
-     * @param mixed $params
-     * 
-     * @return void
-     */
-    public function addRelation($params = [])
-    {
-        $params = array_merge($this->getDefaultRelationParams(), $params);
-        $params = $this->setRelationDefaults($params);
-
-        $this->validateParams($params);
-        $relations = $this->getMeta('relations');
-        $relations[$params['name']] = $params;
-        $this->addMeta('relations', $relations);
-    }
-
-    /**
-     * Validate all the parameters of a relation
-     * 
-     * @param mixed $params
-     * 
-     * @return void
-     * @throws \Exception
-     */
-    public function validateParams($params)
-    {
-        if (!$params['name']) {
-            throw new \Exception('Flex relations require a name');
-        }
-
-        if ($this->hasRelation($params['name'])) {
-            throw new \Exception('This relation already exists');
-        }
-
-        if (!$params['class'] || !class_exists($params['class'])) {
-            throw new \Exception('Flex relations require a class');
-        }
-
-        if (!$params['table']) {
-            throw new \Exception('Flex relations require a table name');
-        }
-    }
-
-    /**
-     * Get a relation by name
-     * 
-     * @param mixed $name
-     * 
-     * @return null|array
-     */
-    public function getRelation($name) {
-        $relations = $this->getMeta('relations');
-        return Common::get($relations, $name);
-    }
-
-    /**
-     * Convenience method to check if the instance has a 
-     * relationship
-     * 
-     * @param mixed $name
-     * 
-     * @return boolean
-     */
-    public function hasRelation($name)
-    {
-        return !!$this->getRelation($name);
-    }
-
-    /**
-     * Overwrite a relation info with a new one.
-     * 
-     * @param mixed $name
-     * @param mixed $params
-     * 
-     * @return boolean
-     */
-    public function editRelation($name, $params)
-    {
-        foreach ($this->_meta['relations'] as $relName => $relation) {
-            if ($name === $relName) {
-                $this->_meta['relations'][$name] = $params;
-                return true;
-            }
-        }
-
-        return false;
-    }
-
-    /**
-     * Set the default parameters of a relation
-     * 
-     * @param mixed $params
-     * 
-     * @return array
-     */
-    public function setRelationDefaults($params)
-    {
-        if (!$params['key'] && $params['name']) {
-            $snakeCaseName = strtolower(preg_replace('/(?<!^)[A-Z]/', '_$0', $params['name']));
-            $params['name'] = $snakeCaseName . '_id';
-        }
-
-        $params['loaded'] = false;
-        $params['instance'] = null;
-
-        return $params;
-    }
-
-    /**
-     * Get the default relation parameters
-     * 
-     * @return array
-     */
-    public function getDefaultRelationParams()
-    {
-        return [
-            'name' => '',
-            'key' => '',
-            'external_key' => '',
-            'table' => '',
-            'table_alias' => '',
-            'class' => 'Makiavelo\\Flex\\Flex',
-            'type' => 'Belongs',
-            'remove_orphans' => false
-        ];
-    }
-
-    /**
      * Get the metadata of the object.
-     * @return array
+     * 
+     * @return Meta
      */
-    public function _meta()
+    public function meta()
     {
         return $this->_meta;
+    }
+
+    /**
+     * Get the relations manager object.
+     * 
+     * @return RelationsManager
+     */
+    public function relations()
+    {
+        return $this->_relations;
     }
 
     /**
@@ -762,32 +522,6 @@ class Flex
         }
 
         return false;
-    }
-
-    /**
-     * Add values to the object meta-data
-     * 
-     * @param string $name
-     * @param mixed $value
-     * 
-     * @return void
-     */
-    public function addMeta($name, $value = null)
-    {
-        $this->_meta[$name] = $value;
-    }
-
-    /**
-     * Get a meta-data value
-     * 
-     * @param string $path
-     * @param mixed $default
-     * 
-     * @return mixed
-     */
-    public function getMeta($path, $default = null)
-    {
-        return Common::get($this->_meta, $path, $default);
     }
 
     /**
