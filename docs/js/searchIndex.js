@@ -3,7 +3,7 @@ Search.appendIndex(
                 {
             "fqsen": "\\Makiavelo\\Flex\\Flex",
             "name": "Flex",
-            "summary": "",
+            "summary": "Flexible\u0020models",
             "url": "classes/Makiavelo-Flex-Flex.html"
         },                {
             "fqsen": "\\Makiavelo\\Flex\\Flex\u003A\u003A__construct\u0028\u0029",
@@ -21,15 +21,75 @@ Search.appendIndex(
             "summary": "Populate\u0020the\u0020instance\u0020with\u0020the\u0020given\u0020data.",
             "url": "classes/Makiavelo-Flex-Flex.html#method_hydrate"
         },                {
+            "fqsen": "\\Makiavelo\\Flex\\Flex\u003A\u003AtoArray\u0028\u0029",
+            "name": "toArray",
+            "summary": "Helper\u0020method,\u0020turn\u0020input\u0020data\u0020to\u0020array",
+            "url": "classes/Makiavelo-Flex-Flex.html#method_toArray"
+        },                {
+            "fqsen": "\\Makiavelo\\Flex\\Flex\u003A\u003AremoveTableFields\u0028\u0029",
+            "name": "removeTableFields",
+            "summary": "Remove\u0020all\u0020the\u0020fields\u0020related\u0020to\u0020an\u0020alias\u0020or\u0020table\nform\u0020the\u0020\u0024data\u0020collection.",
+            "url": "classes/Makiavelo-Flex-Flex.html#method_removeTableFields"
+        },                {
+            "fqsen": "\\Makiavelo\\Flex\\Flex\u003A\u003AfieldData\u0028\u0029",
+            "name": "fieldData",
+            "summary": "Helper\u0020method\u0020to\u0020extract\u0020information\u0020about\u0020a\u0020database\u0020field\nDB\u0020should\u0020return\u0020the\u0020following\u0020format\u003A\u0020\u007Btable_name_or_alias\u007D.\u007Bfield_name\u007D",
+            "url": "classes/Makiavelo-Flex-Flex.html#method_fieldData"
+        },                {
+            "fqsen": "\\Makiavelo\\Flex\\Flex\u003A\u003AhydrateCustomClass\u0028\u0029",
+            "name": "hydrateCustomClass",
+            "summary": "Hydrates\u0020this\u0020instance\u0020with\u0020the\u0020data\u0020from\u0020the\n\u0024data\u0020collection.",
+            "url": "classes/Makiavelo-Flex-Flex.html#method_hydrateCustomClass"
+        },                {
+            "fqsen": "\\Makiavelo\\Flex\\Flex\u003A\u003AhydrateFlex\u0028\u0029",
+            "name": "hydrateFlex",
+            "summary": "Hydrate\u0020a\u0020Flex\u0020object.",
+            "url": "classes/Makiavelo-Flex-Flex.html#method_hydrateFlex"
+        },                {
+            "fqsen": "\\Makiavelo\\Flex\\Flex\u003A\u003AhydrateRelations\u0028\u0029",
+            "name": "hydrateRelations",
+            "summary": "Hydrate\u0020all\u0020the\u0020relations\u0020found\u0020in\u0020the\u0020instance.",
+            "url": "classes/Makiavelo-Flex-Flex.html#method_hydrateRelations"
+        },                {
+            "fqsen": "\\Makiavelo\\Flex\\Flex\u003A\u003AhydrateHasAndBelongs\u0028\u0029",
+            "name": "hydrateHasAndBelongs",
+            "summary": "",
+            "url": "classes/Makiavelo-Flex-Flex.html#method_hydrateHasAndBelongs"
+        },                {
+            "fqsen": "\\Makiavelo\\Flex\\Flex\u003A\u003AhydrateHas\u0028\u0029",
+            "name": "hydrateHas",
+            "summary": "Hydrate\u0020a\u0020relationship\u0020of\u0020the\u0020type\u0020\u0027Has\u0027\nThis\u0020method\u0020triggers\u0020hydration\u0020of\u0020child\u0020objects.",
+            "url": "classes/Makiavelo-Flex-Flex.html#method_hydrateHas"
+        },                {
+            "fqsen": "\\Makiavelo\\Flex\\Flex\u003A\u003AhydrateBelongs\u0028\u0029",
+            "name": "hydrateBelongs",
+            "summary": "Hydrate\u0020a\u0020relationship\u0020of\u0020the\u0020type\u0020\u0027Belong\u0027\nThis\u0020method\u0020triggers\u0020hydration\u0020of\u0020child\u0020objects.",
+            "url": "classes/Makiavelo-Flex-Flex.html#method_hydrateBelongs"
+        },                {
             "fqsen": "\\Makiavelo\\Flex\\Flex\u003A\u003AisNew\u0028\u0029",
             "name": "isNew",
             "summary": "Check\u0020if\u0020it\u0027s\u0020a\u0020new\u0020instance\u0020or\u0020a\u0020loaded\u0020one",
             "url": "classes/Makiavelo-Flex-Flex.html#method_isNew"
         },                {
+            "fqsen": "\\Makiavelo\\Flex\\Flex\u003A\u003AisEmpty\u0028\u0029",
+            "name": "isEmpty",
+            "summary": "Determine\u0020if\u0020an\u0020object\u0020is\u0020empty",
+            "url": "classes/Makiavelo-Flex-Flex.html#method_isEmpty"
+        },                {
             "fqsen": "\\Makiavelo\\Flex\\Flex\u003A\u003A__call\u0028\u0029",
             "name": "__call",
-            "summary": "",
+            "summary": "Magic\u0020method\u0020to\u0020handle\u0020getters\u0020and\u0020setters",
             "url": "classes/Makiavelo-Flex-Flex.html#method___call"
+        },                {
+            "fqsen": "\\Makiavelo\\Flex\\Flex\u003A\u003A_getPropertyNames\u0028\u0029",
+            "name": "_getPropertyNames",
+            "summary": "Internal\u0020method\u0020to\u0020get\u0020attribute\u0020and\u0020relation\u0020names\u0020based\non\u0020the\u0020original\u0020method\u0020call.",
+            "url": "classes/Makiavelo-Flex-Flex.html#method__getPropertyNames"
+        },                {
+            "fqsen": "\\Makiavelo\\Flex\\Flex\u003A\u003A_propertyGetterSetter\u0028\u0029",
+            "name": "_propertyGetterSetter",
+            "summary": "Internal\u0020method\u0020to\u0020set\u0020or\u0020set\u0020a\u0020property",
+            "url": "classes/Makiavelo-Flex-Flex.html#method__propertyGetterSetter"
         },                {
             "fqsen": "\\Makiavelo\\Flex\\Flex\u003A\u003A__toString\u0028\u0029",
             "name": "__toString",
@@ -41,25 +101,20 @@ Search.appendIndex(
             "summary": "Get\u0020all\u0020the\u0020non\u002Dinternal\u0020attributes\u0020of\u0020the\u0020instance.",
             "url": "classes/Makiavelo-Flex-Flex.html#method_getAttributes"
         },                {
-            "fqsen": "\\Makiavelo\\Flex\\Flex\u003A\u003A\u0024_meta",
-            "name": "_meta",
-            "summary": "Internal\u0020variable\u0020for\u0020meta\u0020data\u0020like\u0020table\u0020name",
-            "url": "classes/Makiavelo-Flex-Flex.html#property__meta"
+            "fqsen": "\\Makiavelo\\Flex\\Flex\u003A\u003Ameta\u0028\u0029",
+            "name": "meta",
+            "summary": "Get\u0020the\u0020metadata\u0020of\u0020the\u0020object.",
+            "url": "classes/Makiavelo-Flex-Flex.html#method_meta"
+        },                {
+            "fqsen": "\\Makiavelo\\Flex\\Flex\u003A\u003Arelations\u0028\u0029",
+            "name": "relations",
+            "summary": "Get\u0020the\u0020relations\u0020manager\u0020object.",
+            "url": "classes/Makiavelo-Flex-Flex.html#method_relations"
         },                {
             "fqsen": "\\Makiavelo\\Flex\\Flex\u003A\u003AisInternal\u0028\u0029",
             "name": "isInternal",
             "summary": "Determine\u0020if\u0020it\u0027s\u0020an\u0020internal\u0020attribute",
             "url": "classes/Makiavelo-Flex-Flex.html#method_isInternal"
-        },                {
-            "fqsen": "\\Makiavelo\\Flex\\Flex\u003A\u003AaddMeta\u0028\u0029",
-            "name": "addMeta",
-            "summary": "Add\u0020values\u0020to\u0020the\u0020object\u0020meta\u002Ddata",
-            "url": "classes/Makiavelo-Flex-Flex.html#method_addMeta"
-        },                {
-            "fqsen": "\\Makiavelo\\Flex\\Flex\u003A\u003AgetMeta\u0028\u0029",
-            "name": "getMeta",
-            "summary": "Get\u0020a\u0020meta\u002Ddata\u0020value",
-            "url": "classes/Makiavelo-Flex-Flex.html#method_getMeta"
         },                {
             "fqsen": "\\Makiavelo\\Flex\\Flex\u003A\u003Avalid\u0028\u0029",
             "name": "valid",
@@ -86,6 +141,16 @@ Search.appendIndex(
             "summary": "Method\u0020to\u0020be\u0020executed\u0020after\u0020deleting\u0020an\u0020object.",
             "url": "classes/Makiavelo-Flex-Flex.html#method_postDelete"
         },                {
+            "fqsen": "\\Makiavelo\\Flex\\Flex\u003A\u003A\u0024_meta",
+            "name": "_meta",
+            "summary": "Internal\u0020variable\u0020for\u0020meta\u0020data\u0020like\u0020table\u0020name",
+            "url": "classes/Makiavelo-Flex-Flex.html#property__meta"
+        },                {
+            "fqsen": "\\Makiavelo\\Flex\\Flex\u003A\u003A\u0024_relations",
+            "name": "_relations",
+            "summary": "",
+            "url": "classes/Makiavelo-Flex-Flex.html#property__relations"
+        },                {
             "fqsen": "\\Makiavelo\\Flex\\FlexRepository",
             "name": "FlexRepository",
             "summary": "",
@@ -101,6 +166,16 @@ Search.appendIndex(
             "summary": "Get\u0020the\u0020current\u0020instance\u0020or\u0020create\u0020one.",
             "url": "classes/Makiavelo-Flex-FlexRepository.html#method_get"
         },                {
+            "fqsen": "\\Makiavelo\\Flex\\FlexRepository\u003A\u003A\u0024freeze",
+            "name": "freeze",
+            "summary": "If\u0020this\u0020is\u0020set\u0020to\u0020true,\u0020no\u0020database\u0020changes\u0020will\u0020be\u0020performed.",
+            "url": "classes/Makiavelo-Flex-FlexRepository.html#property_freeze"
+        },                {
+            "fqsen": "\\Makiavelo\\Flex\\FlexRepository\u003A\u003Afrozen\u0028\u0029",
+            "name": "frozen",
+            "summary": "Check\u0020if\u0020the\u0020database\u0020is\u0020frozen.",
+            "url": "classes/Makiavelo-Flex-FlexRepository.html#method_frozen"
+        },                {
             "fqsen": "\\Makiavelo\\Flex\\FlexRepository\u003A\u003AresetInstance\u0028\u0029",
             "name": "resetInstance",
             "summary": "Re\u002Dcreate\u0020the\u0020instance",
@@ -115,6 +190,61 @@ Search.appendIndex(
             "name": "save",
             "summary": "Save\u0020a\u0020model\u0020\u0028create\u0020or\u0020update\u0029\nif\u0020self\u003A\u003A\u0024freeze\u0020is\u0020true\u0020the\u0020\u0027prepare\u0027\u0020method\u0020will\u0020try\nto\u0020syncronize\u0020the\u0020current\u0020schema\u0020with\u0020the\u0020database\u0020schema.",
             "url": "classes/Makiavelo-Flex-FlexRepository.html#method_save"
+        },                {
+            "fqsen": "\\Makiavelo\\Flex\\FlexRepository\u003A\u003AbeginTransaction\u0028\u0029",
+            "name": "beginTransaction",
+            "summary": "If\u0020not\u0020frozen,\u0020start\u0020transaction",
+            "url": "classes/Makiavelo-Flex-FlexRepository.html#method_beginTransaction"
+        },                {
+            "fqsen": "\\Makiavelo\\Flex\\FlexRepository\u003A\u003Acommit\u0028\u0029",
+            "name": "commit",
+            "summary": "If\u0020not\u0020frozen,\u0020commit\u0020transaction",
+            "url": "classes/Makiavelo-Flex-FlexRepository.html#method_commit"
+        },                {
+            "fqsen": "\\Makiavelo\\Flex\\FlexRepository\u003A\u003Arollback\u0028\u0029",
+            "name": "rollback",
+            "summary": "If\u0020not\u0020frozen,\u0020rollback\u0020transaction",
+            "url": "classes/Makiavelo-Flex-FlexRepository.html#method_rollback"
+        },                {
+            "fqsen": "\\Makiavelo\\Flex\\FlexRepository\u003A\u003AhandleRelations\u0028\u0029",
+            "name": "handleRelations",
+            "summary": "Handle\u0020relations\u0020before\u0020saving\u0020the\u0020Flex\u0020model",
+            "url": "classes/Makiavelo-Flex-FlexRepository.html#method_handleRelations"
+        },                {
+            "fqsen": "\\Makiavelo\\Flex\\FlexRepository\u003A\u003AhandlePostRelations\u0028\u0029",
+            "name": "handlePostRelations",
+            "summary": "Handle\u0020the\u0020relations\u0020after\u0020saving\u0020the\u0020Flex\u0020model",
+            "url": "classes/Makiavelo-Flex-FlexRepository.html#method_handlePostRelations"
+        },                {
+            "fqsen": "\\Makiavelo\\Flex\\FlexRepository\u003A\u003AhandleHasAndBelongsRelation\u0028\u0029",
+            "name": "handleHasAndBelongsRelation",
+            "summary": "Handle\u0020a\u0020\u0027HasAndBelongs\u0027\u0020relation\u0020after\u0020the\u0020parent\u0020model\u0020was\u0020saved",
+            "url": "classes/Makiavelo-Flex-FlexRepository.html#method_handleHasAndBelongsRelation"
+        },                {
+            "fqsen": "\\Makiavelo\\Flex\\FlexRepository\u003A\u003AhandleHasRelation\u0028\u0029",
+            "name": "handleHasRelation",
+            "summary": "Handle\u0020a\u0020\u0027Has\u0027\u0020relation\u0020after\u0020the\u0020parent\u0020model\u0020was\u0020saved",
+            "url": "classes/Makiavelo-Flex-FlexRepository.html#method_handleHasRelation"
+        },                {
+            "fqsen": "\\Makiavelo\\Flex\\FlexRepository\u003A\u003A_clearIntermediateTable\u0028\u0029",
+            "name": "_clearIntermediateTable",
+            "summary": "Internal\u0020method\u0020to\u0020clear\u0020an\u0020intermediate\u0020table\u0020in\u0020a\u0020\u0027HasAndBelongs\u0027\nrelation\u0020after\u0020updates.",
+            "url": "classes/Makiavelo-Flex-FlexRepository.html#method__clearIntermediateTable"
+        },                {
+            "fqsen": "\\Makiavelo\\Flex\\FlexRepository\u003A\u003AremoveUnusedChilds\u0028\u0029",
+            "name": "removeUnusedChilds",
+            "summary": "Delete\u0020orphaned\u0020records\u0020from\u0020a\u0020\u0027Has\u0027\u0020relation\u0020after\u0020an\u0020update",
+            "url": "classes/Makiavelo-Flex-FlexRepository.html#method_removeUnusedChilds"
+        },                {
+            "fqsen": "\\Makiavelo\\Flex\\FlexRepository\u003A\u003AnullifyUnusedChilds\u0028\u0029",
+            "name": "nullifyUnusedChilds",
+            "summary": "Set\u0020to\u0020null\u0020references\u0020to\u0020the\u0020main\u0020model\u0020in\u0020a\u0020\u0027Has\u0027\u0020relation\u0020after\u0020updates.",
+            "url": "classes/Makiavelo-Flex-FlexRepository.html#method_nullifyUnusedChilds"
+        },                {
+            "fqsen": "\\Makiavelo\\Flex\\FlexRepository\u003A\u003A_saveIntermediateTable\u0028\u0029",
+            "name": "_saveIntermediateTable",
+            "summary": "Internal\u0020method\u0020to\u0020save\u0020an\u0020intermediate\u0020table\u0020in\u0020a\u0020HasAndBelongs\u0020relationship",
+            "url": "classes/Makiavelo-Flex-FlexRepository.html#method__saveIntermediateTable"
         },                {
             "fqsen": "\\Makiavelo\\Flex\\FlexRepository\u003A\u003Aupdate\u0028\u0029",
             "name": "update",
@@ -188,8 +318,13 @@ Search.appendIndex(
         },                {
             "fqsen": "\\Makiavelo\\Flex\\FlexRepository\u003A\u003Aprepare\u0028\u0029",
             "name": "prepare",
-            "summary": "While\u0020not\u0020freezed\u0020the\u0020table\u0020will\u0020get\u0020updated\njust\u0020by\u0020saving\u0020records\u0020to\u0020it.",
+            "summary": "While\u0020not\u0020frozen\u0020the\u0020table\u0020will\u0020get\u0020updated\njust\u0020by\u0020saving\u0020records\u0020to\u0020it.",
             "url": "classes/Makiavelo-Flex-FlexRepository.html#method_prepare"
+        },                {
+            "fqsen": "\\Makiavelo\\Flex\\FlexRepository\u003A\u003AaddUniqueCombinedIndex\u0028\u0029",
+            "name": "addUniqueCombinedIndex",
+            "summary": "",
+            "url": "classes/Makiavelo-Flex-FlexRepository.html#method_addUniqueCombinedIndex"
         },                {
             "fqsen": "\\Makiavelo\\Flex\\FlexRepository\u003A\u003AupdateTableTypes\u0028\u0029",
             "name": "updateTableTypes",
@@ -236,6 +371,11 @@ Search.appendIndex(
             "summary": "Helper\u0020method\u0020to\u0020do\u0020quick\u0020finds\nFor\u0020complex\u0020queries\u0020use\u0020PDO\u0020directly.",
             "url": "classes/Makiavelo-Flex-FlexRepository.html#method_find"
         },                {
+            "fqsen": "\\Makiavelo\\Flex\\FlexRepository\u003A\u003AfindOne\u0028\u0029",
+            "name": "findOne",
+            "summary": "Alias\u0020for\u0020\u0027find\u0027\u0020which\u0020just\u0020returns\u0020the\u0020first\u0020result\u0020and\nlimits\u0020the\u0020query\u0020to\u0020one\u0020result.",
+            "url": "classes/Makiavelo-Flex-FlexRepository.html#method_findOne"
+        },                {
             "fqsen": "\\Makiavelo\\Flex\\FlexRepository\u003A\u003Aquery\u0028\u0029",
             "name": "query",
             "summary": "Execute\u0020any\u0020query\u0020and\u0020get\u0020an\u0020array\u0020or\u0020a\u0020collection\u0020of\u0020models\nIf\u0020the\u0020query\u0020has\u0020any\u0020parameters,\u0020they\u0020have\u0020to\u0020be\u0020prepared\u0020to\u0020avoid\u0020injection\nso\u0020name\u0020them\u0020in\u0020the\u0020PDO\u0020fashion\u0020and\u0020send\u0020an\u0020array\u0020of\u0020parameters\/values.",
@@ -256,6 +396,11 @@ Search.appendIndex(
             "summary": "Hydrate\u0020a\u0020collection.",
             "url": "classes/Makiavelo-Flex-FlexRepository.html#method_hydrate"
         },                {
+            "fqsen": "\\Makiavelo\\Flex\\FlexRepository\u003A\u003AbuildHaystack\u0028\u0029",
+            "name": "buildHaystack",
+            "summary": "Get\u0020a\u0020full\u0020result\u0020from\u0020the\u0020database,\u0020and\u0020group\u0020them\u0020by\u0020the\nselected\u0020id.",
+            "url": "classes/Makiavelo-Flex-FlexRepository.html#method_buildHaystack"
+        },                {
             "fqsen": "\\Makiavelo\\Flex\\FlexRepository\u003A\u003A\u0024db",
             "name": "db",
             "summary": "",
@@ -270,11 +415,6 @@ Search.appendIndex(
             "name": "instance",
             "summary": "",
             "url": "classes/Makiavelo-Flex-FlexRepository.html#property_instance"
-        },                {
-            "fqsen": "\\Makiavelo\\Flex\\FlexRepository\u003A\u003A\u0024freeze",
-            "name": "freeze",
-            "summary": "If\u0020this\u0020is\u0020set\u0020to\u0020true,\u0020no\u0020database\u0020changes\u0020will\u0020be\u0020performed.",
-            "url": "classes/Makiavelo-Flex-FlexRepository.html#property_freeze"
         },                {
             "fqsen": "\\Makiavelo\\Flex\\Util\\Common",
             "name": "Common",
@@ -295,6 +435,11 @@ Search.appendIndex(
             "name": "find",
             "summary": "Find\u0020one\u0020or\u0020more\u0020elements\u0020inside\u0020a\u0020collection\u0020where\nthe\u0020path\u0020resolves\u0020to\u0020the\u0020value\u0020provided.",
             "url": "classes/Makiavelo-Flex-Util-Common.html#method_find"
+        },                {
+            "fqsen": "\\Makiavelo\\Flex\\Util\\Common\u003A\u003AisCollection\u0028\u0029",
+            "name": "isCollection",
+            "summary": "",
+            "url": "classes/Makiavelo-Flex-Util-Common.html#method_isCollection"
         },                {
             "fqsen": "\\Makiavelo\\Flex\\Util\\EnhancedPDO",
             "name": "EnhancedPDO",
@@ -320,6 +465,211 @@ Search.appendIndex(
             "name": "transactionCounter",
             "summary": "",
             "url": "classes/Makiavelo-Flex-Util-EnhancedPDO.html#property_transactionCounter"
+        },                {
+            "fqsen": "\\Makiavelo\\Flex\\Meta",
+            "name": "Meta",
+            "summary": "Class\u0020to\u0020handle\u0020meta\u0020data\u0020of\u0020a\u0020class\nUsage\u0020examples\u003A\u0020table\u0020name,\u0020table\u0020fields\u0020definition,\u0020etc.",
+            "url": "classes/Makiavelo-Flex-Meta.html"
+        },                {
+            "fqsen": "\\Makiavelo\\Flex\\Meta\u003A\u003A__construct\u0028\u0029",
+            "name": "__construct",
+            "summary": "",
+            "url": "classes/Makiavelo-Flex-Meta.html#method___construct"
+        },                {
+            "fqsen": "\\Makiavelo\\Flex\\Meta\u003A\u003Aadd\u0028\u0029",
+            "name": "add",
+            "summary": "Add\u0020a\u0020key\/value\u0020pair",
+            "url": "classes/Makiavelo-Flex-Meta.html#method_add"
+        },                {
+            "fqsen": "\\Makiavelo\\Flex\\Meta\u003A\u003Aget\u0028\u0029",
+            "name": "get",
+            "summary": "Get\u0020a\u0020meta\u0020value",
+            "url": "classes/Makiavelo-Flex-Meta.html#method_get"
+        },                {
+            "fqsen": "\\Makiavelo\\Flex\\Meta\u003A\u003Ahas\u0028\u0029",
+            "name": "has",
+            "summary": "Check\u0020if\u0020the\u0020key\u0020exists\u0020in\u0020the\u0020meta\u0020data\u0020array",
+            "url": "classes/Makiavelo-Flex-Meta.html#method_has"
+        },                {
+            "fqsen": "\\Makiavelo\\Flex\\Meta\u003A\u003AgetAliasOrTable\u0028\u0029",
+            "name": "getAliasOrTable",
+            "summary": "Utility\u0020method\u0020to\u0020get\u0020the\u0020actual\u0020table\u0020name\neven\u0020if\u0020it\u0027s\u0020aliased.\u0020Used\u0020to\u0020perform\u0020queries.",
+            "url": "classes/Makiavelo-Flex-Meta.html#method_getAliasOrTable"
+        },                {
+            "fqsen": "\\Makiavelo\\Flex\\Meta\u003A\u003A\u0024values",
+            "name": "values",
+            "summary": "Container\u0020for\u0020all\u0020the\u0020meta\u0020values",
+            "url": "classes/Makiavelo-Flex-Meta.html#property_values"
+        },                {
+            "fqsen": "\\Makiavelo\\Flex\\Relation",
+            "name": "Relation",
+            "summary": "Class\u0020to\u0020handle\u0020all\u0020the\u0020relationship\u0020information\nof\u0020a\u0020Flex\u0020model.",
+            "url": "classes/Makiavelo-Flex-Relation.html"
+        },                {
+            "fqsen": "\\Makiavelo\\Flex\\Relation\u003A\u003A__construct\u0028\u0029",
+            "name": "__construct",
+            "summary": "",
+            "url": "classes/Makiavelo-Flex-Relation.html#method___construct"
+        },                {
+            "fqsen": "\\Makiavelo\\Flex\\Relation\u003A\u003Abuild\u0028\u0029",
+            "name": "build",
+            "summary": "Set\u0020all\u0020the\u0020object\u0027s\u0020parameters\u0020via\u0020array\u0020input",
+            "url": "classes/Makiavelo-Flex-Relation.html#method_build"
+        },                {
+            "fqsen": "\\Makiavelo\\Flex\\Relation\u003A\u003AinitUnsetFields\u0028\u0029",
+            "name": "initUnsetFields",
+            "summary": "Convenience\u0020method\u0020to\u0020set\u0020some\u0020default\u0020values\u0020if\u0020some\u0020required\nparameters\u0020are\u0020missing.",
+            "url": "classes/Makiavelo-Flex-Relation.html#method_initUnsetFields"
+        },                {
+            "fqsen": "\\Makiavelo\\Flex\\Relation\u003A\u003AvalidateParams\u0028\u0029",
+            "name": "validateParams",
+            "summary": "Validate\u0020that\u0020all\u0020the\u0020required\u0020parameters\u0020for\u0020a\u0020relationship\u0020are\u0020set",
+            "url": "classes/Makiavelo-Flex-Relation.html#method_validateParams"
+        },                {
+            "fqsen": "\\Makiavelo\\Flex\\Relation\u003A\u003AsetBelongInstance\u0028\u0029",
+            "name": "setBelongInstance",
+            "summary": "Set\u0020the\u0020instance\u0020of\u0020a\u0020\u0027Belong\u0027\u0020relation",
+            "url": "classes/Makiavelo-Flex-Relation.html#method_setBelongInstance"
+        },                {
+            "fqsen": "\\Makiavelo\\Flex\\Relation\u003A\u003AsetHasInstance\u0028\u0029",
+            "name": "setHasInstance",
+            "summary": "Set\u0020the\u0020instance\u0020of\u0020a\u0020\u0027Has\u0027\u0020relation",
+            "url": "classes/Makiavelo-Flex-Relation.html#method_setHasInstance"
+        },                {
+            "fqsen": "\\Makiavelo\\Flex\\Relation\u003A\u003AgetInstance\u0028\u0029",
+            "name": "getInstance",
+            "summary": "Get\u0020the\u0020instance\u0020of\u0020this\u0020relation",
+            "url": "classes/Makiavelo-Flex-Relation.html#method_getInstance"
+        },                {
+            "fqsen": "\\Makiavelo\\Flex\\Relation\u003A\u003AgetHasAndBelongsInstance\u0028\u0029",
+            "name": "getHasAndBelongsInstance",
+            "summary": "Get\u0020the\u0020collection\u0020of\u0020related\u0020models",
+            "url": "classes/Makiavelo-Flex-Relation.html#method_getHasAndBelongsInstance"
+        },                {
+            "fqsen": "\\Makiavelo\\Flex\\Relation\u003A\u003AgetHasInstance\u0028\u0029",
+            "name": "getHasInstance",
+            "summary": "Get\u0020the\u0020collection\u0020of\u0020related\u0020models",
+            "url": "classes/Makiavelo-Flex-Relation.html#method_getHasInstance"
+        },                {
+            "fqsen": "\\Makiavelo\\Flex\\Relation\u003A\u003AgetBelongInstance\u0028\u0029",
+            "name": "getBelongInstance",
+            "summary": "Get\u0020the\u0020instance\u0020of\u0020a\u0020\u0027Belong\u0027\u0020relation",
+            "url": "classes/Makiavelo-Flex-Relation.html#method_getBelongInstance"
+        },                {
+            "fqsen": "\\Makiavelo\\Flex\\Relation\u003A\u003AsetInstance\u0028\u0029",
+            "name": "setInstance",
+            "summary": "Set\u0020the\u0020instance\u0020of\u0020a\u0020relation",
+            "url": "classes/Makiavelo-Flex-Relation.html#method_setInstance"
+        },                {
+            "fqsen": "\\Makiavelo\\Flex\\Relation\u003A\u003Aadd\u0028\u0029",
+            "name": "add",
+            "summary": "Add\u0020an\u0020instance\u0020to\u0020the\u0020collection\nor\u0020do\u0020nothing\u0020if\u0020the\u0020current\u0020instance\u0020is\u0020not\u0020a\u0020collection",
+            "url": "classes/Makiavelo-Flex-Relation.html#method_add"
+        },                {
+            "fqsen": "\\Makiavelo\\Flex\\Relation\u003A\u003AisEmpty\u0028\u0029",
+            "name": "isEmpty",
+            "summary": "Check\u0020if\u0020a\u0020relation\u0027s\u0020instance\u0020is\u0020empty",
+            "url": "classes/Makiavelo-Flex-Relation.html#method_isEmpty"
+        },                {
+            "fqsen": "\\Makiavelo\\Flex\\Relation\u003A\u003AisCollection\u0028\u0029",
+            "name": "isCollection",
+            "summary": "Check\u0020if\u0020the\u0020instance\u0020is\u0020a\u0020collection",
+            "url": "classes/Makiavelo-Flex-Relation.html#method_isCollection"
+        },                {
+            "fqsen": "\\Makiavelo\\Flex\\Relation\u003A\u003AisEmptyCollection\u0028\u0029",
+            "name": "isEmptyCollection",
+            "summary": "Check\u0020if\u0020the\u0020collection\u0020is\u0020empty",
+            "url": "classes/Makiavelo-Flex-Relation.html#method_isEmptyCollection"
+        },                {
+            "fqsen": "\\Makiavelo\\Flex\\Relation\u003A\u003A\u0024name",
+            "name": "name",
+            "summary": "Name\u0020of\u0020the\u0020relationship\nIt\u0020will\u0020be\u0020indexed\u0020by\u0020that\u0020name\u0020in\u0020RelationManager",
+            "url": "classes/Makiavelo-Flex-Relation.html#property_name"
+        },                {
+            "fqsen": "\\Makiavelo\\Flex\\Relation\u003A\u003A\u0024key",
+            "name": "key",
+            "summary": "The\u0020key\u0020to\u0020use\u0020in\u0020the\u0020relationship\nBelongs\u003A\u0020will\u0020be\u0020the\u0020local\u0020field\nHas\u003A\u0020will\u0020be\u0020the\u0020remote\u0020field\nHasAndBelongs\u003A\u0020will\u0020be\u0020the\u0020local\u0020field\u0020name\u0020in\u0020the\u0020relation\u0020table",
+            "url": "classes/Makiavelo-Flex-Relation.html#property_key"
+        },                {
+            "fqsen": "\\Makiavelo\\Flex\\Relation\u003A\u003A\u0024externalKey",
+            "name": "externalKey",
+            "summary": "Used\u0020in\u0020\u0027HasAndBelongs\u0027\u0020relations\nIt\u0027s\u0020the\u0020id\u0020of\u0020the\u0020other\u0020entity\u0020in\u0020the\u0020relation\u0020table",
+            "url": "classes/Makiavelo-Flex-Relation.html#property_externalKey"
+        },                {
+            "fqsen": "\\Makiavelo\\Flex\\Relation\u003A\u003A\u0024table",
+            "name": "table",
+            "summary": "The\u0020table\u0020name\u0020of\u0020the\u0020model",
+            "url": "classes/Makiavelo-Flex-Relation.html#property_table"
+        },                {
+            "fqsen": "\\Makiavelo\\Flex\\Relation\u003A\u003A\u0024tableAlias",
+            "name": "tableAlias",
+            "summary": "When\u0020using\u0020multiple\u0020references\u0020to\u0020the\u0020same\u0020table\nan\u0020alias\u0020is\u0020required.",
+            "url": "classes/Makiavelo-Flex-Relation.html#property_tableAlias"
+        },                {
+            "fqsen": "\\Makiavelo\\Flex\\Relation\u003A\u003A\u0024relationTable",
+            "name": "relationTable",
+            "summary": "Used\u0020in\u0020\u0027HasAndBelongs\u0027\u0020relationships\nIt\u0027s\u0020the\u0020name\u0020of\u0020the\u0020intermediate\u0020table",
+            "url": "classes/Makiavelo-Flex-Relation.html#property_relationTable"
+        },                {
+            "fqsen": "\\Makiavelo\\Flex\\Relation\u003A\u003A\u0024class",
+            "name": "class",
+            "summary": "The\u0020name\u0020of\u0020the\u0020class\u0020of\u0020the\u0020related\u0020model",
+            "url": "classes/Makiavelo-Flex-Relation.html#property_class"
+        },                {
+            "fqsen": "\\Makiavelo\\Flex\\Relation\u003A\u003A\u0024type",
+            "name": "type",
+            "summary": "The\u0020type\u0020of\u0020relationship\nPossible\u0020values\u003A\u0020\u0027Belongs\u0027,\u0020\u0027Has\u0027\u0020and\u0020\u0027HasAndBelongs\u0027",
+            "url": "classes/Makiavelo-Flex-Relation.html#property_type"
+        },                {
+            "fqsen": "\\Makiavelo\\Flex\\Relation\u003A\u003A\u0024removeOrphans",
+            "name": "removeOrphans",
+            "summary": "Whether\u0020to\u0020remove\u0020orphaned\u0020records\u0020or\u0020not\u0020after\u0020a\u0020\u0027Has\u0027\u0020or\na\u0020\u0027HasAndBelongs\u0027\u0020relation\u0020records\u0020are\u0020updated.",
+            "url": "classes/Makiavelo-Flex-Relation.html#property_removeOrphans"
+        },                {
+            "fqsen": "\\Makiavelo\\Flex\\Relation\u003A\u003A\u0024instance",
+            "name": "instance",
+            "summary": "The\u0020instance\u0020of\u0020the\u0020related\u0020model\/s\nThis\u0020can\u0020be\u0020a\u0020class\u0020instance\u0020or\u0020an\u0020array\u0020in\u0020case\u0020of\u0020\u0027Has\u0027\u0020and\n\u0027HasAndBelongs\u0027\u0020relations.",
+            "url": "classes/Makiavelo-Flex-Relation.html#property_instance"
+        },                {
+            "fqsen": "\\Makiavelo\\Flex\\Relation\u003A\u003A\u0024loaded",
+            "name": "loaded",
+            "summary": "Flag\u0020to\u0020check\u0020if\u0020the\u0020instance\u0020was\u0020loaded\nIf\u0020a\u0020\u0027Has\u0027\u0020or\u0020\u0027HasAndBelongs\u0027\u0020relation\u0020is\u0020set\u0020to\u0020an\u0020empty\u0020array\nit\u0020will\u0020count\u0020as\u0020loaded,\u0020since\u0020it\u0020was\u0020just\u0020created.",
+            "url": "classes/Makiavelo-Flex-Relation.html#property_loaded"
+        },                {
+            "fqsen": "\\Makiavelo\\Flex\\Relation\u003A\u003A\u0024uniquePair",
+            "name": "uniquePair",
+            "summary": "Name\u0020of\u0020the\u0020unique\u0020pair\u0020of\u0020field\u0020names\u0020used\u0020in\u0020a\u0020\u0027HasAndBelongs\u0027\nintermediate\u0020table.",
+            "url": "classes/Makiavelo-Flex-Relation.html#property_uniquePair"
+        },                {
+            "fqsen": "\\Makiavelo\\Flex\\RelationManager",
+            "name": "RelationManager",
+            "summary": "Class\u0020to\u0020handle\u0020collections\u0020of\u0020relations.",
+            "url": "classes/Makiavelo-Flex-RelationManager.html"
+        },                {
+            "fqsen": "\\Makiavelo\\Flex\\RelationManager\u003A\u003A__construct\u0028\u0029",
+            "name": "__construct",
+            "summary": "",
+            "url": "classes/Makiavelo-Flex-RelationManager.html#method___construct"
+        },                {
+            "fqsen": "\\Makiavelo\\Flex\\RelationManager\u003A\u003Aadd\u0028\u0029",
+            "name": "add",
+            "summary": "Add\u0020a\u0020relation\u0020to\u0020the\u0020collection\nThe\u0020input\u0020parameters\u0020match\u0020the\u0020\u0027Relation\u0027\u0020class\ninput\u0020parameters.",
+            "url": "classes/Makiavelo-Flex-RelationManager.html#method_add"
+        },                {
+            "fqsen": "\\Makiavelo\\Flex\\RelationManager\u003A\u003Ahas\u0028\u0029",
+            "name": "has",
+            "summary": "Check\u0020if\u0020a\u0020relation\u0020exists",
+            "url": "classes/Makiavelo-Flex-RelationManager.html#method_has"
+        },                {
+            "fqsen": "\\Makiavelo\\Flex\\RelationManager\u003A\u003Aget\u0028\u0029",
+            "name": "get",
+            "summary": "Get\u0020a\u0020relation\u0020by\u0020name,\u0020or\u0020all\u0020of\u0020them\u0020if\u0020no\u0020name\u0020was\u0020provided",
+            "url": "classes/Makiavelo-Flex-RelationManager.html#method_get"
+        },                {
+            "fqsen": "\\Makiavelo\\Flex\\RelationManager\u003A\u003A\u0024relations",
+            "name": "relations",
+            "summary": "Collection\u0020of\u0020relations",
+            "url": "classes/Makiavelo-Flex-RelationManager.html#property_relations"
         },                {
             "fqsen": "\\",
             "name": "\\",
