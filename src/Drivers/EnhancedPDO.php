@@ -1,6 +1,6 @@
 <?php
 
-namespace Makiavelo\Flex\Util;
+namespace Makiavelo\Flex\Drivers;
 
 /**
  * Extend PDO to add an emulation of nested transactions

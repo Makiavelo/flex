@@ -60,7 +60,12 @@ use Makiavelo\Flex\FlexRepository;
 Here's a quick example of an implementation, let's say we have a json to dump into a db:
 ```php
 $repo = FlexRepository::get();
-$repo->connect('172.17.0.1', 'db', 'user', 'pass');
+$repo->connect([
+    'host' => 'localhost',
+    'db' => 'flex_test',
+    'user' => 'myuser',
+    'pass' => 'mypass'
+]);
 
 $json = '[{"name":"John", "last_name": "Doe"},...]'; // Dots to represent lots of other users
 
@@ -104,12 +109,45 @@ include('../vendor/autoload.php');
 
 
 $repo = FlexRepository::get();
-$status = $repo->connect(
-    '172.17.0.1',
-    'flex_test',
-    'root',
-    'root'
-);
+$status = $repo->connect([
+    'host' => 'localhost',
+    'db' => 'flex_test',
+    'user' => 'myuser',
+    'pass' => 'mypass'
+]);
+```
+
+### Using other databases
+Flex is built for MySQL, and doesn't aim to be database agnostic. Anyways, you still can use the database of your choice, but it will require you to build a driver for it.
+
+All the queries and their logic are into the driver, so to make it work with any other database it's required to copy this file:
+
+`src/Drivers/PDOMySQL.php` 
+
+Understand what is happenning there and rewrite the queries for the database required.
+
+Example:
+```php
+public function delete($table, Flex $model)
+{
+    $query = "DELETE FROM {$table} WHERE id = ?"; // <--- CHANGE THIS
+    $stmt = $this->db->prepare($query);           // <--- and of course your connector to whatever
+    $result = $stmt->execute([$model->id]);
+    return $result;
+}
+```
+
+Then just replace the driver in `FlexRepository`
+```php
+$driver = new MySQLiDriver(....);
+FlexRepository::get()->useDriver($driver);
+
+// OR
+FlexRepository::get(['driver' => $driver]); // In the first call only
+
+// MySQLiDriver should have the same methods as PDOMySQL.php
+// and connect to the real connector with mysqli_connect(...)
+// to execute the actual queries in the db engine
 ```
 
 ### Creating models
@@ -719,12 +757,12 @@ include('../vendor/autoload.php');
 
 FlexRepository::freeze();
 $repo = FlexRepository::get();
-$status = $repo->connect(
-    '172.17.0.1',
-    'flex_test',
-    'root',
-    'root'
-);
+$status = $repo->connect([
+    'host' => 'localhost',
+    'db' => 'flex_test',
+    'user' => 'myuser',
+    'pass' => 'mypass'
+]);
 ```
 
 This will completely turn off the automatic schema synchronization, so saving models can fail if the attributes aren't defined on the database.

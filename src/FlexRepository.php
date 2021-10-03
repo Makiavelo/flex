@@ -2,14 +2,11 @@
 
 namespace Makiavelo\Flex;
 
-use Makiavelo\Flex\Util\EnhancedPDO;
+use Makiavelo\Flex\Drivers\PDOMySQL;
 use Makiavelo\Flex\Util\Common;
 
 class FlexRepository
 {
-    /**
-     * @var EnhancedPDO
-     */
     public $db;
 
     /**
@@ -28,9 +25,13 @@ class FlexRepository
      */
     protected static $freeze = false;
 
-    private function __construct()
+    private function __construct($params = [])
     {
-        
+        if (isset($params['driver'])) {
+            $this->db = $params['driver'];
+        } else {
+            $this->db = new PDOMySQL();
+        }
     }
 
     /**
@@ -38,15 +39,27 @@ class FlexRepository
      * 
      * @return FlexRepository
      */
-    public static function get()
+    public static function get($params = [])
     {
         if (self::$instance) {
             return self::$instance;
         } else {
-            self::$instance = new FlexRepository();
+            self::$instance = new FlexRepository($params);
         }
 
         return self::$instance;
+    }
+
+    /**
+     * Change the 'db' property to this value
+     * 
+     * @param mixed $driver
+     * 
+     * @return void
+     */
+    public function useDriver($driver)
+    {
+        $this->db = $driver;
     }
 
     /**
@@ -82,32 +95,16 @@ class FlexRepository
     }
 
     /**
-     * Connect to the database
+     * Connect to the database through the current driver
      * 
-     * @param string $host
-     * @param string $db
-     * @param string $user
-     * @param string $pass
-     * @param string $charset
+     * @param array $params
      * 
      * @return boolean
-     * @throws \PDOException
+     * @throws \Exception
      */
-    public function connect($host, $db, $user, $pass, $charset = 'utf8mb4')
+    public function connect($params)
     {
-        $dsn = "mysql:host=$host;dbname=$db;charset=$charset";
-        $options = [
-            \PDO::ATTR_ERRMODE            => \PDO::ERRMODE_EXCEPTION,
-            \PDO::ATTR_DEFAULT_FETCH_MODE => \PDO::FETCH_ASSOC,
-            \PDO::ATTR_EMULATE_PREPARES   => false,
-        ];
-
-        try {
-            $this->db = new EnhancedPdo($dsn, $user, $pass, $options);
-            return true;
-        } catch (\PDOException $e) {
-            throw new \PDOException($e->getMessage(), (int)$e->getCode());
-        }
+        return $this->db->connect($params);
     }
 
     /**
@@ -305,14 +302,11 @@ class FlexRepository
                 // If the db is frozen we asume the table exists.
                 $tableExists = true;
             } else {
-                $tableExists = $this->tableExists($relation->relationTable);
+                $tableExists = $this->db->tableExists($relation->relationTable);
             }
 
             if ($tableExists) {
-                $query = "DELETE FROM {$relation->relationTable} WHERE {$relation->key} = :parent_id";
-                $stmt = $this->db->prepare($query);
-                $this->bindValues($stmt, [':parent_id' => $model->id]);
-                $result = $stmt->execute();
+                $result = $this->db->deleteQuery($model, $relation);
 
                 return $result;
             }
@@ -333,10 +327,7 @@ class FlexRepository
     {
         $usedIds = array_map(function($obj) { return $obj->id; }, $relation['instance']);
         if ($relation->type === 'Has') {
-            $query = "DELETE FROM {$relation->table} WHERE {$relation->key} = :parent_id AND {$relation->table}.id NOT IN (" . implode($usedIds) . ")";
-            $stmt = $this->db->prepare($query);
-            $this->bindValues($stmt, [':parent_id' => $model->id]);
-            $result = $stmt->execute();
+            $result = $this->db->unusedChildsQuery($relation, $model, $usedIds);
         }
 
         return $result;
@@ -356,14 +347,7 @@ class FlexRepository
         $usedIds = array_map(function($obj) { return $obj->id; }, $relation->instance);
 
         if ($relation->type === 'Has') {
-            $query = "UPDATE {$relation->table} SET {$relation->key} = NULL WHERE {$relation->key} = :parent_id";
-            if ($usedIds) {
-                $query .= " AND {$relation->table}.id NOT IN (" . implode(',', $usedIds) . ")";
-            }
-            
-            $stmt = $this->db->prepare($query);
-            $this->bindValues($stmt, [':parent_id' => $model->id]);
-            $result = $stmt->execute();
+            $result = $this->db->nullifyUnusedChilds($model, $relation, $usedIds);
         }
 
         return $result;
@@ -413,11 +397,8 @@ class FlexRepository
             $updates[] = "{$name} = ?";
         }
 
-        $query = "UPDATE {$table} SET " . implode(",", $updates) . " WHERE id = ?";
-        $stmt = $this->db->prepare($query);
         $values = array_merge($data['values'], [$model->id]);
-        $result = $stmt->execute($values);
-
+        $result = $this->db->update($model, $table, $updates, $data, $values);
         return $result;
     }
 
@@ -434,17 +415,7 @@ class FlexRepository
     {
         $table = $model->meta()->get('table');
         $data = $this->getFieldsAndValues($model);
-        $count = count($data['fields']);
-        $placeHolders = array_fill(0, $count, '?');
-
-        $query = "INSERT INTO {$table} (" . implode(",", $data['fields']) . ") VALUES (" . implode(",", $placeHolders) . ")";
-        $stmt = $this->db->prepare($query);
-        $result = $stmt->execute($data['values']);
-        if ($result) {
-            $id = $this->db->lastInsertId();
-            $model->setId($id);
-        }
-        
+        $result = $this->db->insert($model, $table, $data);
         return $result;
     }
 
@@ -464,9 +435,7 @@ class FlexRepository
 
         if ($pre) {
             $table = $model->meta()->get('table');
-            $query = "DELETE FROM {$table} WHERE id = ?";
-            $stmt = $this->db->prepare($query);
-            $result = $stmt->execute([$model->id]);
+            $result = $this->db->delete($table, $model);
 
             if ($result) {
                 $model->postDelete();
@@ -551,7 +520,7 @@ class FlexRepository
         if ($inserts) {
             $inserts = $this->preSaves($inserts);
             if ($inserts) {
-                $status = $this->insertCollection($inserts);
+                $status = $this->db->insertCollection($inserts);
             }
             $this->postSaves($inserts);
         }
@@ -643,47 +612,6 @@ class FlexRepository
     }
 
     /**
-     * Insert a model collection in the database using transactions
-     * All the models are inserted in one query.
-     * 
-     * @param Flex[] $inserts
-     * 
-     * @return boolean
-     * @throws \PDOException
-     */
-    public function insertCollection($inserts) {
-        $model = $inserts[0];
-        $table = $model->meta()->get('table');
-        $data = $this->getFieldsAndValues($model);
-        $count = count($data['fields']);
-
-        $insertStrings = [];
-        $values = [];
-        foreach ($inserts as $m) {
-            $placeHolders = array_fill(0, $count, '?');
-            $insertStrings[] = "(" . implode(',', $placeHolders) . ")";
-            $fv = $this->getFieldsAndValues($m);
-            foreach ($fv['values'] as $key => $value) {
-                $values[] = $value;
-            }
-        }
-
-        $this->beginTransaction();
-        $query = "INSERT INTO {$table} (" . implode(',', $data['fields']) . ") VALUES " . implode(',', $insertStrings);
-        $stmt = $this->db->prepare($query);
-        $result = $stmt->execute($values);
-        $lastId = $this->db->lastInsertId();
-
-        for ($i = 0; $i < count($inserts); $i++) {
-            $inserts[$i]->setId($lastId + $i);
-        }
-
-        $this->commit();
-
-        return $result;
-    }
-
-    /**
      * Get all the fields and their values from a Flex model
      * 
      * @param Flex $model
@@ -706,30 +634,7 @@ class FlexRepository
         return $result;
     }
 
-    /**
-     * Delete a collection of Flex models
-     * 
-     * @param Flex[] $collection
-     * 
-     * @return boolean
-     */
-    public function deleteCollection($collection)
-    {
-        if ($collection) {
-            $model = $collection[0];
-            $table = $model->meta()->get('table');
-            $count = count($collection);
-            $placeHolders = array_fill(0, $count, '?');
-
-            $query = "DELETE FROM {$table} WHERE id IN (" . implode(',', $placeHolders) . ")";
-            $stmt = $this->db->prepare($query);
-            $result = $stmt->execute($this->getCollectionIds($collection));
-
-            return $result;
-        } else {
-            return false;
-        }
-    }
+    
 
     /**
      * Get an array of ids from a Flex collection
@@ -767,20 +672,20 @@ class FlexRepository
         }
 
         $table = $model->meta()->get('table');
-        $tableExists = $this->tableExists($table);
+        $tableExists = $this->db->tableExists($table);
 
         if (!$tableExists) {
-            $this->createTable($table);
+            $this->db->createTable($table);
         }
 
-        $tableFields = $this->getTableFields($table);
+        $tableFields = $this->db->getTableFields($table);
 
-        $this->updateTableTypes($model, $tableFields);
+        $this->db->updateTableTypes($model, $tableFields);
         $fields = $this->addModelFields($model, $tableFields);
         $fields = $this->addNewFields($model, $tableFields, $fields);
 
         if ($fields) {
-            $this->addFieldsToTable($table, $fields);
+            $this->db->addFieldsToTable($table, $fields);
         }
 
         // It was actually created, but this var was false if 
@@ -788,47 +693,14 @@ class FlexRepository
         if (!$tableExists) {
             $type = $model->meta()->get('table_type');
             if ($type === 'intermediate') {
-                $this->addUniqueCombinedIndex($model);
+                $this->db->addUniqueCombinedIndex($model);
             }
         }
 
         return true;
     }
 
-    public function addUniqueCombinedIndex($model)
-    {
-        $query = "ALTER TABLE `{$model->meta()->get('table')}` ADD CONSTRAINT flex_unique_pair_constraint UNIQUE KEY({$model->meta()->get('unique_pair')})";
-        $result = $this->db->query($query);
-
-        return $result;
-    }
-
-    /**
-     * Update field types on the model table
-     * 
-     * @param Flex $model
-     * @param mixed $tableFields
-     * 
-     * @return void
-     */
-    public function updateTableTypes(Flex $model, $tableFields)
-    {
-        $table = $model->meta()->get('table');
-        $baseQuery = "ALTER TABLE `{$table}` MODIFY COLUMN ";
-        $modelFields = $model->meta()->get('fields');
-        if ($modelFields) {
-            foreach ($modelFields as $name => $modelData) {
-                foreach ($tableFields as $tableField) {
-                    if ($tableField['Field'] === $name) {
-                        if (strtolower($tableField['Type']) !== strtolower($modelData['type'])) {
-                            $query = $baseQuery . "`{$name}`" . " " . $modelData['type'];
-                            $this->db->query($query);
-                        }       
-                    }
-                }
-            }
-        }
-    }
+    
 
     /**
      * Add new fields to the table if needed.
@@ -891,78 +763,9 @@ class FlexRepository
         return $fields;
     }
 
-    /**
-     * Execute the query to add fields to a table
-     * 
-     * @param string $name Table name
-     * @param array $fields
-     * 
-     * @return \PDOStatement|false
-     */
-    public function addFieldsToTable($name, $fields)
-    {
-        $query = "ALTER TABLE {$name} ";
-        $columns = [];
-        foreach ($fields as $key => $field) {
-            $fieldQuery = "ADD COLUMN {$field['name']} {$field['type']}";
-            if (!$field['null']) {
-                $fieldQuery .= " NOT NULL";
-            }
-            $columns[] = $fieldQuery;
-        }
+    
 
-        $query .= implode(',', $columns);
-        $result = $this->db->query($query);
-
-        return $result;
-    }
-
-    /**
-     * Execute the query to create a table
-     * 
-     * @param string $name
-     * 
-     * @return \PDOStatement|false
-     */
-    public function createTable($name) {
-        $tableQuery = "CREATE TABLE IF NOT EXISTS `{$name}` (id INT auto_increment, primary key (id)) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci";
-        $result = $this->db->query($tableQuery);
-
-        return $result;
-    }
-
-    /**
-     * Check if a table exists via query
-     * 
-     * @param string $name
-     * 
-     * @return boolean
-     */
-    public function tableExists($name)
-    {
-        $query = "SHOW TABLES LIKE '{$name}'";
-        $result = $this->db->query($query)->fetchAll();
-        if (count($result) > 0) {
-            return true;
-        }
-
-        return false;
-    }
-
-    /**
-     * Get the table fields via DESCRIBE query
-     * 
-     * @param string $name
-     * 
-     * @return array|false
-     */
-    public function getTableFields($name)
-    {
-        $query = "DESCRIBE {$name}";
-        $result = $this->db->query($query)->fetchAll();
-
-        return $result;
-    }
+    
 
     /**
      * Helper method to create a new object
@@ -980,64 +783,6 @@ class FlexRepository
         $flex->id = null;
 
         return $flex;
-    }
-
-    /**
-     * Helper method to do quick finds
-     * For complex queries use PDO directly.
-     * 
-     * @param string $table
-     * @param string $condition
-     * @param array $params
-     * @param array $options
-     * 
-     * @return array|false
-     */
-    public function find($table, $condition = '', $params = [], $options = [])
-    {
-        $this->db->setAttribute(\PDO::ATTR_FETCH_TABLE_NAMES, true);
-        $options = array_merge($this->getDefaultOptions(), $options);
-
-        $query = "SELECT * FROM {$table}";
-        if ($condition) {
-            $query .= " WHERE {$condition}";
-            $stmt = $this->db->prepare($query);
-            $this->bindValues($stmt, $params);
-            $stmt->execute();
-            $result = $stmt->fetchAll();
-        } else {
-            $result = $this->db->query($query)->fetchAll();
-        }
-
-        if ($options['hydrate']) {
-            $result = $this->hydrate($result, $table, $options['class']);
-        }
-
-        $this->db->setAttribute(\PDO::ATTR_FETCH_TABLE_NAMES, false);
-
-        return $result;
-    }
-
-    /**
-     * Alias for 'find' which just returns the first result and
-     * limits the query to one result.
-     * 
-     * @param mixed $table
-     * @param string $condition
-     * @param array $params
-     * @param array $options
-     * 
-     * @return mixed
-     */
-    public function findOne($table, $condition = '', $params = [], $options = [])
-    {
-        $condition .= ' LIMIT 1';
-        $result = $this->find($table, $condition, $params, $options);
-        if ($result) {
-            return $result[0];
-        }
-
-        return null;
     }
 
     /**
@@ -1063,52 +808,59 @@ class FlexRepository
      */
     public function query($query, $params = [], $options = [])
     {
-        $this->db->setAttribute(\PDO::ATTR_FETCH_TABLE_NAMES, true);
-        $options = array_merge($this->getDefaultOptions(), $options);
+        $result = $this->db->query($query, $params, $options);
 
-        $stmt = $this->db->prepare($query);
-        $this->bindValues($stmt, $params);
-        $stmt->execute();
-        $result = $stmt->fetchAll();
-        if ($options['hydrate']) {
-            $result = $this->hydrate($result, $options['table'], $options['class']);
+        if ($result) {
+            if (Common::get($options, 'hydrate', true)) {
+                $result = $this->hydrate($result, Common::get($options, 'table', ''), Common::get($options, 'class', 'Makiavelo\\Flex\\flex'));
+            }
         }
-        $this->db->setAttribute(\PDO::ATTR_FETCH_TABLE_NAMES, false);
 
         return $result;
     }
 
     /**
-     * Get default options for queries
+     * Helper method to do quick finds
+     * For complex queries use PDO directly.
      * 
-     * @return array
+     * @param string $table
+     * @param string $condition
+     * @param array $params
+     * @param array $options
+     * 
+     * @return array|false
      */
-    public function getDefaultOptions()
+    public function find($table, $condition = '', $params = [], $options = [])
     {
-        $options = [
-            'hydrate' => true,
-            'class' => 'Makiavelo\\Flex\\Flex',
-            'table' => ''
-        ];
+        $result = $this->db->find($table, $condition, $params, $options);
+        if (Common::get($options, 'hydrate', true)) {
+            $result = $this->hydrate($result, $table, Common::get($options, 'class', 'Makiavelo\\Flex\\Flex'));
+        }
 
-        return $options;
+        return $result;
     }
 
     /**
-     * Bind parameters to the PDOStatement
+     * Alias for 'find' which just returns the first result and
+     * limits the query to one result.
      * 
-     * @param \PDOStatement $stmt
+     * @param mixed $table
+     * @param string $condition
      * @param array $params
+     * @param array $options
      * 
-     * @return void
+     * @return mixed
      */
-    public function bindValues(\PDOStatement $stmt, $params = [])
+    public function findOne($table, $condition = '', $params = [], $options = [])
     {
-        if ($params) {
-            foreach ($params as $key => $value) {
-                $stmt->bindValue($key, $value);
+        $result = $this->db->findOne($table, $condition, $params, $options);
+        if ($result) {
+            if ($options['hydrate']) {
+                $result = $this->hydrate($result[0], $table, $options['class']);
             }
         }
+
+        return $result;
     }
 
     /**
