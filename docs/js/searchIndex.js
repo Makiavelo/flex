@@ -166,6 +166,11 @@ Search.appendIndex(
             "summary": "Get\u0020the\u0020current\u0020instance\u0020or\u0020create\u0020one.",
             "url": "classes/Makiavelo-Flex-FlexRepository.html#method_get"
         },                {
+            "fqsen": "\\Makiavelo\\Flex\\FlexRepository\u003A\u003AuseDriver\u0028\u0029",
+            "name": "useDriver",
+            "summary": "Change\u0020the\u0020\u0027db\u0027\u0020property\u0020to\u0020this\u0020value",
+            "url": "classes/Makiavelo-Flex-FlexRepository.html#method_useDriver"
+        },                {
             "fqsen": "\\Makiavelo\\Flex\\FlexRepository\u003A\u003A\u0024freeze",
             "name": "freeze",
             "summary": "If\u0020this\u0020is\u0020set\u0020to\u0020true,\u0020no\u0020database\u0020changes\u0020will\u0020be\u0020performed.",
@@ -183,7 +188,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\Makiavelo\\Flex\\FlexRepository\u003A\u003Aconnect\u0028\u0029",
             "name": "connect",
-            "summary": "Connect\u0020to\u0020the\u0020database",
+            "summary": "Connect\u0020to\u0020the\u0020database\u0020through\u0020the\u0020current\u0020driver",
             "url": "classes/Makiavelo-Flex-FlexRepository.html#method_connect"
         },                {
             "fqsen": "\\Makiavelo\\Flex\\FlexRepository\u003A\u003Asave\u0028\u0029",
@@ -296,20 +301,10 @@ Search.appendIndex(
             "summary": "Update\u0020all\u0020the\u0020models\u0020from\u0020a\u0020collection",
             "url": "classes/Makiavelo-Flex-FlexRepository.html#method_updateCollection"
         },                {
-            "fqsen": "\\Makiavelo\\Flex\\FlexRepository\u003A\u003AinsertCollection\u0028\u0029",
-            "name": "insertCollection",
-            "summary": "Insert\u0020a\u0020model\u0020collection\u0020in\u0020the\u0020database\u0020using\u0020transactions\nAll\u0020the\u0020models\u0020are\u0020inserted\u0020in\u0020one\u0020query.",
-            "url": "classes/Makiavelo-Flex-FlexRepository.html#method_insertCollection"
-        },                {
             "fqsen": "\\Makiavelo\\Flex\\FlexRepository\u003A\u003AgetFieldsAndValues\u0028\u0029",
             "name": "getFieldsAndValues",
             "summary": "Get\u0020all\u0020the\u0020fields\u0020and\u0020their\u0020values\u0020from\u0020a\u0020Flex\u0020model",
             "url": "classes/Makiavelo-Flex-FlexRepository.html#method_getFieldsAndValues"
-        },                {
-            "fqsen": "\\Makiavelo\\Flex\\FlexRepository\u003A\u003AdeleteCollection\u0028\u0029",
-            "name": "deleteCollection",
-            "summary": "Delete\u0020a\u0020collection\u0020of\u0020Flex\u0020models",
-            "url": "classes/Makiavelo-Flex-FlexRepository.html#method_deleteCollection"
         },                {
             "fqsen": "\\Makiavelo\\Flex\\FlexRepository\u003A\u003AgetCollectionIds\u0028\u0029",
             "name": "getCollectionIds",
@@ -321,16 +316,6 @@ Search.appendIndex(
             "summary": "While\u0020not\u0020frozen\u0020the\u0020table\u0020will\u0020get\u0020updated\njust\u0020by\u0020saving\u0020records\u0020to\u0020it.",
             "url": "classes/Makiavelo-Flex-FlexRepository.html#method_prepare"
         },                {
-            "fqsen": "\\Makiavelo\\Flex\\FlexRepository\u003A\u003AaddUniqueCombinedIndex\u0028\u0029",
-            "name": "addUniqueCombinedIndex",
-            "summary": "",
-            "url": "classes/Makiavelo-Flex-FlexRepository.html#method_addUniqueCombinedIndex"
-        },                {
-            "fqsen": "\\Makiavelo\\Flex\\FlexRepository\u003A\u003AupdateTableTypes\u0028\u0029",
-            "name": "updateTableTypes",
-            "summary": "Update\u0020field\u0020types\u0020on\u0020the\u0020model\u0020table",
-            "url": "classes/Makiavelo-Flex-FlexRepository.html#method_updateTableTypes"
-        },                {
             "fqsen": "\\Makiavelo\\Flex\\FlexRepository\u003A\u003AaddNewFields\u0028\u0029",
             "name": "addNewFields",
             "summary": "Add\u0020new\u0020fields\u0020to\u0020the\u0020table\u0020if\u0020needed.",
@@ -341,30 +326,15 @@ Search.appendIndex(
             "summary": "Add\u0020the\u0020model\u0020fields\u0020defined\u0020in\u0020the\u0020meta\u0020that\u0020are\u0020not\u0020defined\nin\u0020the\u0020database\u0020table.",
             "url": "classes/Makiavelo-Flex-FlexRepository.html#method_addModelFields"
         },                {
-            "fqsen": "\\Makiavelo\\Flex\\FlexRepository\u003A\u003AaddFieldsToTable\u0028\u0029",
-            "name": "addFieldsToTable",
-            "summary": "Execute\u0020the\u0020query\u0020to\u0020add\u0020fields\u0020to\u0020a\u0020table",
-            "url": "classes/Makiavelo-Flex-FlexRepository.html#method_addFieldsToTable"
-        },                {
-            "fqsen": "\\Makiavelo\\Flex\\FlexRepository\u003A\u003AcreateTable\u0028\u0029",
-            "name": "createTable",
-            "summary": "Execute\u0020the\u0020query\u0020to\u0020create\u0020a\u0020table",
-            "url": "classes/Makiavelo-Flex-FlexRepository.html#method_createTable"
-        },                {
-            "fqsen": "\\Makiavelo\\Flex\\FlexRepository\u003A\u003AtableExists\u0028\u0029",
-            "name": "tableExists",
-            "summary": "Check\u0020if\u0020a\u0020table\u0020exists\u0020via\u0020query",
-            "url": "classes/Makiavelo-Flex-FlexRepository.html#method_tableExists"
-        },                {
-            "fqsen": "\\Makiavelo\\Flex\\FlexRepository\u003A\u003AgetTableFields\u0028\u0029",
-            "name": "getTableFields",
-            "summary": "Get\u0020the\u0020table\u0020fields\u0020via\u0020DESCRIBE\u0020query",
-            "url": "classes/Makiavelo-Flex-FlexRepository.html#method_getTableFields"
-        },                {
             "fqsen": "\\Makiavelo\\Flex\\FlexRepository\u003A\u003Acreate\u0028\u0029",
             "name": "create",
             "summary": "Helper\u0020method\u0020to\u0020create\u0020a\u0020new\u0020object\nIf\u0020an\u0020object\u0020is\u0020created\u0020this\u0020way,\u0020all\u0020the\u0020fields\nwill\u0020be\u0020created\u0020as\u0020TEXT\u0020by\u0020default.",
             "url": "classes/Makiavelo-Flex-FlexRepository.html#method_create"
+        },                {
+            "fqsen": "\\Makiavelo\\Flex\\FlexRepository\u003A\u003Aquery\u0028\u0029",
+            "name": "query",
+            "summary": "Execute\u0020any\u0020query\u0020and\u0020get\u0020an\u0020array\u0020or\u0020a\u0020collection\u0020of\u0020models\nIf\u0020the\u0020query\u0020has\u0020any\u0020parameters,\u0020they\u0020have\u0020to\u0020be\u0020prepared\u0020to\u0020avoid\u0020injection\nso\u0020name\u0020them\u0020in\u0020the\u0020PDO\u0020fashion\u0020and\u0020send\u0020an\u0020array\u0020of\u0020parameters\/values.",
+            "url": "classes/Makiavelo-Flex-FlexRepository.html#method_query"
         },                {
             "fqsen": "\\Makiavelo\\Flex\\FlexRepository\u003A\u003Afind\u0028\u0029",
             "name": "find",
@@ -375,21 +345,6 @@ Search.appendIndex(
             "name": "findOne",
             "summary": "Alias\u0020for\u0020\u0027find\u0027\u0020which\u0020just\u0020returns\u0020the\u0020first\u0020result\u0020and\nlimits\u0020the\u0020query\u0020to\u0020one\u0020result.",
             "url": "classes/Makiavelo-Flex-FlexRepository.html#method_findOne"
-        },                {
-            "fqsen": "\\Makiavelo\\Flex\\FlexRepository\u003A\u003Aquery\u0028\u0029",
-            "name": "query",
-            "summary": "Execute\u0020any\u0020query\u0020and\u0020get\u0020an\u0020array\u0020or\u0020a\u0020collection\u0020of\u0020models\nIf\u0020the\u0020query\u0020has\u0020any\u0020parameters,\u0020they\u0020have\u0020to\u0020be\u0020prepared\u0020to\u0020avoid\u0020injection\nso\u0020name\u0020them\u0020in\u0020the\u0020PDO\u0020fashion\u0020and\u0020send\u0020an\u0020array\u0020of\u0020parameters\/values.",
-            "url": "classes/Makiavelo-Flex-FlexRepository.html#method_query"
-        },                {
-            "fqsen": "\\Makiavelo\\Flex\\FlexRepository\u003A\u003AgetDefaultOptions\u0028\u0029",
-            "name": "getDefaultOptions",
-            "summary": "Get\u0020default\u0020options\u0020for\u0020queries",
-            "url": "classes/Makiavelo-Flex-FlexRepository.html#method_getDefaultOptions"
-        },                {
-            "fqsen": "\\Makiavelo\\Flex\\FlexRepository\u003A\u003AbindValues\u0028\u0029",
-            "name": "bindValues",
-            "summary": "Bind\u0020parameters\u0020to\u0020the\u0020PDOStatement",
-            "url": "classes/Makiavelo-Flex-FlexRepository.html#method_bindValues"
         },                {
             "fqsen": "\\Makiavelo\\Flex\\FlexRepository\u003A\u003Ahydrate\u0028\u0029",
             "name": "hydrate",
@@ -440,31 +395,6 @@ Search.appendIndex(
             "name": "isCollection",
             "summary": "",
             "url": "classes/Makiavelo-Flex-Util-Common.html#method_isCollection"
-        },                {
-            "fqsen": "\\Makiavelo\\Flex\\Util\\EnhancedPDO",
-            "name": "EnhancedPDO",
-            "summary": "Extend\u0020PDO\u0020to\u0020add\u0020an\u0020emulation\u0020of\u0020nested\u0020transactions",
-            "url": "classes/Makiavelo-Flex-Util-EnhancedPDO.html"
-        },                {
-            "fqsen": "\\Makiavelo\\Flex\\Util\\EnhancedPDO\u003A\u003AbeginTransaction\u0028\u0029",
-            "name": "beginTransaction",
-            "summary": "Create\u0020a\u0020new\u0020transaction.",
-            "url": "classes/Makiavelo-Flex-Util-EnhancedPDO.html#method_beginTransaction"
-        },                {
-            "fqsen": "\\Makiavelo\\Flex\\Util\\EnhancedPDO\u003A\u003Acommit\u0028\u0029",
-            "name": "commit",
-            "summary": "Commit\u0020the\u0020current\u0020transaction.",
-            "url": "classes/Makiavelo-Flex-Util-EnhancedPDO.html#method_commit"
-        },                {
-            "fqsen": "\\Makiavelo\\Flex\\Util\\EnhancedPDO\u003A\u003Arollback\u0028\u0029",
-            "name": "rollback",
-            "summary": "Rollbacks\u0020a\u0020transaction.",
-            "url": "classes/Makiavelo-Flex-Util-EnhancedPDO.html#method_rollback"
-        },                {
-            "fqsen": "\\Makiavelo\\Flex\\Util\\EnhancedPDO\u003A\u003A\u0024transactionCounter",
-            "name": "transactionCounter",
-            "summary": "",
-            "url": "classes/Makiavelo-Flex-Util-EnhancedPDO.html#property_transactionCounter"
         },                {
             "fqsen": "\\Makiavelo\\Flex\\Meta",
             "name": "Meta",
@@ -671,10 +601,180 @@ Search.appendIndex(
             "summary": "Collection\u0020of\u0020relations",
             "url": "classes/Makiavelo-Flex-RelationManager.html#property_relations"
         },                {
+            "fqsen": "\\Makiavelo\\Flex\\Drivers\\EnhancedPDO",
+            "name": "EnhancedPDO",
+            "summary": "Extend\u0020PDO\u0020to\u0020add\u0020an\u0020emulation\u0020of\u0020nested\u0020transactions",
+            "url": "classes/Makiavelo-Flex-Drivers-EnhancedPDO.html"
+        },                {
+            "fqsen": "\\Makiavelo\\Flex\\Drivers\\EnhancedPDO\u003A\u003AbeginTransaction\u0028\u0029",
+            "name": "beginTransaction",
+            "summary": "Create\u0020a\u0020new\u0020transaction.",
+            "url": "classes/Makiavelo-Flex-Drivers-EnhancedPDO.html#method_beginTransaction"
+        },                {
+            "fqsen": "\\Makiavelo\\Flex\\Drivers\\EnhancedPDO\u003A\u003Acommit\u0028\u0029",
+            "name": "commit",
+            "summary": "Commit\u0020the\u0020current\u0020transaction.",
+            "url": "classes/Makiavelo-Flex-Drivers-EnhancedPDO.html#method_commit"
+        },                {
+            "fqsen": "\\Makiavelo\\Flex\\Drivers\\EnhancedPDO\u003A\u003Arollback\u0028\u0029",
+            "name": "rollback",
+            "summary": "Rollbacks\u0020a\u0020transaction.",
+            "url": "classes/Makiavelo-Flex-Drivers-EnhancedPDO.html#method_rollback"
+        },                {
+            "fqsen": "\\Makiavelo\\Flex\\Drivers\\EnhancedPDO\u003A\u003A\u0024transactionCounter",
+            "name": "transactionCounter",
+            "summary": "",
+            "url": "classes/Makiavelo-Flex-Drivers-EnhancedPDO.html#property_transactionCounter"
+        },                {
+            "fqsen": "\\Makiavelo\\Flex\\Drivers\\PDOMySQL",
+            "name": "PDOMySQL",
+            "summary": "",
+            "url": "classes/Makiavelo-Flex-Drivers-PDOMySQL.html"
+        },                {
+            "fqsen": "\\Makiavelo\\Flex\\Drivers\\PDOMySQL\u003A\u003A__construct\u0028\u0029",
+            "name": "__construct",
+            "summary": "",
+            "url": "classes/Makiavelo-Flex-Drivers-PDOMySQL.html#method___construct"
+        },                {
+            "fqsen": "\\Makiavelo\\Flex\\Drivers\\PDOMySQL\u003A\u003Aconnect\u0028\u0029",
+            "name": "connect",
+            "summary": "Connect\u0020to\u0020PDO",
+            "url": "classes/Makiavelo-Flex-Drivers-PDOMySQL.html#method_connect"
+        },                {
+            "fqsen": "\\Makiavelo\\Flex\\Drivers\\PDOMySQL\u003A\u003AunusedChildsQuery\u0028\u0029",
+            "name": "unusedChildsQuery",
+            "summary": "Query\u0020used\u0020to\u0020delet\u0020unused\u0020childs\u0020in\u0020\u0027Has\u0027\u0020or\u0020\u0027HasAndBelongs\u0027\u0020relations",
+            "url": "classes/Makiavelo-Flex-Drivers-PDOMySQL.html#method_unusedChildsQuery"
+        },                {
+            "fqsen": "\\Makiavelo\\Flex\\Drivers\\PDOMySQL\u003A\u003AnullifyUnusedChilds\u0028\u0029",
+            "name": "nullifyUnusedChilds",
+            "summary": "Query\u0020to\u0020set\u0020to\u0020null\u0020childs\u0020of\u0020a\u0020\u0027Has\u0027\u0020relation",
+            "url": "classes/Makiavelo-Flex-Drivers-PDOMySQL.html#method_nullifyUnusedChilds"
+        },                {
+            "fqsen": "\\Makiavelo\\Flex\\Drivers\\PDOMySQL\u003A\u003Aupdate\u0028\u0029",
+            "name": "update",
+            "summary": "Query\u0020to\u0020update\u0020a\u0020model",
+            "url": "classes/Makiavelo-Flex-Drivers-PDOMySQL.html#method_update"
+        },                {
+            "fqsen": "\\Makiavelo\\Flex\\Drivers\\PDOMySQL\u003A\u003Ainsert\u0028\u0029",
+            "name": "insert",
+            "summary": "Query\u0020to\u0020insert\u0020a\u0020model\nSets\u0020the\u0020inserted\u0020ID\u0020in\u0020the\u0020model\u0020instance.",
+            "url": "classes/Makiavelo-Flex-Drivers-PDOMySQL.html#method_insert"
+        },                {
+            "fqsen": "\\Makiavelo\\Flex\\Drivers\\PDOMySQL\u003A\u003Adelete\u0028\u0029",
+            "name": "delete",
+            "summary": "Query\u0020to\u0020delete\u0020a\u0020record\u0020by\u0020id",
+            "url": "classes/Makiavelo-Flex-Drivers-PDOMySQL.html#method_delete"
+        },                {
+            "fqsen": "\\Makiavelo\\Flex\\Drivers\\PDOMySQL\u003A\u003AdeleteQuery\u0028\u0029",
+            "name": "deleteQuery",
+            "summary": "Query\u0020to\u0020delete\u0020from\u0020a\u0020relation\u0020table",
+            "url": "classes/Makiavelo-Flex-Drivers-PDOMySQL.html#method_deleteQuery"
+        },                {
+            "fqsen": "\\Makiavelo\\Flex\\Drivers\\PDOMySQL\u003A\u003AinsertCollection\u0028\u0029",
+            "name": "insertCollection",
+            "summary": "Insert\u0020a\u0020model\u0020collection\u0020in\u0020the\u0020database\u0020using\u0020transactions\nAll\u0020the\u0020models\u0020are\u0020inserted\u0020in\u0020one\u0020query.",
+            "url": "classes/Makiavelo-Flex-Drivers-PDOMySQL.html#method_insertCollection"
+        },                {
+            "fqsen": "\\Makiavelo\\Flex\\Drivers\\PDOMySQL\u003A\u003AgetFieldsAndValues\u0028\u0029",
+            "name": "getFieldsAndValues",
+            "summary": "Get\u0020all\u0020the\u0020fields\u0020and\u0020their\u0020values\u0020from\u0020a\u0020Flex\u0020model",
+            "url": "classes/Makiavelo-Flex-Drivers-PDOMySQL.html#method_getFieldsAndValues"
+        },                {
+            "fqsen": "\\Makiavelo\\Flex\\Drivers\\PDOMySQL\u003A\u003AdeleteCollection\u0028\u0029",
+            "name": "deleteCollection",
+            "summary": "Delete\u0020a\u0020collection\u0020of\u0020Flex\u0020models",
+            "url": "classes/Makiavelo-Flex-Drivers-PDOMySQL.html#method_deleteCollection"
+        },                {
+            "fqsen": "\\Makiavelo\\Flex\\Drivers\\PDOMySQL\u003A\u003AgetCollectionIds\u0028\u0029",
+            "name": "getCollectionIds",
+            "summary": "Get\u0020an\u0020array\u0020of\u0020ids\u0020from\u0020a\u0020Flex\u0020collection",
+            "url": "classes/Makiavelo-Flex-Drivers-PDOMySQL.html#method_getCollectionIds"
+        },                {
+            "fqsen": "\\Makiavelo\\Flex\\Drivers\\PDOMySQL\u003A\u003AaddUniqueCombinedIndex\u0028\u0029",
+            "name": "addUniqueCombinedIndex",
+            "summary": "Query\u0020to\u0020add\u0020the\u0020unique\u0020key\u0020constraint\u0020on\u0020a\u0020relation\u0020table",
+            "url": "classes/Makiavelo-Flex-Drivers-PDOMySQL.html#method_addUniqueCombinedIndex"
+        },                {
+            "fqsen": "\\Makiavelo\\Flex\\Drivers\\PDOMySQL\u003A\u003AupdateTableTypes\u0028\u0029",
+            "name": "updateTableTypes",
+            "summary": "Update\u0020field\u0020types\u0020on\u0020the\u0020model\u0020table",
+            "url": "classes/Makiavelo-Flex-Drivers-PDOMySQL.html#method_updateTableTypes"
+        },                {
+            "fqsen": "\\Makiavelo\\Flex\\Drivers\\PDOMySQL\u003A\u003AaddFieldsToTable\u0028\u0029",
+            "name": "addFieldsToTable",
+            "summary": "Execute\u0020the\u0020query\u0020to\u0020add\u0020fields\u0020to\u0020a\u0020table",
+            "url": "classes/Makiavelo-Flex-Drivers-PDOMySQL.html#method_addFieldsToTable"
+        },                {
+            "fqsen": "\\Makiavelo\\Flex\\Drivers\\PDOMySQL\u003A\u003AcreateTable\u0028\u0029",
+            "name": "createTable",
+            "summary": "Execute\u0020the\u0020query\u0020to\u0020create\u0020a\u0020table",
+            "url": "classes/Makiavelo-Flex-Drivers-PDOMySQL.html#method_createTable"
+        },                {
+            "fqsen": "\\Makiavelo\\Flex\\Drivers\\PDOMySQL\u003A\u003AtableExists\u0028\u0029",
+            "name": "tableExists",
+            "summary": "Check\u0020if\u0020a\u0020table\u0020exists\u0020via\u0020query",
+            "url": "classes/Makiavelo-Flex-Drivers-PDOMySQL.html#method_tableExists"
+        },                {
+            "fqsen": "\\Makiavelo\\Flex\\Drivers\\PDOMySQL\u003A\u003AgetTableFields\u0028\u0029",
+            "name": "getTableFields",
+            "summary": "Get\u0020the\u0020table\u0020fields\u0020via\u0020DESCRIBE\u0020query",
+            "url": "classes/Makiavelo-Flex-Drivers-PDOMySQL.html#method_getTableFields"
+        },                {
+            "fqsen": "\\Makiavelo\\Flex\\Drivers\\PDOMySQL\u003A\u003Afind\u0028\u0029",
+            "name": "find",
+            "summary": "Helper\u0020method\u0020to\u0020do\u0020quick\u0020finds\nFor\u0020complex\u0020queries\u0020use\u0020PDO\u0020directly.",
+            "url": "classes/Makiavelo-Flex-Drivers-PDOMySQL.html#method_find"
+        },                {
+            "fqsen": "\\Makiavelo\\Flex\\Drivers\\PDOMySQL\u003A\u003AfindOne\u0028\u0029",
+            "name": "findOne",
+            "summary": "Alias\u0020for\u0020\u0027find\u0027\u0020which\u0020just\u0020returns\u0020the\u0020first\u0020result\u0020and\nlimits\u0020the\u0020query\u0020to\u0020one\u0020result.",
+            "url": "classes/Makiavelo-Flex-Drivers-PDOMySQL.html#method_findOne"
+        },                {
+            "fqsen": "\\Makiavelo\\Flex\\Drivers\\PDOMySQL\u003A\u003AgetDefaultOptions\u0028\u0029",
+            "name": "getDefaultOptions",
+            "summary": "Get\u0020default\u0020options\u0020for\u0020queries",
+            "url": "classes/Makiavelo-Flex-Drivers-PDOMySQL.html#method_getDefaultOptions"
+        },                {
+            "fqsen": "\\Makiavelo\\Flex\\Drivers\\PDOMySQL\u003A\u003Aquery\u0028\u0029",
+            "name": "query",
+            "summary": "Execute\u0020any\u0020query\u0020and\u0020get\u0020an\u0020array\u0020or\u0020a\u0020collection\u0020of\u0020models\nIf\u0020the\u0020query\u0020has\u0020any\u0020parameters,\u0020they\u0020have\u0020to\u0020be\u0020prepared\u0020to\u0020avoid\u0020injection\nso\u0020name\u0020them\u0020in\u0020the\u0020PDO\u0020fashion\u0020and\u0020send\u0020an\u0020array\u0020of\u0020parameters\/values.",
+            "url": "classes/Makiavelo-Flex-Drivers-PDOMySQL.html#method_query"
+        },                {
+            "fqsen": "\\Makiavelo\\Flex\\Drivers\\PDOMySQL\u003A\u003AbeginTransaction\u0028\u0029",
+            "name": "beginTransaction",
+            "summary": "If\u0020not\u0020frozen,\u0020start\u0020transaction",
+            "url": "classes/Makiavelo-Flex-Drivers-PDOMySQL.html#method_beginTransaction"
+        },                {
+            "fqsen": "\\Makiavelo\\Flex\\Drivers\\PDOMySQL\u003A\u003Acommit\u0028\u0029",
+            "name": "commit",
+            "summary": "If\u0020not\u0020frozen,\u0020commit\u0020transaction",
+            "url": "classes/Makiavelo-Flex-Drivers-PDOMySQL.html#method_commit"
+        },                {
+            "fqsen": "\\Makiavelo\\Flex\\Drivers\\PDOMySQL\u003A\u003Arollback\u0028\u0029",
+            "name": "rollback",
+            "summary": "If\u0020not\u0020frozen,\u0020rollback\u0020transaction",
+            "url": "classes/Makiavelo-Flex-Drivers-PDOMySQL.html#method_rollback"
+        },                {
+            "fqsen": "\\Makiavelo\\Flex\\Drivers\\PDOMySQL\u003A\u003AbindValues\u0028\u0029",
+            "name": "bindValues",
+            "summary": "Bind\u0020parameters\u0020to\u0020the\u0020PDOStatement",
+            "url": "classes/Makiavelo-Flex-Drivers-PDOMySQL.html#method_bindValues"
+        },                {
+            "fqsen": "\\Makiavelo\\Flex\\Drivers\\PDOMySQL\u003A\u003A\u0024db",
+            "name": "db",
+            "summary": "",
+            "url": "classes/Makiavelo-Flex-Drivers-PDOMySQL.html#property_db"
+        },                {
             "fqsen": "\\",
             "name": "\\",
             "summary": "",
             "url": "namespaces/default.html"
+        },                {
+            "fqsen": "\\Makiavelo\\Flex\\Drivers",
+            "name": "Drivers",
+            "summary": "",
+            "url": "namespaces/makiavelo-flex-drivers.html"
         },                {
             "fqsen": "\\Makiavelo\\Flex",
             "name": "Flex",
