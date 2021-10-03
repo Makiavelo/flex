@@ -37,15 +37,15 @@ final class FlexRepositoryFunctionalTest extends TestCase
     public function testConnect()
     {
         $repo = FlexRepository::get();
-        $status = $repo->connect(
-            '172.17.0.1',
-            'flex_test',
-            'root',
-            'root'
-        );
+        $status = $repo->connect([
+            'host' => '172.17.0.1',
+            'db' => 'flex_test',
+            'user' => 'root',
+            'pass' => 'root'
+        ]);
 
         $this->assertTrue($status);
-        $this->assertEquals(get_class($repo->db), 'Makiavelo\\Flex\\Util\\EnhancedPDO');
+        $this->assertEquals(get_class($repo->db), 'Makiavelo\\Flex\\Drivers\\PDOMySQL');
     }
 
     /**
@@ -60,7 +60,7 @@ final class FlexRepositoryFunctionalTest extends TestCase
 
         $repo->save($model);
 
-        $fields = $repo->getTableFields('test_save');
+        $fields = $repo->db->getTableFields('test_save');
         $this->assertCount(3, $fields);
 
         $this->assertEquals($fields[0]['Field'], 'id');
@@ -146,7 +146,7 @@ final class FlexRepositoryFunctionalTest extends TestCase
 
         $repo->saveCollection([$model1, $model2, $model3]);
 
-        $repo->deleteCollection([$model1, $model2, $model3]);
+        $repo->db->deleteCollection([$model1, $model2, $model3]);
 
         $result = $repo->find('test_delete_collection', "id IN ('{$model1->id}', '{$model2->id}', '{$model3->id}')");
         $this->assertCount(0, $result);
@@ -189,9 +189,9 @@ final class FlexRepositoryFunctionalTest extends TestCase
     public function testCreateTable()
     {
         $repo = FlexRepository::get();
-        $repo->createTable('test_create_table');
+        $repo->db->createTable('test_create_table');
         
-        $fields = $repo->getTableFields('test_create_table');
+        $fields = $repo->db->getTableFields('test_create_table');
         $this->assertEquals($fields[0]['Field'], 'id');
         $this->assertEquals($fields[0]['Type'], 'int');
         $this->assertEquals($fields[0]['Key'], 'PRI');
@@ -204,7 +204,7 @@ final class FlexRepositoryFunctionalTest extends TestCase
     public function testAddFieldsToTable()
     {
         $repo = FlexRepository::get();
-        $repo->createTable('test_add_fields');
+        $repo->db->createTable('test_add_fields');
 
         $fields = [
             [
@@ -219,9 +219,9 @@ final class FlexRepositoryFunctionalTest extends TestCase
             ]
         ];
 
-        $repo->addFieldsToTable('test_add_fields', $fields);
+        $repo->db->addFieldsToTable('test_add_fields', $fields);
 
-        $tf = $repo->getTableFields('test_add_fields');
+        $tf = $repo->db->getTableFields('test_add_fields');
 
         $this->assertEquals($tf[1]['Field'], 'name');
         $this->assertEquals($tf[1]['Type'], 'text');
@@ -233,8 +233,8 @@ final class FlexRepositoryFunctionalTest extends TestCase
     public function testTableExists()
     {
         $repo = FlexRepository::get();
-        $repo->createTable('test_table_exists');
-        $exists = $repo->tableExists('test_table_exists');
+        $repo->db->createTable('test_table_exists');
+        $exists = $repo->db->tableExists('test_table_exists');
         $this->assertTrue($exists);
     }
 
@@ -252,11 +252,11 @@ final class FlexRepositoryFunctionalTest extends TestCase
             'phone' => ['type' => 'VARCHAR(50)', 'nullable' => true],
         ]);
 
-        $tableFields = $repo->getTableFields('test_update_table_types');
+        $tableFields = $repo->db->getTableFields('test_update_table_types');
 
-        $repo->updateTableTypes($model, $tableFields);
+        $repo->db->updateTableTypes($model, $tableFields);
 
-        $updatedFields = $repo->getTableFields('test_update_table_types');
+        $updatedFields = $repo->db->getTableFields('test_update_table_types');
         $this->assertEquals($updatedFields[1]['Field'], 'name');
         $this->assertEquals($updatedFields[1]['Type'], 'varchar(150)');
 

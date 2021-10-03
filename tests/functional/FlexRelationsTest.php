@@ -15,13 +15,12 @@ final class FlexRelationsTest extends TestCase
         $sql = file_get_contents(dirname(__FILE__) . '/fixtures/flex_repo_setup_before.sql');
         $qr = $db->exec($sql);
 
-        FlexRepository::get()->connect(
-            '172.17.0.1',
-            'flex_test',
-            //'example_project',
-            'root',
-            'root'
-        );
+        FlexRepository::get()->connect([
+            'host' => '172.17.0.1',
+            'db' => 'flex_test',
+            'user' => 'root',
+            'pass' => 'root'
+        ]);
     }
 
     public static function tearDownAfterClass(): void
