@@ -129,7 +129,7 @@
                 <dt class="phpdocumentor-table-of-contents__entry -property -public">
     <a href="classes/Makiavelo-Flex-FlexRepository.html#property_db">$db</a>
     <span>
-                &nbsp;: <a href="classes/Makiavelo-Flex-Util-EnhancedPDO.html"><abbr title="\Makiavelo\Flex\Util\EnhancedPDO">EnhancedPDO</abbr></a>            </span>
+                &nbsp;: mixed            </span>
 </dt>
 <dd></dd>
 
@@ -170,13 +170,6 @@ relation after updates.</dd>
 <dd>Internal method to save an intermediate table in a HasAndBelongs relationship</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
-    <a href="classes/Makiavelo-Flex-FlexRepository.html#method_addFieldsToTable">addFieldsToTable()</a>
-    <span>
-                        &nbsp;: <abbr title="\PDOStatement">PDOStatement</abbr>|false    </span>
-</dt>
-<dd>Execute the query to add fields to a table</dd>
-
-            <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/Makiavelo-Flex-FlexRepository.html#method_addModelFields">addModelFields()</a>
     <span>
                         &nbsp;: array&lt;string|int, mixed&gt;    </span>
@@ -192,25 +185,11 @@ in the database table.</dd>
 <dd>Add new fields to the table if needed.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
-    <a href="classes/Makiavelo-Flex-FlexRepository.html#method_addUniqueCombinedIndex">addUniqueCombinedIndex()</a>
-    <span>
-                        &nbsp;: mixed    </span>
-</dt>
-<dd></dd>
-
-            <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/Makiavelo-Flex-FlexRepository.html#method_beginTransaction">beginTransaction()</a>
     <span>
                         &nbsp;: void    </span>
 </dt>
 <dd>If not frozen, start transaction</dd>
-
-            <dt class="phpdocumentor-table-of-contents__entry -method -public">
-    <a href="classes/Makiavelo-Flex-FlexRepository.html#method_bindValues">bindValues()</a>
-    <span>
-                        &nbsp;: void    </span>
-</dt>
-<dd>Bind parameters to the PDOStatement</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/Makiavelo-Flex-FlexRepository.html#method_buildHaystack">buildHaystack()</a>
@@ -232,7 +211,7 @@ selected id.</dd>
     <span>
                         &nbsp;: bool    </span>
 </dt>
-<dd>Connect to the database</dd>
+<dd>Connect to the database through the current driver</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/Makiavelo-Flex-FlexRepository.html#method_create">create()</a>
@@ -244,25 +223,11 @@ If an object is created this way, all the fields
 will be created as TEXT by default.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
-    <a href="classes/Makiavelo-Flex-FlexRepository.html#method_createTable">createTable()</a>
-    <span>
-                        &nbsp;: <abbr title="\PDOStatement">PDOStatement</abbr>|false    </span>
-</dt>
-<dd>Execute the query to create a table</dd>
-
-            <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/Makiavelo-Flex-FlexRepository.html#method_delete">delete()</a>
     <span>
                         &nbsp;: bool    </span>
 </dt>
 <dd>Delete a model.</dd>
-
-            <dt class="phpdocumentor-table-of-contents__entry -method -public">
-    <a href="classes/Makiavelo-Flex-FlexRepository.html#method_deleteCollection">deleteCollection()</a>
-    <span>
-                        &nbsp;: bool    </span>
-</dt>
-<dd>Delete a collection of Flex models</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/Makiavelo-Flex-FlexRepository.html#method_find">find()</a>
@@ -309,13 +274,6 @@ limits the query to one result.</dd>
 <dd>Get an array of ids from a Flex collection</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
-    <a href="classes/Makiavelo-Flex-FlexRepository.html#method_getDefaultOptions">getDefaultOptions()</a>
-    <span>
-                        &nbsp;: array&lt;string|int, mixed&gt;    </span>
-</dt>
-<dd>Get default options for queries</dd>
-
-            <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/Makiavelo-Flex-FlexRepository.html#method_getFieldsAndValues">getFieldsAndValues()</a>
     <span>
                         &nbsp;: array&lt;string|int, mixed&gt;    </span>
@@ -328,13 +286,6 @@ limits the query to one result.</dd>
                         &nbsp;: array&lt;string|int, mixed&gt;    </span>
 </dt>
 <dd>Get all the inserts/updates from a collection.</dd>
-
-            <dt class="phpdocumentor-table-of-contents__entry -method -public">
-    <a href="classes/Makiavelo-Flex-FlexRepository.html#method_getTableFields">getTableFields()</a>
-    <span>
-                        &nbsp;: array&lt;string|int, mixed&gt;|false    </span>
-</dt>
-<dd>Get the table fields via DESCRIBE query</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/Makiavelo-Flex-FlexRepository.html#method_handleHasAndBelongsRelation">handleHasAndBelongsRelation()</a>
@@ -378,14 +329,6 @@ limits the query to one result.</dd>
 </dt>
 <dd>Insert a model via DB query
 Table name is retrieved from the object meta.</dd>
-
-            <dt class="phpdocumentor-table-of-contents__entry -method -public">
-    <a href="classes/Makiavelo-Flex-FlexRepository.html#method_insertCollection">insertCollection()</a>
-    <span>
-                        &nbsp;: bool    </span>
-</dt>
-<dd>Insert a model collection in the database using transactions
-All the models are inserted in one query.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/Makiavelo-Flex-FlexRepository.html#method_nullifyUnusedChilds">nullifyUnusedChilds()</a>
@@ -477,13 +420,6 @@ to syncronize the current schema with the database schema.</dd>
 <dd>Save a collection of models.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
-    <a href="classes/Makiavelo-Flex-FlexRepository.html#method_tableExists">tableExists()</a>
-    <span>
-                        &nbsp;: bool    </span>
-</dt>
-<dd>Check if a table exists via query</dd>
-
-            <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/Makiavelo-Flex-FlexRepository.html#method_update">update()</a>
     <span>
                         &nbsp;: bool    </span>
@@ -499,11 +435,11 @@ Table name is retrieved from the object meta.</dd>
 <dd>Update all the models from a collection</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
-    <a href="classes/Makiavelo-Flex-FlexRepository.html#method_updateTableTypes">updateTableTypes()</a>
+    <a href="classes/Makiavelo-Flex-FlexRepository.html#method_useDriver">useDriver()</a>
     <span>
                         &nbsp;: void    </span>
 </dt>
-<dd>Update field types on the model table</dd>
+<dd>Change the &#039;db&#039; property to this value</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -private">
     <a href="classes/Makiavelo-Flex-FlexRepository.html#method___construct">__construct()</a>
@@ -540,19 +476,21 @@ Table name is retrieved from the object meta.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/FlexRepository.php"><a href="files/src-flexrepository.html"><abbr title="src/FlexRepository.php">FlexRepository.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">13</span>
+    <span class="phpdocumentor-element-found-in__line">10</span>
 
     </aside>
 
     
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
-        <span class="phpdocumentor-signature__type"><a href="classes/Makiavelo-Flex-Util-EnhancedPDO.html"><abbr title="\Makiavelo\Flex\Util\EnhancedPDO">EnhancedPDO</abbr></a></span>
+        <span class="phpdocumentor-signature__type">mixed</span>
     <span class="phpdocumentor-signature__name">$db</span>
     </code>
 
-    
-    
+        <section class="phpdocumentor-description"></section>
+
+        <section class="phpdocumentor-description"></section>
+
     
 
 </article>
@@ -572,7 +510,7 @@ Table name is retrieved from the object meta.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/FlexRepository.php"><a href="files/src-flexrepository.html"><abbr title="src/FlexRepository.php">FlexRepository.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">18</span>
+    <span class="phpdocumentor-element-found-in__line">15</span>
 
     </aside>
 
@@ -604,7 +542,7 @@ Table name is retrieved from the object meta.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/FlexRepository.php"><a href="files/src-flexrepository.html"><abbr title="src/FlexRepository.php">FlexRepository.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">29</span>
+    <span class="phpdocumentor-element-found-in__line">26</span>
 
     </aside>
 
@@ -637,7 +575,7 @@ Table name is retrieved from the object meta.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/FlexRepository.php"><a href="files/src-flexrepository.html"><abbr title="src/FlexRepository.php">FlexRepository.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">23</span>
+    <span class="phpdocumentor-element-found-in__line">20</span>
 
     </aside>
 
@@ -673,7 +611,7 @@ Table name is retrieved from the object meta.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/FlexRepository.php"><a href="files/src-flexrepository.html"><abbr title="src/FlexRepository.php">FlexRepository.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">301</span>
+    <span class="phpdocumentor-element-found-in__line">298</span>
 
     </aside>
 
@@ -724,7 +662,7 @@ relation after updates.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/FlexRepository.php"><a href="files/src-flexrepository.html"><abbr title="src/FlexRepository.php">FlexRepository.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">381</span>
+    <span class="phpdocumentor-element-found-in__line">365</span>
 
     </aside>
 
@@ -780,58 +718,6 @@ relation after updates.</p>
             -public
                                                         "
 >
-    <h4 class="phpdocumentor-element__name" id="method_addFieldsToTable">
-        addFieldsToTable()
-        <a href="classes/Makiavelo-Flex-FlexRepository.html#method_addFieldsToTable" class="headerlink"><i class="fas fa-link"></i></a>
-    </h4>
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/FlexRepository.php"><a href="files/src-flexrepository.html"><abbr title="src/FlexRepository.php">FlexRepository.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">902</span>
-
-    </aside>
-
-        <p class="phpdocumentor-summary">Execute the query to add fields to a table</p>
-
-    <code class="phpdocumentor-code phpdocumentor-signature ">
-    <span class="phpdocumentor-signature__visibility">public</span>
-                <span class="phpdocumentor-signature__name">addFieldsToTable</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$name</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__return-type">array&lt;string|int, mixed&gt;&nbsp;</span><span class="phpdocumentor-signature__argument__name">$fields</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><abbr title="\PDOStatement">PDOStatement</abbr>|false</span></code>
-
-    
-        <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
-    <dl class="phpdocumentor-argument-list">
-                    <dt class="phpdocumentor-argument-list__entry">
-                <span class="phpdocumentor-signature__argument__name">$name</span>
-                : <span class="phpdocumentor-signature__argument__return-type">string</span>
-                            </dt>
-            <dd class="phpdocumentor-argument-list__definition">
-                    <section class="phpdocumentor-description"><p>Table name</p>
-</section>
-
-            </dd>
-                    <dt class="phpdocumentor-argument-list__entry">
-                <span class="phpdocumentor-signature__argument__name">$fields</span>
-                : <span class="phpdocumentor-signature__argument__return-type">array&lt;string|int, mixed&gt;</span>
-                            </dt>
-            <dd class="phpdocumentor-argument-list__definition">
-                
-            </dd>
-            </dl>
-
-    
-
-        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type"><abbr title="\PDOStatement">PDOStatement</abbr>|false</span>
-            &mdash;
-        
-    
-</article>
-                    <article
-        class="phpdocumentor-element
-            -method
-            -public
-                                                        "
->
     <h4 class="phpdocumentor-element__name" id="method_addModelFields">
         addModelFields()
         <a href="classes/Makiavelo-Flex-FlexRepository.html#method_addModelFields" class="headerlink"><i class="fas fa-link"></i></a>
@@ -839,7 +725,7 @@ relation after updates.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/FlexRepository.php"><a href="files/src-flexrepository.html"><abbr title="src/FlexRepository.php">FlexRepository.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">874</span>
+    <span class="phpdocumentor-element-found-in__line">746</span>
 
     </aside>
 
@@ -897,7 +783,7 @@ in the database table.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/FlexRepository.php"><a href="files/src-flexrepository.html"><abbr title="src/FlexRepository.php">FlexRepository.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">842</span>
+    <span class="phpdocumentor-element-found-in__line">714</span>
 
     </aside>
 
@@ -947,50 +833,6 @@ in the database table.</p>
             -public
                                                         "
 >
-    <h4 class="phpdocumentor-element__name" id="method_addUniqueCombinedIndex">
-        addUniqueCombinedIndex()
-        <a href="classes/Makiavelo-Flex-FlexRepository.html#method_addUniqueCombinedIndex" class="headerlink"><i class="fas fa-link"></i></a>
-    </h4>
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/FlexRepository.php"><a href="files/src-flexrepository.html"><abbr title="src/FlexRepository.php">FlexRepository.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">798</span>
-
-    </aside>
-
-    
-    <code class="phpdocumentor-code phpdocumentor-signature ">
-    <span class="phpdocumentor-signature__visibility">public</span>
-                <span class="phpdocumentor-signature__name">addUniqueCombinedIndex</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">mixed&nbsp;</span><span class="phpdocumentor-signature__argument__name">$model</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">mixed</span></code>
-
-        <section class="phpdocumentor-description"></section>
-
-        <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
-    <dl class="phpdocumentor-argument-list">
-                    <dt class="phpdocumentor-argument-list__entry">
-                <span class="phpdocumentor-signature__argument__name">$model</span>
-                : <span class="phpdocumentor-signature__argument__return-type">mixed</span>
-                            </dt>
-            <dd class="phpdocumentor-argument-list__definition">
-                    <section class="phpdocumentor-description"></section>
-
-            </dd>
-            </dl>
-
-    
-
-        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type">mixed</span>
-            &mdash;
-        
-    
-</article>
-                    <article
-        class="phpdocumentor-element
-            -method
-            -public
-                                                        "
->
     <h4 class="phpdocumentor-element__name" id="method_beginTransaction">
         beginTransaction()
         <a href="classes/Makiavelo-Flex-FlexRepository.html#method_beginTransaction" class="headerlink"><i class="fas fa-link"></i></a>
@@ -998,7 +840,7 @@ in the database table.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/FlexRepository.php"><a href="files/src-flexrepository.html"><abbr title="src/FlexRepository.php">FlexRepository.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">157</span>
+    <span class="phpdocumentor-element-found-in__line">154</span>
 
     </aside>
 
@@ -1024,56 +866,6 @@ in the database table.</p>
             -public
                                                         "
 >
-    <h4 class="phpdocumentor-element__name" id="method_bindValues">
-        bindValues()
-        <a href="classes/Makiavelo-Flex-FlexRepository.html#method_bindValues" class="headerlink"><i class="fas fa-link"></i></a>
-    </h4>
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/FlexRepository.php"><a href="files/src-flexrepository.html"><abbr title="src/FlexRepository.php">FlexRepository.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">1105</span>
-
-    </aside>
-
-        <p class="phpdocumentor-summary">Bind parameters to the PDOStatement</p>
-
-    <code class="phpdocumentor-code phpdocumentor-signature ">
-    <span class="phpdocumentor-signature__visibility">public</span>
-                <span class="phpdocumentor-signature__name">bindValues</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type"><abbr title="\PDOStatement">PDOStatement</abbr>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$stmt</span></span><span class="phpdocumentor-signature__argument"><span>[</span><span>, </span><span class="phpdocumentor-signature__argument__return-type">array&lt;string|int, mixed&gt;&nbsp;</span><span class="phpdocumentor-signature__argument__name">$params</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">[]</span><span> ]</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">void</span></code>
-
-    
-        <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
-    <dl class="phpdocumentor-argument-list">
-                    <dt class="phpdocumentor-argument-list__entry">
-                <span class="phpdocumentor-signature__argument__name">$stmt</span>
-                : <span class="phpdocumentor-signature__argument__return-type"><abbr title="\PDOStatement">PDOStatement</abbr></span>
-                            </dt>
-            <dd class="phpdocumentor-argument-list__definition">
-                
-            </dd>
-                    <dt class="phpdocumentor-argument-list__entry">
-                <span class="phpdocumentor-signature__argument__name">$params</span>
-                : <span class="phpdocumentor-signature__argument__return-type">array&lt;string|int, mixed&gt;</span>
-                 = <span class="phpdocumentor-signature__argument__default-value">[]</span>            </dt>
-            <dd class="phpdocumentor-argument-list__definition">
-                
-            </dd>
-            </dl>
-
-    
-
-        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type">void</span>
-            &mdash;
-        
-    
-</article>
-                    <article
-        class="phpdocumentor-element
-            -method
-            -public
-                                                        "
->
     <h4 class="phpdocumentor-element__name" id="method_buildHaystack">
         buildHaystack()
         <a href="classes/Makiavelo-Flex-FlexRepository.html#method_buildHaystack" class="headerlink"><i class="fas fa-link"></i></a>
@@ -1081,7 +873,7 @@ in the database table.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/FlexRepository.php"><a href="files/src-flexrepository.html"><abbr title="src/FlexRepository.php">FlexRepository.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">1161</span>
+    <span class="phpdocumentor-element-found-in__line">913</span>
 
     </aside>
 
@@ -1139,7 +931,7 @@ selected id.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/FlexRepository.php"><a href="files/src-flexrepository.html"><abbr title="src/FlexRepository.php">FlexRepository.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">167</span>
+    <span class="phpdocumentor-element-found-in__line">164</span>
 
     </aside>
 
@@ -1172,51 +964,23 @@ selected id.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/FlexRepository.php"><a href="files/src-flexrepository.html"><abbr title="src/FlexRepository.php">FlexRepository.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">96</span>
+    <span class="phpdocumentor-element-found-in__line">105</span>
 
     </aside>
 
-        <p class="phpdocumentor-summary">Connect to the database</p>
+        <p class="phpdocumentor-summary">Connect to the database through the current driver</p>
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
-                <span class="phpdocumentor-signature__name">connect</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$host</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__return-type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$db</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__return-type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$user</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__return-type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$pass</span></span><span class="phpdocumentor-signature__argument"><span>[</span><span>, </span><span class="phpdocumentor-signature__argument__return-type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$charset</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">&#039;utf8mb4&#039;</span><span> ]</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">bool</span></code>
+                <span class="phpdocumentor-signature__name">connect</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">array&lt;string|int, mixed&gt;&nbsp;</span><span class="phpdocumentor-signature__argument__name">$params</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">bool</span></code>
 
     
         <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
     <dl class="phpdocumentor-argument-list">
                     <dt class="phpdocumentor-argument-list__entry">
-                <span class="phpdocumentor-signature__argument__name">$host</span>
-                : <span class="phpdocumentor-signature__argument__return-type">string</span>
+                <span class="phpdocumentor-signature__argument__name">$params</span>
+                : <span class="phpdocumentor-signature__argument__return-type">array&lt;string|int, mixed&gt;</span>
                             </dt>
-            <dd class="phpdocumentor-argument-list__definition">
-                
-            </dd>
-                    <dt class="phpdocumentor-argument-list__entry">
-                <span class="phpdocumentor-signature__argument__name">$db</span>
-                : <span class="phpdocumentor-signature__argument__return-type">string</span>
-                            </dt>
-            <dd class="phpdocumentor-argument-list__definition">
-                
-            </dd>
-                    <dt class="phpdocumentor-argument-list__entry">
-                <span class="phpdocumentor-signature__argument__name">$user</span>
-                : <span class="phpdocumentor-signature__argument__return-type">string</span>
-                            </dt>
-            <dd class="phpdocumentor-argument-list__definition">
-                
-            </dd>
-                    <dt class="phpdocumentor-argument-list__entry">
-                <span class="phpdocumentor-signature__argument__name">$pass</span>
-                : <span class="phpdocumentor-signature__argument__return-type">string</span>
-                            </dt>
-            <dd class="phpdocumentor-argument-list__definition">
-                
-            </dd>
-                    <dt class="phpdocumentor-argument-list__entry">
-                <span class="phpdocumentor-signature__argument__name">$charset</span>
-                : <span class="phpdocumentor-signature__argument__return-type">string</span>
-                 = <span class="phpdocumentor-signature__argument__default-value">&#039;utf8mb4&#039;</span>            </dt>
             <dd class="phpdocumentor-argument-list__definition">
                 
             </dd>
@@ -1232,7 +996,7 @@ selected id.</p>
                     <span class="phpdocumentor-tag__name">throws</span>
                 </dt>
                 <dd class="phpdocumentor-tag-list__definition">
-                                                                <span class="phpdocumentor-tag-link"><abbr title="\PDOException">PDOException</abbr></span>
+                                                                <span class="phpdocumentor-tag-link"><abbr title="\Exception">Exception</abbr></span>
                                                             
                                              
                                     </dd>
@@ -1257,7 +1021,7 @@ selected id.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/FlexRepository.php"><a href="files/src-flexrepository.html"><abbr title="src/FlexRepository.php">FlexRepository.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">976</span>
+    <span class="phpdocumentor-element-found-in__line">779</span>
 
     </aside>
 
@@ -1295,49 +1059,6 @@ will be created as TEXT by default.</p>
             -public
                                                         "
 >
-    <h4 class="phpdocumentor-element__name" id="method_createTable">
-        createTable()
-        <a href="classes/Makiavelo-Flex-FlexRepository.html#method_createTable" class="headerlink"><i class="fas fa-link"></i></a>
-    </h4>
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/FlexRepository.php"><a href="files/src-flexrepository.html"><abbr title="src/FlexRepository.php">FlexRepository.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">927</span>
-
-    </aside>
-
-        <p class="phpdocumentor-summary">Execute the query to create a table</p>
-
-    <code class="phpdocumentor-code phpdocumentor-signature ">
-    <span class="phpdocumentor-signature__visibility">public</span>
-                <span class="phpdocumentor-signature__name">createTable</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$name</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><abbr title="\PDOStatement">PDOStatement</abbr>|false</span></code>
-
-    
-        <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
-    <dl class="phpdocumentor-argument-list">
-                    <dt class="phpdocumentor-argument-list__entry">
-                <span class="phpdocumentor-signature__argument__name">$name</span>
-                : <span class="phpdocumentor-signature__argument__return-type">string</span>
-                            </dt>
-            <dd class="phpdocumentor-argument-list__definition">
-                
-            </dd>
-            </dl>
-
-    
-
-        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type"><abbr title="\PDOStatement">PDOStatement</abbr>|false</span>
-            &mdash;
-        
-    
-</article>
-                    <article
-        class="phpdocumentor-element
-            -method
-            -public
-                                                        "
->
     <h4 class="phpdocumentor-element__name" id="method_delete">
         delete()
         <a href="classes/Makiavelo-Flex-FlexRepository.html#method_delete" class="headerlink"><i class="fas fa-link"></i></a>
@@ -1345,7 +1066,7 @@ will be created as TEXT by default.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/FlexRepository.php"><a href="files/src-flexrepository.html"><abbr title="src/FlexRepository.php">FlexRepository.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">461</span>
+    <span class="phpdocumentor-element-found-in__line">432</span>
 
     </aside>
 
@@ -1384,49 +1105,6 @@ will be created as TEXT by default.</p>
             -public
                                                         "
 >
-    <h4 class="phpdocumentor-element__name" id="method_deleteCollection">
-        deleteCollection()
-        <a href="classes/Makiavelo-Flex-FlexRepository.html#method_deleteCollection" class="headerlink"><i class="fas fa-link"></i></a>
-    </h4>
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/FlexRepository.php"><a href="files/src-flexrepository.html"><abbr title="src/FlexRepository.php">FlexRepository.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">716</span>
-
-    </aside>
-
-        <p class="phpdocumentor-summary">Delete a collection of Flex models</p>
-
-    <code class="phpdocumentor-code phpdocumentor-signature ">
-    <span class="phpdocumentor-signature__visibility">public</span>
-                <span class="phpdocumentor-signature__name">deleteCollection</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">array&lt;string|int, <a href="classes/Makiavelo-Flex-Flex.html"><abbr title="\Makiavelo\Flex\Flex">Flex</abbr></a>&gt;&nbsp;</span><span class="phpdocumentor-signature__argument__name">$collection</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">bool</span></code>
-
-    
-        <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
-    <dl class="phpdocumentor-argument-list">
-                    <dt class="phpdocumentor-argument-list__entry">
-                <span class="phpdocumentor-signature__argument__name">$collection</span>
-                : <span class="phpdocumentor-signature__argument__return-type">array&lt;string|int, <a href="classes/Makiavelo-Flex-Flex.html"><abbr title="\Makiavelo\Flex\Flex">Flex</abbr></a>&gt;</span>
-                            </dt>
-            <dd class="phpdocumentor-argument-list__definition">
-                
-            </dd>
-            </dl>
-
-    
-
-        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type">bool</span>
-            &mdash;
-        
-    
-</article>
-                    <article
-        class="phpdocumentor-element
-            -method
-            -public
-                                                        "
->
     <h4 class="phpdocumentor-element__name" id="method_find">
         find()
         <a href="classes/Makiavelo-Flex-FlexRepository.html#method_find" class="headerlink"><i class="fas fa-link"></i></a>
@@ -1434,7 +1112,7 @@ will be created as TEXT by default.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/FlexRepository.php"><a href="files/src-flexrepository.html"><abbr title="src/FlexRepository.php">FlexRepository.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">996</span>
+    <span class="phpdocumentor-element-found-in__line">833</span>
 
     </aside>
 
@@ -1499,7 +1177,7 @@ For complex queries use PDO directly.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/FlexRepository.php"><a href="files/src-flexrepository.html"><abbr title="src/FlexRepository.php">FlexRepository.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">1032</span>
+    <span class="phpdocumentor-element-found-in__line">854</span>
 
     </aside>
 
@@ -1564,7 +1242,7 @@ limits the query to one result.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/FlexRepository.php"><a href="files/src-flexrepository.html"><abbr title="src/FlexRepository.php">FlexRepository.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">58</span>
+    <span class="phpdocumentor-element-found-in__line">71</span>
 
     </aside>
 
@@ -1599,7 +1277,7 @@ limits the query to one result.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/FlexRepository.php"><a href="files/src-flexrepository.html"><abbr title="src/FlexRepository.php">FlexRepository.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">68</span>
+    <span class="phpdocumentor-element-found-in__line">81</span>
 
     </aside>
 
@@ -1632,7 +1310,7 @@ limits the query to one result.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/FlexRepository.php"><a href="files/src-flexrepository.html"><abbr title="src/FlexRepository.php">FlexRepository.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">41</span>
+    <span class="phpdocumentor-element-found-in__line">42</span>
 
     </aside>
 
@@ -1640,10 +1318,21 @@ limits the query to one result.</p>
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
-            <span class="phpdocumentor-signature__static">static</span>    <span class="phpdocumentor-signature__name">get</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><a href="classes/Makiavelo-Flex-FlexRepository.html"><abbr title="\Makiavelo\Flex\FlexRepository">FlexRepository</abbr></a></span></code>
+            <span class="phpdocumentor-signature__static">static</span>    <span class="phpdocumentor-signature__name">get</span><span>(</span><span class="phpdocumentor-signature__argument"><span>[</span><span class="phpdocumentor-signature__argument__return-type">mixed&nbsp;</span><span class="phpdocumentor-signature__argument__name">$params</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">[]</span><span> ]</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><a href="classes/Makiavelo-Flex-FlexRepository.html"><abbr title="\Makiavelo\Flex\FlexRepository">FlexRepository</abbr></a></span></code>
 
     
-    
+        <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
+    <dl class="phpdocumentor-argument-list">
+                    <dt class="phpdocumentor-argument-list__entry">
+                <span class="phpdocumentor-signature__argument__name">$params</span>
+                : <span class="phpdocumentor-signature__argument__return-type">mixed</span>
+                 = <span class="phpdocumentor-signature__argument__default-value">[]</span>            </dt>
+            <dd class="phpdocumentor-argument-list__definition">
+                    <section class="phpdocumentor-description"></section>
+
+            </dd>
+            </dl>
+
     
 
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
@@ -1665,7 +1354,7 @@ limits the query to one result.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/FlexRepository.php"><a href="files/src-flexrepository.html"><abbr title="src/FlexRepository.php">FlexRepository.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">741</span>
+    <span class="phpdocumentor-element-found-in__line">646</span>
 
     </aside>
 
@@ -1701,39 +1390,6 @@ limits the query to one result.</p>
             -public
                                                         "
 >
-    <h4 class="phpdocumentor-element__name" id="method_getDefaultOptions">
-        getDefaultOptions()
-        <a href="classes/Makiavelo-Flex-FlexRepository.html#method_getDefaultOptions" class="headerlink"><i class="fas fa-link"></i></a>
-    </h4>
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/FlexRepository.php"><a href="files/src-flexrepository.html"><abbr title="src/FlexRepository.php">FlexRepository.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">1086</span>
-
-    </aside>
-
-        <p class="phpdocumentor-summary">Get default options for queries</p>
-
-    <code class="phpdocumentor-code phpdocumentor-signature ">
-    <span class="phpdocumentor-signature__visibility">public</span>
-                <span class="phpdocumentor-signature__name">getDefaultOptions</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">array&lt;string|int, mixed&gt;</span></code>
-
-    
-    
-    
-
-        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type">array&lt;string|int, mixed&gt;</span>
-            &mdash;
-        
-    
-</article>
-                    <article
-        class="phpdocumentor-element
-            -method
-            -public
-                                                        "
->
     <h4 class="phpdocumentor-element__name" id="method_getFieldsAndValues">
         getFieldsAndValues()
         <a href="classes/Makiavelo-Flex-FlexRepository.html#method_getFieldsAndValues" class="headerlink"><i class="fas fa-link"></i></a>
@@ -1741,7 +1397,7 @@ limits the query to one result.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/FlexRepository.php"><a href="files/src-flexrepository.html"><abbr title="src/FlexRepository.php">FlexRepository.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">693</span>
+    <span class="phpdocumentor-element-found-in__line">621</span>
 
     </aside>
 
@@ -1784,7 +1440,7 @@ limits the query to one result.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/FlexRepository.php"><a href="files/src-flexrepository.html"><abbr title="src/FlexRepository.php">FlexRepository.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">569</span>
+    <span class="phpdocumentor-element-found-in__line">538</span>
 
     </aside>
 
@@ -1820,49 +1476,6 @@ limits the query to one result.</p>
             -public
                                                         "
 >
-    <h4 class="phpdocumentor-element__name" id="method_getTableFields">
-        getTableFields()
-        <a href="classes/Makiavelo-Flex-FlexRepository.html#method_getTableFields" class="headerlink"><i class="fas fa-link"></i></a>
-    </h4>
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/FlexRepository.php"><a href="files/src-flexrepository.html"><abbr title="src/FlexRepository.php">FlexRepository.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">959</span>
-
-    </aside>
-
-        <p class="phpdocumentor-summary">Get the table fields via DESCRIBE query</p>
-
-    <code class="phpdocumentor-code phpdocumentor-signature ">
-    <span class="phpdocumentor-signature__visibility">public</span>
-                <span class="phpdocumentor-signature__name">getTableFields</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$name</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">array&lt;string|int, mixed&gt;|false</span></code>
-
-    
-        <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
-    <dl class="phpdocumentor-argument-list">
-                    <dt class="phpdocumentor-argument-list__entry">
-                <span class="phpdocumentor-signature__argument__name">$name</span>
-                : <span class="phpdocumentor-signature__argument__return-type">string</span>
-                            </dt>
-            <dd class="phpdocumentor-argument-list__definition">
-                
-            </dd>
-            </dl>
-
-    
-
-        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type">array&lt;string|int, mixed&gt;|false</span>
-            &mdash;
-        
-    
-</article>
-                    <article
-        class="phpdocumentor-element
-            -method
-            -public
-                                                        "
->
     <h4 class="phpdocumentor-element__name" id="method_handleHasAndBelongsRelation">
         handleHasAndBelongsRelation()
         <a href="classes/Makiavelo-Flex-FlexRepository.html#method_handleHasAndBelongsRelation" class="headerlink"><i class="fas fa-link"></i></a>
@@ -1870,7 +1483,7 @@ limits the query to one result.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/FlexRepository.php"><a href="files/src-flexrepository.html"><abbr title="src/FlexRepository.php">FlexRepository.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">235</span>
+    <span class="phpdocumentor-element-found-in__line">232</span>
 
     </aside>
 
@@ -1920,7 +1533,7 @@ limits the query to one result.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/FlexRepository.php"><a href="files/src-flexrepository.html"><abbr title="src/FlexRepository.php">FlexRepository.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">268</span>
+    <span class="phpdocumentor-element-found-in__line">265</span>
 
     </aside>
 
@@ -1970,7 +1583,7 @@ limits the query to one result.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/FlexRepository.php"><a href="files/src-flexrepository.html"><abbr title="src/FlexRepository.php">FlexRepository.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">213</span>
+    <span class="phpdocumentor-element-found-in__line">210</span>
 
     </aside>
 
@@ -2013,7 +1626,7 @@ limits the query to one result.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/FlexRepository.php"><a href="files/src-flexrepository.html"><abbr title="src/FlexRepository.php">FlexRepository.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">189</span>
+    <span class="phpdocumentor-element-found-in__line">186</span>
 
     </aside>
 
@@ -2056,7 +1669,7 @@ limits the query to one result.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/FlexRepository.php"><a href="files/src-flexrepository.html"><abbr title="src/FlexRepository.php">FlexRepository.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">1124</span>
+    <span class="phpdocumentor-element-found-in__line">876</span>
 
     </aside>
 
@@ -2117,7 +1730,7 @@ but the class to use can be modified.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/FlexRepository.php"><a href="files/src-flexrepository.html"><abbr title="src/FlexRepository.php">FlexRepository.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">433</span>
+    <span class="phpdocumentor-element-found-in__line">414</span>
 
     </aside>
 
@@ -2156,64 +1769,6 @@ Table name is retrieved from the object meta.</p>
             -public
                                                         "
 >
-    <h4 class="phpdocumentor-element__name" id="method_insertCollection">
-        insertCollection()
-        <a href="classes/Makiavelo-Flex-FlexRepository.html#method_insertCollection" class="headerlink"><i class="fas fa-link"></i></a>
-    </h4>
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/FlexRepository.php"><a href="files/src-flexrepository.html"><abbr title="src/FlexRepository.php">FlexRepository.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">654</span>
-
-    </aside>
-
-        <p class="phpdocumentor-summary">Insert a model collection in the database using transactions
-All the models are inserted in one query.</p>
-
-    <code class="phpdocumentor-code phpdocumentor-signature ">
-    <span class="phpdocumentor-signature__visibility">public</span>
-                <span class="phpdocumentor-signature__name">insertCollection</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">array&lt;string|int, <a href="classes/Makiavelo-Flex-Flex.html"><abbr title="\Makiavelo\Flex\Flex">Flex</abbr></a>&gt;&nbsp;</span><span class="phpdocumentor-signature__argument__name">$inserts</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">bool</span></code>
-
-    
-        <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
-    <dl class="phpdocumentor-argument-list">
-                    <dt class="phpdocumentor-argument-list__entry">
-                <span class="phpdocumentor-signature__argument__name">$inserts</span>
-                : <span class="phpdocumentor-signature__argument__return-type">array&lt;string|int, <a href="classes/Makiavelo-Flex-Flex.html"><abbr title="\Makiavelo\Flex\Flex">Flex</abbr></a>&gt;</span>
-                            </dt>
-            <dd class="phpdocumentor-argument-list__definition">
-                
-            </dd>
-            </dl>
-
-    
-    <h5 class="phpdocumentor-tag-list__heading" id="tags">
-        Tags
-        <a href="#tags" class="headerlink"><i class="fas fa-link"></i></a>
-    </h5>
-    <dl class="phpdocumentor-tag-list">
-                                    <dt class="phpdocumentor-tag-list__entry">
-                    <span class="phpdocumentor-tag__name">throws</span>
-                </dt>
-                <dd class="phpdocumentor-tag-list__definition">
-                                                                <span class="phpdocumentor-tag-link"><abbr title="\PDOException">PDOException</abbr></span>
-                                                            
-                                             
-                                    </dd>
-                        </dl>
-
-        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type">bool</span>
-            &mdash;
-        
-    
-</article>
-                    <article
-        class="phpdocumentor-element
-            -method
-            -public
-                                                        "
->
     <h4 class="phpdocumentor-element__name" id="method_nullifyUnusedChilds">
         nullifyUnusedChilds()
         <a href="classes/Makiavelo-Flex-FlexRepository.html#method_nullifyUnusedChilds" class="headerlink"><i class="fas fa-link"></i></a>
@@ -2221,7 +1776,7 @@ All the models are inserted in one query.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/FlexRepository.php"><a href="files/src-flexrepository.html"><abbr title="src/FlexRepository.php">FlexRepository.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">353</span>
+    <span class="phpdocumentor-element-found-in__line">344</span>
 
     </aside>
 
@@ -2271,7 +1826,7 @@ All the models are inserted in one query.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/FlexRepository.php"><a href="files/src-flexrepository.html"><abbr title="src/FlexRepository.php">FlexRepository.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">547</span>
+    <span class="phpdocumentor-element-found-in__line">516</span>
 
     </aside>
 
@@ -2317,7 +1872,7 @@ All the models are inserted in one query.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/FlexRepository.php"><a href="files/src-flexrepository.html"><abbr title="src/FlexRepository.php">FlexRepository.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">525</span>
+    <span class="phpdocumentor-element-found-in__line">494</span>
 
     </aside>
 
@@ -2360,7 +1915,7 @@ All the models are inserted in one query.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/FlexRepository.php"><a href="files/src-flexrepository.html"><abbr title="src/FlexRepository.php">FlexRepository.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">614</span>
+    <span class="phpdocumentor-element-found-in__line">583</span>
 
     </aside>
 
@@ -2403,7 +1958,7 @@ All the models are inserted in one query.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/FlexRepository.php"><a href="files/src-flexrepository.html"><abbr title="src/FlexRepository.php">FlexRepository.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">763</span>
+    <span class="phpdocumentor-element-found-in__line">668</span>
 
     </aside>
 
@@ -2452,7 +2007,7 @@ created as TEXT fields in the table.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/FlexRepository.php"><a href="files/src-flexrepository.html"><abbr title="src/FlexRepository.php">FlexRepository.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">594</span>
+    <span class="phpdocumentor-element-found-in__line">563</span>
 
     </aside>
 
@@ -2495,7 +2050,7 @@ created as TEXT fields in the table.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/FlexRepository.php"><a href="files/src-flexrepository.html"><abbr title="src/FlexRepository.php">FlexRepository.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">1064</span>
+    <span class="phpdocumentor-element-found-in__line">809</span>
 
     </aside>
 
@@ -2562,7 +2117,7 @@ be updated later on (unless the table meta is set manually).</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/FlexRepository.php"><a href="files/src-flexrepository.html"><abbr title="src/FlexRepository.php">FlexRepository.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">332</span>
+    <span class="phpdocumentor-element-found-in__line">326</span>
 
     </aside>
 
@@ -2612,7 +2167,7 @@ be updated later on (unless the table meta is set manually).</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/FlexRepository.php"><a href="files/src-flexrepository.html"><abbr title="src/FlexRepository.php">FlexRepository.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">78</span>
+    <span class="phpdocumentor-element-found-in__line">91</span>
 
     </aside>
 
@@ -2645,7 +2200,7 @@ be updated later on (unless the table meta is set manually).</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/FlexRepository.php"><a href="files/src-flexrepository.html"><abbr title="src/FlexRepository.php">FlexRepository.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">177</span>
+    <span class="phpdocumentor-element-found-in__line">174</span>
 
     </aside>
 
@@ -2678,7 +2233,7 @@ be updated later on (unless the table meta is set manually).</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/FlexRepository.php"><a href="files/src-flexrepository.html"><abbr title="src/FlexRepository.php">FlexRepository.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">124</span>
+    <span class="phpdocumentor-element-found-in__line">121</span>
 
     </aside>
 
@@ -2725,7 +2280,7 @@ to syncronize the current schema with the database schema.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/FlexRepository.php"><a href="files/src-flexrepository.html"><abbr title="src/FlexRepository.php">FlexRepository.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">495</span>
+    <span class="phpdocumentor-element-found-in__line">464</span>
 
     </aside>
 
@@ -2767,49 +2322,6 @@ insert and update operations will be performed separately.</p>
             -public
                                                         "
 >
-    <h4 class="phpdocumentor-element__name" id="method_tableExists">
-        tableExists()
-        <a href="classes/Makiavelo-Flex-FlexRepository.html#method_tableExists" class="headerlink"><i class="fas fa-link"></i></a>
-    </h4>
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/FlexRepository.php"><a href="files/src-flexrepository.html"><abbr title="src/FlexRepository.php">FlexRepository.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">941</span>
-
-    </aside>
-
-        <p class="phpdocumentor-summary">Check if a table exists via query</p>
-
-    <code class="phpdocumentor-code phpdocumentor-signature ">
-    <span class="phpdocumentor-signature__visibility">public</span>
-                <span class="phpdocumentor-signature__name">tableExists</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$name</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">bool</span></code>
-
-    
-        <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
-    <dl class="phpdocumentor-argument-list">
-                    <dt class="phpdocumentor-argument-list__entry">
-                <span class="phpdocumentor-signature__argument__name">$name</span>
-                : <span class="phpdocumentor-signature__argument__return-type">string</span>
-                            </dt>
-            <dd class="phpdocumentor-argument-list__definition">
-                
-            </dd>
-            </dl>
-
-    
-
-        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type">bool</span>
-            &mdash;
-        
-    
-</article>
-                    <article
-        class="phpdocumentor-element
-            -method
-            -public
-                                                        "
->
     <h4 class="phpdocumentor-element__name" id="method_update">
         update()
         <a href="classes/Makiavelo-Flex-FlexRepository.html#method_update" class="headerlink"><i class="fas fa-link"></i></a>
@@ -2817,7 +2329,7 @@ insert and update operations will be performed separately.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/FlexRepository.php"><a href="files/src-flexrepository.html"><abbr title="src/FlexRepository.php">FlexRepository.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">406</span>
+    <span class="phpdocumentor-element-found-in__line">390</span>
 
     </aside>
 
@@ -2863,7 +2375,7 @@ Table name is retrieved from the object meta.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/FlexRepository.php"><a href="files/src-flexrepository.html"><abbr title="src/FlexRepository.php">FlexRepository.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">628</span>
+    <span class="phpdocumentor-element-found-in__line">597</span>
 
     </aside>
 
@@ -2899,35 +2411,28 @@ Table name is retrieved from the object meta.</p>
             -public
                                                         "
 >
-    <h4 class="phpdocumentor-element__name" id="method_updateTableTypes">
-        updateTableTypes()
-        <a href="classes/Makiavelo-Flex-FlexRepository.html#method_updateTableTypes" class="headerlink"><i class="fas fa-link"></i></a>
+    <h4 class="phpdocumentor-element__name" id="method_useDriver">
+        useDriver()
+        <a href="classes/Makiavelo-Flex-FlexRepository.html#method_useDriver" class="headerlink"><i class="fas fa-link"></i></a>
     </h4>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/FlexRepository.php"><a href="files/src-flexrepository.html"><abbr title="src/FlexRepository.php">FlexRepository.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">814</span>
+    <span class="phpdocumentor-element-found-in__line">60</span>
 
     </aside>
 
-        <p class="phpdocumentor-summary">Update field types on the model table</p>
+        <p class="phpdocumentor-summary">Change the &#039;db&#039; property to this value</p>
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
-                <span class="phpdocumentor-signature__name">updateTableTypes</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type"><a href="classes/Makiavelo-Flex-Flex.html"><abbr title="\Makiavelo\Flex\Flex">Flex</abbr></a>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$model</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__return-type">mixed&nbsp;</span><span class="phpdocumentor-signature__argument__name">$tableFields</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">void</span></code>
+                <span class="phpdocumentor-signature__name">useDriver</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">mixed&nbsp;</span><span class="phpdocumentor-signature__argument__name">$driver</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">void</span></code>
 
     
         <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
     <dl class="phpdocumentor-argument-list">
                     <dt class="phpdocumentor-argument-list__entry">
-                <span class="phpdocumentor-signature__argument__name">$model</span>
-                : <span class="phpdocumentor-signature__argument__return-type"><a href="classes/Makiavelo-Flex-Flex.html"><abbr title="\Makiavelo\Flex\Flex">Flex</abbr></a></span>
-                            </dt>
-            <dd class="phpdocumentor-argument-list__definition">
-                
-            </dd>
-                    <dt class="phpdocumentor-argument-list__entry">
-                <span class="phpdocumentor-signature__argument__name">$tableFields</span>
+                <span class="phpdocumentor-signature__argument__name">$driver</span>
                 : <span class="phpdocumentor-signature__argument__return-type">mixed</span>
                             </dt>
             <dd class="phpdocumentor-argument-list__definition">
@@ -2956,18 +2461,29 @@ Table name is retrieved from the object meta.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/FlexRepository.php"><a href="files/src-flexrepository.html"><abbr title="src/FlexRepository.php">FlexRepository.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">31</span>
+    <span class="phpdocumentor-element-found-in__line">28</span>
 
     </aside>
 
     
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">private</span>
-                <span class="phpdocumentor-signature__name">__construct</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">mixed</span></code>
+                <span class="phpdocumentor-signature__name">__construct</span><span>(</span><span class="phpdocumentor-signature__argument"><span>[</span><span class="phpdocumentor-signature__argument__return-type">mixed&nbsp;</span><span class="phpdocumentor-signature__argument__name">$params</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">[]</span><span> ]</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">mixed</span></code>
 
         <section class="phpdocumentor-description"></section>
 
-    
+        <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
+    <dl class="phpdocumentor-argument-list">
+                    <dt class="phpdocumentor-argument-list__entry">
+                <span class="phpdocumentor-signature__argument__name">$params</span>
+                : <span class="phpdocumentor-signature__argument__return-type">mixed</span>
+                 = <span class="phpdocumentor-signature__argument__default-value">[]</span>            </dt>
+            <dd class="phpdocumentor-argument-list__definition">
+                    <section class="phpdocumentor-description"></section>
+
+            </dd>
+            </dl>
+
     
 
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
