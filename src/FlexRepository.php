@@ -763,10 +763,6 @@ class FlexRepository
         return $fields;
     }
 
-    
-
-    
-
     /**
      * Helper method to create a new object
      * If an object is created this way, all the fields
@@ -832,6 +828,12 @@ class FlexRepository
      */
     public function find($table, $condition = '', $params = [], $options = [])
     {
+        if (!self::frozen()) {
+            if (!$this->db->tableExists($table)) {
+                return [];
+            }
+        }
+        
         $result = $this->db->find($table, $condition, $params, $options);
         if (Common::get($options, 'hydrate', true)) {
             $result = $this->hydrate($result, $table, Common::get($options, 'class', 'Makiavelo\\Flex\\Flex'));

@@ -10,6 +10,7 @@ The main approach is to have flexible models without worrying about database sch
   * [Quick tour](#quick-tour)
   * [Examples](#examples)
     + [Connecting to the database](#connecting-to-the-database)
+    + [Using other databases](#using-other-databases)
     + [Creating models](#creating-models)
     + [Custom classes](#custom-classes)
     + [Custom field types](#custom-field-types)

@@ -477,16 +477,20 @@ class PDOMySQL
      */
     public function query($query, $params = [], $options = [])
     {
-        $this->db->setAttribute(\PDO::ATTR_FETCH_TABLE_NAMES, true);
-        $options = array_merge($this->getDefaultOptions(), $options);
+        try {
+            $this->db->setAttribute(\PDO::ATTR_FETCH_TABLE_NAMES, true);
+            $options = array_merge($this->getDefaultOptions(), $options);
 
-        $stmt = $this->db->prepare($query);
-        $this->bindValues($stmt, $params);
-        $stmt->execute();
-        $result = $stmt->fetchAll();
-        $this->db->setAttribute(\PDO::ATTR_FETCH_TABLE_NAMES, false);
+            $stmt = $this->db->prepare($query);
+            $this->bindValues($stmt, $params);
+            $stmt->execute();
+            $result = $stmt->fetchAll();
+            $this->db->setAttribute(\PDO::ATTR_FETCH_TABLE_NAMES, false);
 
-        return $result;
+            return $result;
+        } catch (\Exception $e) {
+            return [];
+        }
     }
 
     /**

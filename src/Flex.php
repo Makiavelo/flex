@@ -9,22 +9,21 @@ use Makiavelo\Flex\Meta;
 /**
  * Flexible models
  * 
- * @todo add aliases to relationships to be able to hydrate when there are 2 of the same kind (Eg: person (lawyer, doctor)) (DONE)
- * @todo self references (DONE)
- * @todo cleanup, make methods shorter, optimize algorithms, beautify (Done partially, no algos changed, just moved to sub methods)
- * @todo Evaluate Many-to-Many (DONE)
- * @todo Check for updates/deletes in child collections (DONE)
- * @todo Check for HasAndBelongs what happens if it has the same 'tag' twice (DONE)
- * @todo Move relations logic to specific clases (DONE)
- * @todo move meta logic to other class (DONE)
+ * @todo Implement collections
+ * @todo Add searcher in collection (like Common::find)
  */
 class Flex
 {
     /**
      * Internal variable for meta data like table name
-     * @var array
+     * @var Meta
      */
     public $_meta;
+
+    /**
+     * Model relations are stored here
+     * @var Relation[]
+     */
     public $_relations;
 
     public function __construct()
@@ -41,11 +40,15 @@ class Flex
      * 
      * @return mixed
      */
-    public static function build($data)
+    public static function build($data, $table = '')
     {
         $class = static::class;
         $model = new $class();
         $model->hydrate($data);
+
+        if ($table) {
+            $model->meta()->add('table', $table);
+        }
 
         return $model;
     }
@@ -400,7 +403,7 @@ class Flex
             // Properties have snake case to mimic db tables.
             if (property_exists($this, $names['attribute'])) {
                 return $this->_propertyGetterSetter($getSetPreffix, $names['attribute'], $arguments);
-
+                
             } elseif ($this->relations()->has($names['relation'])) {
                 // Search for relationships
                 $relation = $this->relations()->get($names['relation']);

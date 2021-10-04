@@ -15,6 +15,13 @@ final class FlexRepositoryFunctionalTest extends TestCase
         $db = new \PDO($_ENV['PDO_DSN'], $_ENV['PDO_USER'], $_ENV['PDO_PASS']);
         $sql = file_get_contents(dirname(__FILE__) . '/fixtures/flex_repo_setup_before.sql');
         $qr = $db->exec($sql);
+
+        FlexRepository::get()->connect([
+            'host' => '172.17.0.1',
+            'db' => 'flex_test',
+            'user' => 'root',
+            'pass' => 'root'
+        ]);
     }
 
     protected function setUp(): void
@@ -34,23 +41,6 @@ final class FlexRepositoryFunctionalTest extends TestCase
         $qr = $db->exec($sql);
     }
 
-    public function testConnect()
-    {
-        $repo = FlexRepository::get();
-        $status = $repo->connect([
-            'host' => '172.17.0.1',
-            'db' => 'flex_test',
-            'user' => 'root',
-            'pass' => 'root'
-        ]);
-
-        $this->assertTrue($status);
-        $this->assertEquals(get_class($repo->db), 'Makiavelo\\Flex\\Drivers\\PDOMySQL');
-    }
-
-    /**
-     * @depends testConnect
-     */
     public function testSave()
     {
         $repo = FlexRepository::get();
@@ -183,9 +173,6 @@ final class FlexRepositoryFunctionalTest extends TestCase
         $this->assertEquals($result[0]->name, 'Jack');
     }
 
-    /**
-     * @depends testConnect
-     */
     public function testCreateTable()
     {
         $repo = FlexRepository::get();
@@ -198,9 +185,6 @@ final class FlexRepositoryFunctionalTest extends TestCase
         $this->assertEquals($fields[0]['Extra'], 'auto_increment');
     }
 
-    /**
-     * @depends testCreateTable
-     */
     public function testAddFieldsToTable()
     {
         $repo = FlexRepository::get();
@@ -323,5 +307,13 @@ final class FlexRepositoryFunctionalTest extends TestCase
         $this->assertEquals('Modelx', get_class($hydrated[2]));
         $this->assertEquals('Will Ferrel', $hydrated[2]->name . ' ' . $hydrated[2]->last_name);
         $this->assertEquals('modelx', $hydrated[2]->meta()->get('table'));
+    }
+
+    public function testNonCreatedTable()
+    {
+        $repo = FlexRepository::get();
+        $users = $repo->find('user1234', 'id = :id', [':id' => 1]);
+
+        $this->assertCount(0, $users);
     }
 }
