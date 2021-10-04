@@ -148,7 +148,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\Makiavelo\\Flex\\Flex\u003A\u003A\u0024_relations",
             "name": "_relations",
-            "summary": "",
+            "summary": "Model\u0020relations\u0020are\u0020stored\u0020here",
             "url": "classes/Makiavelo-Flex-Flex.html#property__relations"
         },                {
             "fqsen": "\\Makiavelo\\Flex\\FlexRepository",
