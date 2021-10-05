@@ -22,6 +22,7 @@ The main approach is to have flexible models without worrying about database sch
     + [HasAndBelongs](#hasandbelongs)
     + [HasAndBelongs with custom relation data](#hasandbelongs-with-custom-relation-data)
     + [Self referencing](#self-referencing)
+    + [Relation Collections](#relation-collections)
   * [Searching for models](#searching-for-models)
   * [Complex searches](#complex-searches)
   * [Using the raw database connection](#using-the-raw-database-connection)
