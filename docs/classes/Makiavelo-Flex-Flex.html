@@ -106,7 +106,7 @@
         <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Flex.php"><a href="files/src-flex.html"><abbr title="src/Flex.php">Flex.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">15</span>
+    <span class="phpdocumentor-element-found-in__line">16</span>
 
     </aside>
 
@@ -151,6 +151,13 @@
 
 <dl class="phpdocumentor-table-of-contents">
                 <dt class="phpdocumentor-table-of-contents__entry -property -public">
+    <a href="classes/Makiavelo-Flex-Flex.html#property__chainer">$_chainer</a>
+    <span>
+                &nbsp;: <a href="classes/Makiavelo-Flex-Chainer.html"><abbr title="\Makiavelo\Flex\Chainer">Chainer</abbr></a>            </span>
+</dt>
+<dd></dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -property -public">
     <a href="classes/Makiavelo-Flex-Flex.html#property__meta">$_meta</a>
     <span>
                 &nbsp;: <a href="classes/Makiavelo-Flex-Meta.html"><abbr title="\Makiavelo\Flex\Meta">Meta</abbr></a>            </span>
@@ -379,6 +386,38 @@ form the $data collection.</dd>
             -public
                                                         "
 >
+    <h4 class="phpdocumentor-element__name" id="property__chainer">
+        $_chainer
+        <a href="classes/Makiavelo-Flex-Flex.html#property__chainer" class="headerlink"><i class="fas fa-link"></i></a>
+        <span class="phpdocumentor-element__modifiers">
+                                </span>
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Flex.php"><a href="files/src-flex.html"><abbr title="src/Flex.php">Flex.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">33</span>
+
+    </aside>
+
+    
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">public</span>
+        <span class="phpdocumentor-signature__type"><a href="classes/Makiavelo-Flex-Chainer.html"><abbr title="\Makiavelo\Flex\Chainer">Chainer</abbr></a></span>
+    <span class="phpdocumentor-signature__name">$_chainer</span>
+    </code>
+
+    
+    
+    
+
+</article>
+                    <article
+        class="
+            phpdocumentor-element
+            -property
+            -public
+                                                        "
+>
     <h4 class="phpdocumentor-element__name" id="property__meta">
         $_meta
         <a href="classes/Makiavelo-Flex-Flex.html#property__meta" class="headerlink"><i class="fas fa-link"></i></a>
@@ -388,7 +427,7 @@ form the $data collection.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Flex.php"><a href="files/src-flex.html"><abbr title="src/Flex.php">Flex.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">21</span>
+    <span class="phpdocumentor-element-found-in__line">22</span>
 
     </aside>
 
@@ -421,7 +460,7 @@ form the $data collection.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Flex.php"><a href="files/src-flex.html"><abbr title="src/Flex.php">Flex.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">27</span>
+    <span class="phpdocumentor-element-found-in__line">28</span>
 
     </aside>
 
@@ -458,7 +497,7 @@ form the $data collection.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Flex.php"><a href="files/src-flex.html"><abbr title="src/Flex.php">Flex.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">392</span>
+    <span class="phpdocumentor-element-found-in__line">409</span>
 
     </aside>
 
@@ -477,6 +516,13 @@ Example: get{RelationshipName}()
 set{RelationshipName}()</p>
 <p>In the case of getters, if no instance is defined, it will try
 to create one from the database.</p>
+<p>After that it will look for relation names called as a function
+to enable collection magic methods. This works for 'Has' and
+'HasAndBelongs' relations.
+Format: {camelCaseRelationName}()
+Examples:
+users()
+ownedCars()</p>
 <p>All the relationships information is taken from
 $this-&gt;_meta['relations']</p>
 </section>
@@ -520,7 +566,7 @@ $this-&gt;_meta['relations']</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Flex.php"><a href="files/src-flex.html"><abbr title="src/Flex.php">Flex.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">29</span>
+    <span class="phpdocumentor-element-found-in__line">35</span>
 
     </aside>
 
@@ -553,7 +599,7 @@ $this-&gt;_meta['relations']</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Flex.php"><a href="files/src-flex.html"><abbr title="src/Flex.php">Flex.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">466</span>
+    <span class="phpdocumentor-element-found-in__line">491</span>
 
     </aside>
 
@@ -586,7 +632,7 @@ $this-&gt;_meta['relations']</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Flex.php"><a href="files/src-flex.html"><abbr title="src/Flex.php">Flex.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">432</span>
+    <span class="phpdocumentor-element-found-in__line">457</span>
 
     </aside>
 
@@ -630,7 +676,7 @@ on the original method call.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Flex.php"><a href="files/src-flex.html"><abbr title="src/Flex.php">Flex.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">451</span>
+    <span class="phpdocumentor-element-found-in__line">476</span>
 
     </aside>
 
@@ -688,7 +734,7 @@ on the original method call.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Flex.php"><a href="files/src-flex.html"><abbr title="src/Flex.php">Flex.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">43</span>
+    <span class="phpdocumentor-element-found-in__line">50</span>
 
     </aside>
 
@@ -740,7 +786,7 @@ this class can be Flex or any class that extended it</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Flex.php"><a href="files/src-flex.html"><abbr title="src/Flex.php">Flex.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">170</span>
+    <span class="phpdocumentor-element-found-in__line">177</span>
 
     </aside>
 
@@ -786,7 +832,7 @@ DB should return the following format: {table_name_or_alias}.{field_name}</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Flex.php"><a href="files/src-flex.html"><abbr title="src/Flex.php">Flex.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">476</span>
+    <span class="phpdocumentor-element-found-in__line">501</span>
 
     </aside>
 
@@ -819,7 +865,7 @@ DB should return the following format: {table_name_or_alias}.{field_name}</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Flex.php"><a href="files/src-flex.html"><abbr title="src/Flex.php">Flex.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">74</span>
+    <span class="phpdocumentor-element-found-in__line">81</span>
 
     </aside>
 
@@ -882,7 +928,7 @@ a row for each relation match.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Flex.php"><a href="files/src-flex.html"><abbr title="src/Flex.php">Flex.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">321</span>
+    <span class="phpdocumentor-element-found-in__line">328</span>
 
     </aside>
 
@@ -933,7 +979,7 @@ This method triggers hydration of child objects.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Flex.php"><a href="files/src-flex.html"><abbr title="src/Flex.php">Flex.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">200</span>
+    <span class="phpdocumentor-element-found-in__line">207</span>
 
     </aside>
 
@@ -988,7 +1034,7 @@ does the opposite.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Flex.php"><a href="files/src-flex.html"><abbr title="src/Flex.php">Flex.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">233</span>
+    <span class="phpdocumentor-element-found-in__line">240</span>
 
     </aside>
 
@@ -1035,7 +1081,7 @@ be set as an attribute.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Flex.php"><a href="files/src-flex.html"><abbr title="src/Flex.php">Flex.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">290</span>
+    <span class="phpdocumentor-element-found-in__line">297</span>
 
     </aside>
 
@@ -1086,7 +1132,7 @@ This method triggers hydration of child objects.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Flex.php"><a href="files/src-flex.html"><abbr title="src/Flex.php">Flex.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">276</span>
+    <span class="phpdocumentor-element-found-in__line">283</span>
 
     </aside>
 
@@ -1138,7 +1184,7 @@ This method triggers hydration of child objects.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Flex.php"><a href="files/src-flex.html"><abbr title="src/Flex.php">Flex.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">254</span>
+    <span class="phpdocumentor-element-found-in__line">261</span>
 
     </aside>
 
@@ -1185,7 +1231,7 @@ to fetch relations from the database.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Flex.php"><a href="files/src-flex.html"><abbr title="src/Flex.php">Flex.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">353</span>
+    <span class="phpdocumentor-element-found-in__line">360</span>
 
     </aside>
 
@@ -1218,7 +1264,7 @@ to fetch relations from the database.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Flex.php"><a href="files/src-flex.html"><abbr title="src/Flex.php">Flex.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">517</span>
+    <span class="phpdocumentor-element-found-in__line">542</span>
 
     </aside>
 
@@ -1261,7 +1307,7 @@ to fetch relations from the database.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Flex.php"><a href="files/src-flex.html"><abbr title="src/Flex.php">Flex.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">339</span>
+    <span class="phpdocumentor-element-found-in__line">346</span>
 
     </aside>
 
@@ -1294,7 +1340,7 @@ to fetch relations from the database.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Flex.php"><a href="files/src-flex.html"><abbr title="src/Flex.php">Flex.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">495</span>
+    <span class="phpdocumentor-element-found-in__line">520</span>
 
     </aside>
 
@@ -1327,7 +1373,7 @@ to fetch relations from the database.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Flex.php"><a href="files/src-flex.html"><abbr title="src/Flex.php">Flex.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">578</span>
+    <span class="phpdocumentor-element-found-in__line">603</span>
 
     </aside>
 
@@ -1360,7 +1406,7 @@ to fetch relations from the database.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Flex.php"><a href="files/src-flex.html"><abbr title="src/Flex.php">Flex.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">558</span>
+    <span class="phpdocumentor-element-found-in__line">583</span>
 
     </aside>
 
@@ -1393,7 +1439,7 @@ to fetch relations from the database.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Flex.php"><a href="files/src-flex.html"><abbr title="src/Flex.php">Flex.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">568</span>
+    <span class="phpdocumentor-element-found-in__line">593</span>
 
     </aside>
 
@@ -1426,7 +1472,7 @@ to fetch relations from the database.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Flex.php"><a href="files/src-flex.html"><abbr title="src/Flex.php">Flex.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">548</span>
+    <span class="phpdocumentor-element-found-in__line">573</span>
 
     </aside>
 
@@ -1459,7 +1505,7 @@ to fetch relations from the database.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Flex.php"><a href="files/src-flex.html"><abbr title="src/Flex.php">Flex.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">505</span>
+    <span class="phpdocumentor-element-found-in__line">530</span>
 
     </aside>
 
@@ -1492,7 +1538,7 @@ to fetch relations from the database.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Flex.php"><a href="files/src-flex.html"><abbr title="src/Flex.php">Flex.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">132</span>
+    <span class="phpdocumentor-element-found-in__line">139</span>
 
     </aside>
 
@@ -1547,7 +1593,7 @@ without that information until there's nothing to hydrate.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Flex.php"><a href="files/src-flex.html"><abbr title="src/Flex.php">Flex.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">110</span>
+    <span class="phpdocumentor-element-found-in__line">117</span>
 
     </aside>
 
@@ -1590,7 +1636,7 @@ without that information until there's nothing to hydrate.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Flex.php"><a href="files/src-flex.html"><abbr title="src/Flex.php">Flex.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">535</span>
+    <span class="phpdocumentor-element-found-in__line">560</span>
 
     </aside>
 

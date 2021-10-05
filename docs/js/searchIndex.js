@@ -151,6 +151,11 @@ Search.appendIndex(
             "summary": "Model\u0020relations\u0020are\u0020stored\u0020here",
             "url": "classes/Makiavelo-Flex-Flex.html#property__relations"
         },                {
+            "fqsen": "\\Makiavelo\\Flex\\Flex\u003A\u003A\u0024_chainer",
+            "name": "_chainer",
+            "summary": "",
+            "url": "classes/Makiavelo-Flex-Flex.html#property__chainer"
+        },                {
             "fqsen": "\\Makiavelo\\Flex\\FlexRepository",
             "name": "FlexRepository",
             "summary": "",
@@ -766,15 +771,80 @@ Search.appendIndex(
             "summary": "",
             "url": "classes/Makiavelo-Flex-Drivers-PDOMySQL.html#property_db"
         },                {
+            "fqsen": "\\Makiavelo\\Flex\\Chainer",
+            "name": "Chainer",
+            "summary": "",
+            "url": "classes/Makiavelo-Flex-Chainer.html"
+        },                {
+            "fqsen": "\\Makiavelo\\Flex\\Chainer\u003A\u003AaddRelation\u0028\u0029",
+            "name": "addRelation",
+            "summary": "Adds\u0020a\u0020relation\u0020to\u0020the\u0020chain,\u0020this\u0020is\u0020triggered\u0020when\u0020a\u0020model\u0027s\nrelation\u0020magic\u0020method\u0020is\u0020called.",
+            "url": "classes/Makiavelo-Flex-Chainer.html#method_addRelation"
+        },                {
+            "fqsen": "\\Makiavelo\\Flex\\Chainer\u003A\u003AhandleMethods\u0028\u0029",
+            "name": "handleMethods",
+            "summary": "Handle\u0020all\u0020the\u0020available\u0020chained\u0020methods.",
+            "url": "classes/Makiavelo-Flex-Chainer.html#method_handleMethods"
+        },                {
+            "fqsen": "\\Makiavelo\\Flex\\Chainer\u003A\u003AhandleConditions\u0028\u0029",
+            "name": "handleConditions",
+            "summary": "Magic\u0020method\u0020to\u0020handle\u0020operations\u0020that\u0020don\u0027t\u0020interact\ndirectly\u0020with\u0020the\u0020collection,\u0020they\u0020just\u0020store\u0020information\nin\u0020the\u0020chain\u0020for\u0020later\u0020filtering\u0020or\u0020manipulation.",
+            "url": "classes/Makiavelo-Flex-Chainer.html#method_handleConditions"
+        },                {
+            "fqsen": "\\Makiavelo\\Flex\\Chainer\u003A\u003Aremove\u0028\u0029",
+            "name": "remove",
+            "summary": "Magic\u0020method\u0020to\u0020remove\u0020elements\u0020from\u0020the\u0020collection.",
+            "url": "classes/Makiavelo-Flex-Chainer.html#method_remove"
+        },                {
+            "fqsen": "\\Makiavelo\\Flex\\Chainer\u003A\u003Aexists\u0028\u0029",
+            "name": "exists",
+            "summary": "Magic\u0020method\u0020to\u0020check\u0020if\u0020a\u0020condition\u0020exists\u0020in\u0020the\u0020collection",
+            "url": "classes/Makiavelo-Flex-Chainer.html#method_exists"
+        },                {
+            "fqsen": "\\Makiavelo\\Flex\\Chainer\u003A\u003Aadd\u0028\u0029",
+            "name": "add",
+            "summary": "Magic\u0020method\u0020to\u0020add\u0020an\u0020element\u0020to\u0020the\u0020collection",
+            "url": "classes/Makiavelo-Flex-Chainer.html#method_add"
+        },                {
+            "fqsen": "\\Makiavelo\\Flex\\Chainer\u003A\u003Afetch\u0028\u0029",
+            "name": "fetch",
+            "summary": "Magic\u0020method\u0020to\u0020fetch\u0020a\u0020filtered\u0020collection\u0020\u0028or\u0020all\u0020of\u0020it\u0029",
+            "url": "classes/Makiavelo-Flex-Chainer.html#method_fetch"
+        },                {
+            "fqsen": "\\Makiavelo\\Flex\\Chainer\u003A\u003Aclear\u0028\u0029",
+            "name": "clear",
+            "summary": "Magic\u0020method\u0020to\u0020clear\u0020a\u0020collection",
+            "url": "classes/Makiavelo-Flex-Chainer.html#method_clear"
+        },                {
+            "fqsen": "\\Makiavelo\\Flex\\Chainer\u003A\u003AgetResult\u0028\u0029",
+            "name": "getResult",
+            "summary": "Internal\u0020method\u0020to\u0020make\u0020it\u0020easier\u0020to\u0020get\u0020results",
+            "url": "classes/Makiavelo-Flex-Chainer.html#method_getResult"
+        },                {
+            "fqsen": "\\Makiavelo\\Flex\\Chainer\u003A\u003AfilterCollection\u0028\u0029",
+            "name": "filterCollection",
+            "summary": "Filter\u0020a\u0020collection\u0020based\u0020on\u0020the\u0020conditions\u0020previously\u0020set\u0020via\u0020\u0027with\u0027\nThe\u0020condition\u0020can\u0020be\u003A\n1\u0029\u0020array\u003A\u0020all\u0020the\u0020attributes\u0020will\u0020be\u0020compared\u0020against\u0020each\u0020collection\u0020element.",
+            "url": "classes/Makiavelo-Flex-Chainer.html#method_filterCollection"
+        },                {
+            "fqsen": "\\Makiavelo\\Flex\\Chainer\u003A\u003AhandleCallable\u0028\u0029",
+            "name": "handleCallable",
+            "summary": "Handle\u0020conditions\u0020in\u0020Callable\u0020format\nThis\u0020method\u0020requires\u0020a\u0020function\u0020that\u0020returns\u0020a\u0020boolean.",
+            "url": "classes/Makiavelo-Flex-Chainer.html#method_handleCallable"
+        },                {
+            "fqsen": "\\Makiavelo\\Flex\\Chainer\u003A\u003AhandleArray\u0028\u0029",
+            "name": "handleArray",
+            "summary": "Handle\u0020conditions\u0020in\u0020array\u0020format.",
+            "url": "classes/Makiavelo-Flex-Chainer.html#method_handleArray"
+        },                {
+            "fqsen": "\\Makiavelo\\Flex\\Chainer\u003A\u003AhandleFlex\u0028\u0029",
+            "name": "handleFlex",
+            "summary": "Handles\u0020conditions\u0020in\u0020the\u0020Flex\u0020Model\u0020format\nThis\u0020method\u0020compares\u0020model\u0020ids\u0020only.",
+            "url": "classes/Makiavelo-Flex-Chainer.html#method_handleFlex"
+        },                {
             "fqsen": "\\",
             "name": "\\",
             "summary": "",
             "url": "namespaces/default.html"
-        },                {
-            "fqsen": "\\Makiavelo\\Flex\\Drivers",
-            "name": "Drivers",
-            "summary": "",
-            "url": "namespaces/makiavelo-flex-drivers.html"
         },                {
             "fqsen": "\\Makiavelo\\Flex",
             "name": "Flex",
@@ -785,6 +855,11 @@ Search.appendIndex(
             "name": "Makiavelo",
             "summary": "",
             "url": "namespaces/makiavelo.html"
+        },                {
+            "fqsen": "\\Makiavelo\\Flex\\Drivers",
+            "name": "Drivers",
+            "summary": "",
+            "url": "namespaces/makiavelo-flex-drivers.html"
         },                {
             "fqsen": "\\Makiavelo\\Flex\\Util",
             "name": "Util",
