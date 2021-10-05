@@ -39,12 +39,13 @@ class Meta
      * Get a meta value
      * 
      * @param string $name
+     * @param mixed $default
      * 
      * @return mixed
      */
-    public function get($name)
+    public function get($name, $default = null)
     {
-        return Common::get($this->values, $name);
+        return Common::get($this->values, $name, $default);
     }
 
     /**

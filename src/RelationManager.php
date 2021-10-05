@@ -41,12 +41,15 @@ class RelationManager
      * Check if a relation exists
      * 
      * @param string $name
+     * @param boolean $noCase
      * 
      * @return boolean
      */
-    public function has($name)
+    public function has($name, $noCase = false)
     {
         if (isset($this->relations[$name])) {
+            return true;
+        } elseif ($noCase && isset($this->relations[ucfirst($name)])) {
             return true;
         }
 
@@ -57,16 +60,19 @@ class RelationManager
      * Get a relation by name, or all of them if no name was provided
      * 
      * @param null|string $name
+     * @param boolean $noCase
      * 
      * @return mixed
      */
-    public function get($name = null)
+    public function get($name = null, $noCase = false)
     {
         if ($name === null) {
             return $this->relations;
         } else {
             if ($this->has($name)) {
                 return $this->relations[$name];
+            } elseif ($noCase && $this->has($name, $noCase)) {
+                return $this->relations[ucfirst($name)];
             }
         }
 

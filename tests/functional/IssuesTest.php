@@ -2,9 +2,7 @@
 
 use PHPUnit\Framework\TestCase;
 
-use Makiavelo\Flex\Flex;
 use Makiavelo\Flex\FlexRepository as FR;
-use Makiavelo\Flex\Util\EnhancedPDO;
 
 require_once(dirname(__FILE__) . '/../util/test_issues_models.php');
 
@@ -44,7 +42,7 @@ final class IssuesTest extends TestCase
 
     public function testRelationIssue()
     {
-        $user = new User();
+        $user = new UserIss1();
         $user->setName('John');
         $user->setLastName('Doe');
 
@@ -58,10 +56,10 @@ final class IssuesTest extends TestCase
     public function testRelationIssueWithData()
     {
         $params = [':id' => 1];
-        $users = FR::get()->find('user', 'id = :id', $params, ['class' => 'User']);
+        $users = FR::get()->find('user', 'id = :id', $params, ['class' => 'UserIss1']);
         $user = $users[0];
 
-        $tags = FR::get()->query('SELECT * FROM tag', [], ['class' => 'Tag']);
+        $tags = FR::get()->query('SELECT * FROM tag', [], ['class' => 'TagIss1']);
         $this->assertCount(0, $tags);
         
         $tags = $user->getTags();

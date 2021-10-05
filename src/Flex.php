@@ -5,6 +5,7 @@ namespace Makiavelo\Flex;
 use Makiavelo\Flex\RelationManager;
 use Makiavelo\Flex\Util\Common;
 use Makiavelo\Flex\Meta;
+use Makiavelo\Flex\Chainer;
 
 /**
  * Flexible models
@@ -26,10 +27,16 @@ class Flex
      */
     public $_relations;
 
+    /**
+     * @var Chainer
+     */
+    public $_chainer;
+
     public function __construct()
     {
         $this->_meta = new Meta();
         $this->_relations = new RelationManager();
+        $this->_chainer = new Chainer();
     }
 
     /**
@@ -381,6 +388,16 @@ class Flex
      * In the case of getters, if no instance is defined, it will try
      * to create one from the database.
      * 
+     * After that it will look for relation names called as a function
+     * to enable collection magic methods. This works for 'Has' and
+     * 'HasAndBelongs' relations.
+     * Format: {camelCaseRelationName}()
+     * Examples:
+     *      users()
+     *      ownedCars()
+     * 
+     *          
+     * 
      * All the relationships information is taken from
      * $this->_meta['relations']
      * 
@@ -417,6 +434,14 @@ class Flex
                 throw new \Exception("Undefined attribute '" . $names['attribute'] . "'");
             }
         } else {
+            // It's not a getter, setter nor attribute name
+            // so check for relations to return all the collection 
+            // methods available: ['not', 'with', 'add', 'remove', 'clear', 'exists', 'fetch']
+            if ($this->relations()->has($name, true)) {
+                return $this->_chainer->addRelation($this, $name, $arguments);
+            } elseif ($this->meta()->get('chain')) {
+                return $this->_chainer->handleMethods($this, $name, $arguments);
+            }
             throw new \Exception("Undefined method '" . $name . "'");
         }
     }

@@ -2,7 +2,7 @@
 
 use Makiavelo\Flex\Flex;
 
-class Tag extends Flex
+class TagIss1 extends Flex
 {
     public $id;
     public $name;
@@ -17,13 +17,13 @@ class Tag extends Flex
             'table' => 'user',
             'external_key' => 'user_id',
             'relation_table' => 'user_tag',
-            'class' => 'User',
+            'class' => 'UserIss1',
             'type' => 'HasAndBelongs'
         ]);
     }
 }
 
-class User extends Flex
+class UserIss1 extends Flex
 {
     public $id;
     public $name;
@@ -38,7 +38,7 @@ class User extends Flex
             'table' => 'tag',
             'relation_table' => 'user_tag',
             'table_alias' => '',
-            'class' => 'Tag',
+            'class' => 'TagIss1',
             'key' => 'user_id',
             'external_key' => 'tag_id',
             'type' => 'HasAndBelongs',
