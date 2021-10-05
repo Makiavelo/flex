@@ -268,7 +268,7 @@ The default type for all the fields is 'TEXT' if not defined via metadata.
 the attribute 'id' and all the attributes that start with a '_' (underscore) are considered as internal
 and will never be persisted to the database, while 'id' is always generated as a primary key with autoincrement.
 
-### Collections
+### Batch operations with models
 FlexRepository can handle collections for all the operations (insert, update, delete).
 Model relationships are not considered for insert statements.
 
@@ -611,6 +611,67 @@ class User extends Flex {
 As you can see, it's a normal 'Belongs' relation, but there's one important thing to notice here, and it's the
 `'table_alias'` parameter defined in the relation.
 Without this alias, Flex has no way to know who is who when it gets the raw results from the database.
+
+## Relation Collections
+The relations of type 'Has' and 'HasAndBelongs' add collections to the model. We added some magic methods to handle collections and make
+life easier.
+
+Examples:
+```php
+$user1 = new User();
+$user1->setName('John');
+$user1->setLastName('Doe');
+
+$user2 = new User();
+$user2->setName('Jack');
+$user2->setLastName('Daniels');
+
+$user3 = new User();
+$user3->setName('Will');
+$user3->setLastName('Ferrel');
+
+$company = new Company();
+$company->setName('Test Company');
+
+// This could be done with $company->setUsers()
+// but just showcasing...
+$company->users()->add($user1);
+$company->users()->add($user2);
+$company->users()->add($user3);
+
+// Returns user1
+$company->users()->with(['name' => 'John'])->fetch();
+
+// Returns user1 and user3
+$company->users()->not()->with(['last_name' => 'Daniels'])->fetch();
+
+// Removes user1 and user3
+$company->users()->not()->with(['last_name' => 'Daniels'])->remove();
+
+// Returns false, we deleted them
+$company->users()->not()->with(['last_name' => 'Daniels'])->exists();
+
+// Add them again
+$company->users()->add($user1);
+$company->users()->add($user3);
+
+// Empty all
+$company->users()->clear();
+
+// At any point you can save the model
+FlexRepository::get()->save($company);
+```
+It's important to note that this only filters the already loaded models, and doesn't query the database to filter the collection.
+
+The methods available for chaining are:
+
+* __with:__ This is a filter method, and all the methods chained after this will use this filter.
+* __not:__ This will negate the condition set in the 'with' condition (doing the opposite).
+* __fetch:__ Fetch the collection, if no 'with' method was chained, will return everything.
+* __remove:__ Will remove items from the collection based on the 'with' condition. If no 'with' was chained, will remove them all.
+* __add:__ Add a new item to the collection.
+* __clear:__ Will empty the collection.
+* __exists:__ Will check that the 'with' condition has results. Is a shorthand method for 'fetch' that only returns a boolean if the condition has elements.
 
 ## Searching for models
 There are a couple of convenience methods to search for models in the database:
