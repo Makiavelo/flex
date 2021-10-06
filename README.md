@@ -658,6 +658,19 @@ $company->users()->not()->with(['last_name' => 'Daniels'])->remove();
 // Returns false, we deleted them
 $company->users()->not()->with(['last_name' => 'Daniels'])->exists();
 
+// Alias of the previous with but with a callable
+$company->users()->with(function ($model) {
+    if ($model->getLastName() === 'Daniels') {
+        return true;
+    } else {
+        return false;
+    }
+})->fetch();
+
+// Comparing against a model (only id is compared)
+$someUser = new User();
+$company->users()->with($someUser)->fetch();
+
 // Add them again
 $company->users()->add($user1);
 $company->users()->add($user3);
@@ -673,6 +686,10 @@ It's important to note that this only filters the already loaded models, and doe
 The methods available for chaining are:
 
 * __with:__ This is a filter method, and all the methods chained after this will use this filter.
+  * This function accepts 3 types of conditions:
+    * __Array:__ Will match against each $field->$value pair
+    * __Callable:__ Can be a closure or any type of Callable. Matches if it returns true.
+    * __Flex:__ Will match against the Flex model id only. 
 * __not:__ This will negate the condition set in the 'with' condition (doing the opposite).
 * __fetch:__ Fetch the collection, if no 'with' method was chained, will return everything.
 * __remove:__ Will remove items from the collection based on the 'with' condition. If no 'with' was chained, will remove them all.

@@ -97,7 +97,7 @@ class PDOMySQL
      * @param mixed $data
      * @param mixed $values
      * 
-     * @return [type]
+     * @return boolean
      */
     public function update($model, $table, $updates, $data, $values)
     {
