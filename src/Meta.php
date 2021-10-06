@@ -49,6 +49,23 @@ class Meta
     }
 
     /**
+     * Set a value in a determined path.
+     * 
+     * If the path doesn't exist, the missing parts are created.
+     * 
+     * @param mixed $path
+     * @param mixed $value
+     * @param string $container
+     * 
+     * @return Meta
+     */
+    public function set($path, $value, $container = 'array')
+    {
+        $this->values = Common::set($this->values, $path, $value, $container);
+        return $this;
+    }
+
+    /**
      * Check if the key exists in the meta data array
      * 
      * @param string $name

@@ -144,6 +144,10 @@ class Chainer
      */
     public function fetch($model, $arguments)
     {
+        $relation = $model->meta()->get('chain->relation->0');
+        $model->relations()->edit($relation->name, [
+            'loaded' => true
+        ]);
         $result = $this->filterCollection($model);
         return $this->getResult($model->meta()->get('chain->not'), $result);
     }

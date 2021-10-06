@@ -31,7 +31,7 @@ class PDOMySQL
         $options = [
             \PDO::ATTR_ERRMODE            => \PDO::ERRMODE_EXCEPTION,
             \PDO::ATTR_DEFAULT_FETCH_MODE => \PDO::FETCH_ASSOC,
-            \PDO::ATTR_EMULATE_PREPARES   => false,
+            \PDO::ATTR_EMULATE_PREPARES   => false
         ];
 
         try {
@@ -49,11 +49,15 @@ class PDOMySQL
      * @param Flex $model
      * @param mixed $ids
      * 
-     * @return [type]
+     * @return boolean
      */
     public function unusedChildsQuery(Relation $relation, Flex $model, $ids)
     {
-        $query = "DELETE FROM {$relation->table} WHERE {$relation->key} = :parent_id AND {$relation->table}.id NOT IN (" . implode($ids) . ")";
+        $query = "DELETE FROM {$relation->table} WHERE {$relation->key} = :parent_id";
+        if ($ids) {
+            $query .= " AND {$relation->table}.id NOT IN (" . implode(',', $ids) . ")";
+        }
+        
         $stmt = $this->db->prepare($query);
         $this->bindValues($stmt, [':parent_id' => $model->id]);
         $result = $stmt->execute();

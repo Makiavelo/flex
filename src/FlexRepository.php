@@ -27,6 +27,8 @@ class FlexRepository
 
     private function __construct($params = [])
     {
+        $this->meta = new Meta();
+
         if (isset($params['driver'])) {
             $this->db = $params['driver'];
         } else {
@@ -242,6 +244,7 @@ class FlexRepository
             foreach ($relation->instance as $key => $related) {
                 // First save both ends, then add the relation record.
                 $this->handleRelations($relation->instance[$key]);
+                $this->setTableForRawModels($relation, $key);
                 $this->save($relation->instance[$key]);
                 $this->handlePostRelations($relation->instance[$key]);
                 $this->_saveIntermediateTable($model, $relation, $key);
@@ -274,6 +277,7 @@ class FlexRepository
             foreach ($relation->instance as $key => $related) {
                 $this->handleRelations($relation->instance[$key]);
                 $relation->instance[$key]->{$relation->key} = $model->id;
+                $this->setTableForRawModels($relation, $key);
                 $this->save($relation->instance[$key]);
                 $this->handlePostRelations($relation->instance[$key]);
             }
@@ -283,6 +287,25 @@ class FlexRepository
             } else {
                 $this->nullifyUnusedChilds($model, $relation);
             }
+        }
+    }
+
+    /**
+     * When using Raw flex models as relations, the table is not set
+     * because it's loaded on run time. So we fetch it from the relation
+     * data.
+     * 
+     * @param Relation $relation
+     * @param mixed $key The instance key in the array
+     * 
+     * @return void
+     */
+    public function setTableForRawModels(Relation $relation, $key)
+    {
+        // IF the relation is a raw Flex model, set the table.
+        $table = $relation->instance[$key]->meta()->get('table');
+        if (!$table) {
+            $relation->instance[$key]->meta()->add('table', $relation->table);
         }
     }
 
@@ -325,7 +348,7 @@ class FlexRepository
      */
     public function removeUnusedChilds(Flex $model,Relation $relation)
     {
-        $usedIds = array_map(function($obj) { return $obj->id; }, $relation['instance']);
+        $usedIds = array_map(function($obj) { return $obj->id; }, $relation->getInstance($model));
         if ($relation->type === 'Has') {
             $result = $this->db->unusedChildsQuery($relation, $model, $usedIds);
         }

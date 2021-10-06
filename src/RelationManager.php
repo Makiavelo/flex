@@ -78,4 +78,24 @@ class RelationManager
 
         return false;
     }
+
+    /**
+     * Edit a relation 
+     * 
+     * Changes relation attributes based on the values provided
+     * in the $params associative array.
+     * 
+     * @param mixed $name
+     * @param array $params
+     * 
+     * @return RelationManager
+     */
+    public function edit($name, $params = [])
+    {
+        $relation = $this->get($name);
+        foreach ($params as $key => $value) {
+            $relation->$key = $value;
+        }
+        return $this;
+    }
 }

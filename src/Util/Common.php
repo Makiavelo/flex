@@ -73,10 +73,14 @@ class Common
             }
         } else {
             if (is_object($collection)) {
-                $collection->{$segment} = $container === 'array' ? [] : new \stdClass();
+                if (!isset($collection->{$segment}) || !$collection->{$segment}) {
+                    $collection->{$segment} = $container === 'array' ? [] : new \stdClass();
+                }
                 $collection->{$segment} = Common::set($collection->{$segment}, implode('->', $parts), $value, $container);
             } else {
-                $collection[$segment] = $container === 'array' ? [] : new \stdClass();
+                if (!isset($collection[$segment]) || !$collection[$segment]) {
+                    $collection[$segment] = $container === 'array' ? [] : new \stdClass();
+                }
                 $collection[$segment] = Common::set($collection[$segment], implode('->', $parts), $value, $container);
             }
         }
