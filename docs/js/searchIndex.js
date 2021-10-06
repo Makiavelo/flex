@@ -236,6 +236,11 @@ Search.appendIndex(
             "summary": "Handle\u0020a\u0020\u0027Has\u0027\u0020relation\u0020after\u0020the\u0020parent\u0020model\u0020was\u0020saved",
             "url": "classes/Makiavelo-Flex-FlexRepository.html#method_handleHasRelation"
         },                {
+            "fqsen": "\\Makiavelo\\Flex\\FlexRepository\u003A\u003AsetTableForRawModels\u0028\u0029",
+            "name": "setTableForRawModels",
+            "summary": "When\u0020using\u0020Raw\u0020flex\u0020models\u0020as\u0020relations,\u0020the\u0020table\u0020is\u0020not\u0020set\nbecause\u0020it\u0027s\u0020loaded\u0020on\u0020run\u0020time.\u0020So\u0020we\u0020fetch\u0020it\u0020from\u0020the\u0020relation\ndata.",
+            "url": "classes/Makiavelo-Flex-FlexRepository.html#method_setTableForRawModels"
+        },                {
             "fqsen": "\\Makiavelo\\Flex\\FlexRepository\u003A\u003A_clearIntermediateTable\u0028\u0029",
             "name": "_clearIntermediateTable",
             "summary": "Internal\u0020method\u0020to\u0020clear\u0020an\u0020intermediate\u0020table\u0020in\u0020a\u0020\u0027HasAndBelongs\u0027\nrelation\u0020after\u0020updates.",
@@ -421,6 +426,11 @@ Search.appendIndex(
             "summary": "Get\u0020a\u0020meta\u0020value",
             "url": "classes/Makiavelo-Flex-Meta.html#method_get"
         },                {
+            "fqsen": "\\Makiavelo\\Flex\\Meta\u003A\u003Aset\u0028\u0029",
+            "name": "set",
+            "summary": "Set\u0020a\u0020value\u0020in\u0020a\u0020determined\u0020path.",
+            "url": "classes/Makiavelo-Flex-Meta.html#method_set"
+        },                {
             "fqsen": "\\Makiavelo\\Flex\\Meta\u003A\u003Ahas\u0028\u0029",
             "name": "has",
             "summary": "Check\u0020if\u0020the\u0020key\u0020exists\u0020in\u0020the\u0020meta\u0020data\u0020array",
@@ -600,6 +610,11 @@ Search.appendIndex(
             "name": "get",
             "summary": "Get\u0020a\u0020relation\u0020by\u0020name,\u0020or\u0020all\u0020of\u0020them\u0020if\u0020no\u0020name\u0020was\u0020provided",
             "url": "classes/Makiavelo-Flex-RelationManager.html#method_get"
+        },                {
+            "fqsen": "\\Makiavelo\\Flex\\RelationManager\u003A\u003Aedit\u0028\u0029",
+            "name": "edit",
+            "summary": "Edit\u0020a\u0020relation",
+            "url": "classes/Makiavelo-Flex-RelationManager.html#method_edit"
         },                {
             "fqsen": "\\Makiavelo\\Flex\\RelationManager\u003A\u003A\u0024relations",
             "name": "relations",
@@ -841,6 +856,121 @@ Search.appendIndex(
             "summary": "Handles\u0020conditions\u0020in\u0020the\u0020Flex\u0020Model\u0020format\nThis\u0020method\u0020compares\u0020model\u0020ids\u0020only.",
             "url": "classes/Makiavelo-Flex-Chainer.html#method_handleFlex"
         },                {
+            "fqsen": "\\Makiavelo\\Flex\\Traits\\Geopositioned",
+            "name": "Geopositioned",
+            "summary": "Trait\u0020to\u0020add\u0020latitude\u0020and\u0020longitude\u0020to\u0020the\u0020model\nand\u0020also\u0020some\u0020utility\u0020functions\u0020for\u0020distance\u0020measuring.",
+            "url": "classes/Makiavelo-Flex-Traits-Geopositioned.html"
+        },                {
+            "fqsen": "\\Makiavelo\\Flex\\Traits\\Geopositioned\u003A\u003AdistanceTo\u0028\u0029",
+            "name": "distanceTo",
+            "summary": "Calculate\u0020distance\u0020from\u0020this\u0020model\u0020to\u0020a\u0020lat\/lng\u0020pair",
+            "url": "classes/Makiavelo-Flex-Traits-Geopositioned.html#method_distanceTo"
+        },                {
+            "fqsen": "\\Makiavelo\\Flex\\Traits\\Geopositioned\u003A\u003A_vincentyFormulaDistance\u0028\u0029",
+            "name": "_vincentyFormulaDistance",
+            "summary": "Calculates\u0020the\u0020great\u002Dcircle\u0020distance\u0020between\u0020two\u0020points,\u0020with\nthe\u0020Vincenty\u0020formula.",
+            "url": "classes/Makiavelo-Flex-Traits-Geopositioned.html#method__vincentyFormulaDistance"
+        },                {
+            "fqsen": "\\Makiavelo\\Flex\\Traits\\Geopositioned\u003A\u003A\u0024lat",
+            "name": "lat",
+            "summary": "",
+            "url": "classes/Makiavelo-Flex-Traits-Geopositioned.html#property_lat"
+        },                {
+            "fqsen": "\\Makiavelo\\Flex\\Traits\\Geopositioned\u003A\u003A\u0024lng",
+            "name": "lng",
+            "summary": "",
+            "url": "classes/Makiavelo-Flex-Traits-Geopositioned.html#property_lng"
+        },                {
+            "fqsen": "\\Makiavelo\\Flex\\Traits\\Sluggable",
+            "name": "Sluggable",
+            "summary": "Trait\u0020to\u0020add\u0020slugs\u0020based\u0020on\u0020certain\u0020fields\nThe\u0020fields\u0020will\u0020be\u0020concatenated\u0020and\u0020then\u0020transformed\u0020into\u0020a\u0020slug",
+            "url": "classes/Makiavelo-Flex-Traits-Sluggable.html"
+        },                {
+            "fqsen": "\\Makiavelo\\Flex\\Traits\\Sluggable\u003A\u003A_sluggableInit\u0028\u0029",
+            "name": "_sluggableInit",
+            "summary": "Initialize\u0020the\u0020required\u0020parameters\n\u0020\u0020\u0027fields\u0027\u003A\u0020The\u0020fields\u0020to\u0020be\u0020concatenated\n\u0020\u0020\u0027update\u0027\u003A\u0020If\u0020the\u0020slug\u0020should\u0020be\u0020updated\u0020once\u0020created",
+            "url": "classes/Makiavelo-Flex-Traits-Sluggable.html#method__sluggableInit"
+        },                {
+            "fqsen": "\\Makiavelo\\Flex\\Traits\\Sluggable\u003A\u003A_sluggablePreSave\u0028\u0029",
+            "name": "_sluggablePreSave",
+            "summary": "Build\u0020a\u0020slug\u0020based\u0020on\u0020the\u0020selected\u0020fields",
+            "url": "classes/Makiavelo-Flex-Traits-Sluggable.html#method__sluggablePreSave"
+        },                {
+            "fqsen": "\\Makiavelo\\Flex\\Traits\\Sluggable\u003A\u003A\u0024slug",
+            "name": "slug",
+            "summary": "",
+            "url": "classes/Makiavelo-Flex-Traits-Sluggable.html#property_slug"
+        },                {
+            "fqsen": "\\Makiavelo\\Flex\\Traits\\Timestampable",
+            "name": "Timestampable",
+            "summary": "Simple\u0020trait\u0020to\u0020keep\u0020track\u0020of\u0020create\u0020and\u0020update\u0020dates.",
+            "url": "classes/Makiavelo-Flex-Traits-Timestampable.html"
+        },                {
+            "fqsen": "\\Makiavelo\\Flex\\Traits\\Timestampable\u003A\u003A_timestampablePreSave\u0028\u0029",
+            "name": "_timestampablePreSave",
+            "summary": "Set\u0020the\u0020\u0027created_at\u0027\u0020and\u0020\u0027updated_at\u0027\u0020fields\u0020with\u0020the\u0020selected\u0020format.",
+            "url": "classes/Makiavelo-Flex-Traits-Timestampable.html#method__timestampablePreSave"
+        },                {
+            "fqsen": "\\Makiavelo\\Flex\\Traits\\Timestampable\u003A\u003A\u0024created_at",
+            "name": "created_at",
+            "summary": "",
+            "url": "classes/Makiavelo-Flex-Traits-Timestampable.html#property_created_at"
+        },                {
+            "fqsen": "\\Makiavelo\\Flex\\Traits\\Timestampable\u003A\u003A\u0024updated_at",
+            "name": "updated_at",
+            "summary": "",
+            "url": "classes/Makiavelo-Flex-Traits-Timestampable.html#property_updated_at"
+        },                {
+            "fqsen": "\\Makiavelo\\Flex\\Traits\\Translatable",
+            "name": "Translatable",
+            "summary": "Trait\u0020to\u0020add\u0020translations\u0020to\u0020fields",
+            "url": "classes/Makiavelo-Flex-Traits-Translatable.html"
+        },                {
+            "fqsen": "\\Makiavelo\\Flex\\Traits\\Translatable\u003A\u003A_translatableInit\u0028\u0029",
+            "name": "_translatableInit",
+            "summary": "Initialize\u0020the\u0020translatable\u0020relationship",
+            "url": "classes/Makiavelo-Flex-Traits-Translatable.html#method__translatableInit"
+        },                {
+            "fqsen": "\\Makiavelo\\Flex\\Traits\\Translatable\u003A\u003Atranslation\u0028\u0029",
+            "name": "translation",
+            "summary": "Create\u0020a\u0020translation\u0020with\u0020the\u0020fields\u0020defined\u0020in\u0020the\u0020\u0024values\u0020parameter.",
+            "url": "classes/Makiavelo-Flex-Traits-Translatable.html#method_translation"
+        },                {
+            "fqsen": "\\Makiavelo\\Flex\\Traits\\Translatable\u003A\u003A\u0024locale",
+            "name": "locale",
+            "summary": "",
+            "url": "classes/Makiavelo-Flex-Traits-Translatable.html#property_locale"
+        },                {
+            "fqsen": "\\Makiavelo\\Flex\\Traits\\Translatable\u003A\u003A\u0024availableLocales",
+            "name": "availableLocales",
+            "summary": "",
+            "url": "classes/Makiavelo-Flex-Traits-Translatable.html#property_availableLocales"
+        },                {
+            "fqsen": "\\Makiavelo\\Flex\\Traits\\Versionable",
+            "name": "Versionable",
+            "summary": "Trait\u0020to\u0020add\u0020record\u0020versions",
+            "url": "classes/Makiavelo-Flex-Traits-Versionable.html"
+        },                {
+            "fqsen": "\\Makiavelo\\Flex\\Traits\\Versionable\u003A\u003A_translatableInit\u0028\u0029",
+            "name": "_translatableInit",
+            "summary": "Initialize\u0020the\u0020versions\u0020relationship",
+            "url": "classes/Makiavelo-Flex-Traits-Versionable.html#method__translatableInit"
+        },                {
+            "fqsen": "\\Makiavelo\\Flex\\Traits\\Versionable\u003A\u003A_versionablePreSave\u0028\u0029",
+            "name": "_versionablePreSave",
+            "summary": "Create\u0020a\u0020copy,\u0020update\u0020the\u0020version\u0020number.",
+            "url": "classes/Makiavelo-Flex-Traits-Versionable.html#method__versionablePreSave"
+        },                {
+            "fqsen": "\\Makiavelo\\Flex\\Traits\\Versionable\u003A\u003AchangeVersion\u0028\u0029",
+            "name": "changeVersion",
+            "summary": "Switch\u0020to\u0020another\u0020version.",
+            "url": "classes/Makiavelo-Flex-Traits-Versionable.html#method_changeVersion"
+        },                {
+            "fqsen": "\\Makiavelo\\Flex\\Traits\\Versionable\u003A\u003A\u0024version",
+            "name": "version",
+            "summary": "",
+            "url": "classes/Makiavelo-Flex-Traits-Versionable.html#property_version"
+        },                {
             "fqsen": "\\",
             "name": "\\",
             "summary": "",
@@ -860,6 +990,11 @@ Search.appendIndex(
             "name": "Drivers",
             "summary": "",
             "url": "namespaces/makiavelo-flex-drivers.html"
+        },                {
+            "fqsen": "\\Makiavelo\\Flex\\Traits",
+            "name": "Traits",
+            "summary": "",
+            "url": "namespaces/makiavelo-flex-traits.html"
         },                {
             "fqsen": "\\Makiavelo\\Flex\\Util",
             "name": "Util",
