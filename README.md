@@ -5,6 +5,7 @@ The main approach is to have flexible models without worrying about database sch
 What we offer:
 * Micro ORM
 * Relationships (Belongs, Has, HasAndBelongs)
+* Lazy loading
 * Traits (Reusable behaviors)
 * Query hydrator
 * Handling nested relationships
