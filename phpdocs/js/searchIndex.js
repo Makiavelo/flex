@@ -391,6 +391,11 @@ Search.appendIndex(
             "summary": "Get\u0020a\u0020value\u0020from\u0020a\u0020collection\u0020using\u0020a\u0020path.",
             "url": "classes/Makiavelo-Flex-Util-Common.html#method_get"
         },                {
+            "fqsen": "\\Makiavelo\\Flex\\Util\\Common\u003A\u003Aremove\u0028\u0029",
+            "name": "remove",
+            "summary": "Remove\u0020an\u0020element\u0020by\u0020key\u0020from\u0020the\u0020collection",
+            "url": "classes/Makiavelo-Flex-Util-Common.html#method_remove"
+        },                {
             "fqsen": "\\Makiavelo\\Flex\\Util\\Common\u003A\u003Aset\u0028\u0029",
             "name": "set",
             "summary": "Set\u0020a\u0020value\u0020inside\u0020a\u0020collection\u0020using\u0020a\u0020path.",
@@ -420,6 +425,11 @@ Search.appendIndex(
             "name": "add",
             "summary": "Add\u0020a\u0020key\/value\u0020pair",
             "url": "classes/Makiavelo-Flex-Meta.html#method_add"
+        },                {
+            "fqsen": "\\Makiavelo\\Flex\\Meta\u003A\u003Aremove\u0028\u0029",
+            "name": "remove",
+            "summary": "Remove\u0020the\u0020selected\u0020path\u0020element\u0020from\u0020the\u0020meta\u0020values",
+            "url": "classes/Makiavelo-Flex-Meta.html#method_remove"
         },                {
             "fqsen": "\\Makiavelo\\Flex\\Meta\u003A\u003Aget\u0028\u0029",
             "name": "get",
