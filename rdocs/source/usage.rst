@@ -15,8 +15,4 @@ To use Flex, first install it:
 Building models
 ----------------
 
-.. code-block:: PHP
-        $var = 'Hello world!';
-        echo $var;
-
 Example
