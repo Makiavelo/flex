@@ -1,4 +1,6 @@
-## Validation
+## Extras
+
+### Validation
 We don't offer any validation out of the box, but Flex allows you to do whatever you want when it's validation time.
 Using a mix of 'Event Hooks' and metadata, you can achieve any complex validation you need.
 We recommend searching for any good rule validation library out there, and here is an example of how it can be used within Flex.
@@ -66,12 +68,12 @@ $status = $repo->save($otherUser); // This should be true, no scope defined.
 
 ```
 
-## Transactionality
+### Transactionality
 All the operations on the database are performed in a transactional way, all or nothing.
 There is an exception to this, while the database is not frozen, no transactionality will be available due to limitations of the
 MySQL engine, but as soon as the database is frozen, everything will be transactional.
 
-## Freezing the database
+### Freezing the database
 The tables auto-update functionality (like a NoSQL database) is pretty comfortable on development/prototyping stages, but won't be secure enough
 for production environments. The idea is to grab the rough version created by 'Flex' and update to have the proper types, indexes, etc.
 
@@ -98,10 +100,10 @@ $status = $repo->connect([
 
 This will completely turn off the automatic schema synchronization, so saving models can fail if the attributes aren't defined on the database.
 
-## Documentation
-The documentation of the classes can be found in the 'docs' folder. Can be viewed online on github pages here: https://makiavelo.github.io/flex/
+### Documentation
+The documentation of the classes can be found in the 'phpdocs' folder. Can be viewed online on github pages here: https://makiavelo.github.io/flex/
 
-## Testing
+### Testing
 If you want to play with the code, install dev dependencies and run any of these commands:
 
 ```

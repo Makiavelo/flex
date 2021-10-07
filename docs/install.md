@@ -1,7 +1,9 @@
-## Requirements
+## Install
+
+### Requirements
 PHP, MySQL and a table to work on. No table creation required nor model generation required.
 
-## Install with composer
+### Install with composer
 ```
 composer require makiavelo/flex
 ```
@@ -12,7 +14,7 @@ Or update dependencies in composer.json
 }
 ```
 
-## Install with single file
+### Install with single file
 The repository contains a phar file which can be included directly to avoid using composer.
 The phar can be found here: `/phar/flex.phar`
 ```php

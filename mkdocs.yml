@@ -2,7 +2,7 @@ site_name: Flex
 
 repo_url: https://github.com/Makiavelo/flex
 
-docs_dir: mkd
+docs_dir: docs
 
 theme: readthedocs
 

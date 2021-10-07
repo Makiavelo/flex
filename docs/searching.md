@@ -1,4 +1,6 @@
-## Searching for models
+## Searching
+
+### Searching for models
 There are a couple of convenience methods to search for models in the database:
 ```php
 FlexRepository::get()->find($table, $condition, $params, $options);
@@ -20,7 +22,7 @@ if the 'hydrate' option is sent as false, then it will just return de array of r
 We leave the PDO object open to do whatever.
 Since we only support MySQL, we don't need to translate complex querys to multiple SQL languages.
 
-## Complex searches
+### Complex searches
 To search for anything, with any complexity on the query, we have the 'query' method. The only thing to keep in mind while using this method
 is the name of the fields we are retrieving. The auto-hydration is 'kinda' smart, but needs the correct input to hydrate.
 If no hydration is needed, or it's going to be done manually later, then you can do whatever.
@@ -53,7 +55,7 @@ $result = $repo->query(
 // This will return a User model with the Tag models as a collection (depending on relation configuration)
 ```
 
-## Using the raw database connection
+### Using the raw database connection
 The 'FlexRepository' instance will have a 'db' attribute attached to it. That's the instance of the PDO connection, so the developer can execute
 any query to fetch the data.
 

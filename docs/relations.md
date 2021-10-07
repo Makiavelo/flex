@@ -307,7 +307,7 @@ As you can see, it's a normal 'Belongs' relation, but there's one important thin
 `'table_alias'` parameter defined in the relation.
 Without this alias, Flex has no way to know who is who when it gets the raw results from the database.
 
-## Relation Collections
+### Relation Collections
 The relations of type 'Has' and 'HasAndBelongs' add collections to the model. We added some magic methods to handle collections and make
 life easier.
 
