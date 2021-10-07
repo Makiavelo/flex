@@ -13,7 +13,7 @@ What we offer:
 * Batch operations
 
 ## Full documentation
-Full documentation, examples and tutorials here: https://makiavleoflex.readthedocs.io
+Full documentation, examples and tutorials here: https://makiaveloflex.readthedocs.io
 
 ## Requirements
 PHP, MySQL and a table to work on. No table creation required nor model generation required.
