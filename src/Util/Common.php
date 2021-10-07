@@ -46,6 +46,42 @@ class Common
     }
 
     /**
+     * Remove an element by key from the collection
+     * 
+     * If something was unset, returns true, false otherwise.
+     * 
+     * @param mixed $collection
+     * @param string $key
+     * 
+     * @return boolean
+     */
+    public static function remove(&$collection, $key)
+    {
+        if ($key === null || $key === false) {
+            return false;
+        }
+
+        $parts = explode('->', $key);
+        $total = count($parts);
+
+        if ($total === 1) {
+            if (isset($collection[$parts[0]])) {
+                unset($collection[$parts[0]]);
+                return true;
+            } else {
+                return false;
+            }
+        } else {
+            if (!isset($collection[$parts[0]])) {
+                return true;
+            }
+
+            $current = array_shift($parts);
+            self::remove($collection[$current], implode('->', $parts));
+        }
+    }
+
+    /**
      * Set a value inside a collection using a path.
      * Eg: Common::set($collection, 'user->card->number)
      *     if collection doesn't have the 'user' attribute

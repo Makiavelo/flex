@@ -1,1 +1,2 @@
-* Add hability to add/edit/remove fields in Meta (example, behaviors that need to add custom fields)
+* Add tests with freezed schemas.
+    * Create DB with defined fields for those tests.

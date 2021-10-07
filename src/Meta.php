@@ -36,6 +36,18 @@ class Meta
     }
 
     /**
+     * Remove the selected path element from the meta values
+     * 
+     * @param string $path
+     * 
+     * @return Meta
+     */
+    public function remove($path) {
+        Common::remove($this->values, $path);
+        return $this;
+    }
+
+    /**
      * Get a meta value
      * 
      * @param string $name
